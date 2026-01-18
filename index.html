@@ -1,50 +1,135 @@
-<script>
-function calculateHeat() {
-    const avg = parseFloat(document.getElementById('avg').value);
-    const recent = parseFloat(document.getElementById('recent').value);
-    
-    localStorage.setItem('streakAvg', avg);
-    localStorage.setItem('streakRecent', recent);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Streak Lab | Heat Check v1.2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        .neon-border { border: 1px solid #22c55e; box-shadow: 0 0 15px #22c55e22; }
+        .heat-gradient { background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); }
+        @keyframes pulse-update {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; text-shadow: 0 0 10px #22c55e; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-update { animation: pulse-update 0.4s ease-out; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans">
 
-    document.getElementById('placeholder-text').classList.add('hidden');
-    const analysis = document.getElementById('analysis');
-    analysis.classList.remove('hidden');
+    <header class="p-6 border-b border-slate-800 bg-slate-900/50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-tighter text-green-500">THE STREAK LAB <span class="text-white font-light text-sm ml-2 tracking-normal">v1.2</span></h1>
+            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold border border-slate-700 px-2 py-1 rounded">Pro Analytics</div>
+        </div>
+    </header>
 
-    const diff = ((recent - avg) / avg) * 100;
-    let heatScoreUI = Math.min(Math.max(diff + 50, 0), 100);
+    <main class="flex-grow max-w-4xl mx-auto p-6 w-full">
+        <div class="grid md:grid-cols-2 gap-8 mt-4">
+            
+            <div class="bg-slate-900 p-8 rounded-2xl neon-border">
+                <h2 class="text-lg font-semibold mb-6 text-slate-300">Data Entry</h2>
+                
+                <div class="space-y-5">
+                    <div>
+                        <label for="avg" class="block text-xs uppercase font-bold text-slate-500 mb-2">Season Average</label>
+                        <input type="number" id="avg" step="0.1" oninput="validateForm()" placeholder="e.g. 22.5" 
+                               class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white font-mono transition-all">
+                    </div>
 
-    // Update heat score with pulse animation
-    const scoreEl = document.getElementById('heat-score');
-    scoreEl.innerText = Math.round(heatScoreUI) + "%";
-    scoreEl.classList.remove('animate-update');
-    void scoreEl.offsetWidth; // trigger reflow
-    scoreEl.classList.add('animate-update');
+                    <div>
+                        <label for="recent" class="block text-xs uppercase font-bold text-slate-500 mb-2">Recent Performance</label>
+                        <input type="number" id="recent" step="0.1" oninput="validateForm()" placeholder="e.g. 29.0" 
+                               class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white font-mono transition-all">
+                    </div>
 
-    // Animate heat bar
-    const bar = document.getElementById('heat-bar');
-    bar.style.transition = "width 1s cubic-bezier(0.34, 1.56, 0.64, 1)";
-    bar.style.width = heatScoreUI + "%";
+                    <button id="analyzeBtn" onclick="calculateHeat()" disabled
+                            class="w-full bg-slate-700 text-slate-400 cursor-not-allowed font-bold py-4 rounded-lg transition-all uppercase tracking-widest shadow-lg">
+                        Analyze Trend
+                    </button>
+                </div>
+            </div>
 
-    // Verdict and recommendation
-    const verdict = document.getElementById('verdict');
-    const rec = document.getElementById('recommendation');
+            <div id="result-box" class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex flex-col justify-center items-center text-center shadow-2xl">
+                <div id="placeholder-text" class="text-slate-500">
+                    <p class="text-sm italic">Enter stats to trigger analysis.</p>
+                </div>
+                
+                <div id="analysis" class="hidden w-full" aria-live="polite">
+                    <div class="text-xs uppercase font-bold text-slate-500 mb-2 tracking-widest">Heat Intensity</div>
+                    <div id="heat-score" class="text-7xl font-black mb-6 text-white tracking-tighter">0%</div>
+                    
+                    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden mb-8 border border-slate-700">
+                        <div id="heat-bar" class="h-full heat-gradient" style="width: 0%"></div>
+                    </div>
 
-    verdict.classList.remove('animate-update');
-    void verdict.offsetWidth; // trigger reflow
-    verdict.classList.add('animate-update');
+                    <div id="verdict" class="text-xl font-black uppercase tracking-wider py-3 px-6 rounded-lg inline-block border border-opacity-20 mb-4"></div>
+                    <p id="recommendation" class="text-slate-400 text-sm leading-relaxed max-w-[280px] mx-auto italic border-t border-slate-800 pt-4 mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    if (diff > 15) {
-        verdict.innerText = "Critical Heat 🔥";
-        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-red-900/30 text-red-500 border-red-500 animate-update";
-        rec.innerText = "Performance is +15% above baseline. Strong surge detected. Watch for regression or breakout trends.";
-    } else if (diff > -10) {
-        verdict.innerText = "Optimal Flow 📈";
-        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-green-900/30 text-green-500 border-green-500 animate-update";
-        rec.innerText = "Performance is consistent with baseline. Reliable metrics for forecasting.";
-    } else {
-        verdict.innerText = "Cold Streak ❄️";
-        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-blue-900/30 text-blue-400 border-blue-400 animate-update";
-        rec.innerText = "Performance is below baseline. Possible fatigue, mismatch, or tactical issue.";
-    }
-}
-</script>
+    <footer class="p-8 text-center text-slate-700 text-[10px] tracking-widest uppercase">
+        &copy; 2026 The Streak Lab | Performance Intelligence
+    </footer>
+
+    <script>
+        window.onload = () => {
+            const savedAvg = localStorage.getItem('streakAvg');
+            const savedRecent = localStorage.getItem('streakRecent');
+            if(savedAvg) document.getElementById('avg').value = savedAvg;
+            if(savedRecent) document.getElementById('recent').value = savedRecent;
+            validateForm();
+        };
+
+        function validateForm() {
+            const avg = parseFloat(document.getElementById('avg').value);
+            const recent = parseFloat(document.getElementById('recent').value);
+            const btn = document.getElementById('analyzeBtn');
+
+            if (!isNaN(avg) && avg > 0 && !isNaN(recent) && recent >= 0) {
+                btn.disabled = false;
+                btn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+                btn.classList.add('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/30');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+                btn.classList.remove('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/30');
+            }
+        }
+
+        function calculateHeat() {
+            const avg = parseFloat(document.getElementById('avg').value);
+            const recent = parseFloat(document.getElementById('recent').value);
+            
+            localStorage.setItem('streakAvg', avg);
+            localStorage.setItem('streakRecent', recent);
+
+            document.getElementById('placeholder-text').classList.add('hidden');
+            const analysis = document.getElementById('analysis');
+            analysis.classList.remove('hidden');
+
+            const diff = ((recent - avg) / avg) * 100;
+            let heatScoreUI = Math.min(Math.max(diff + 50, 0), 100);
+
+            const scoreEl = document.getElementById('heat-score');
+            scoreEl.innerText = Math.round(heatScoreUI) + "%";
+            scoreEl.classList.remove('animate-update');
+            void scoreEl.offsetWidth; 
+            scoreEl.classList.add('animate-update');
+
+            const bar = document.getElementById('heat-bar');
+            bar.style.transition = "width 1s cubic-bezier(0.34, 1.56, 0.64, 1)";
+            bar.style.width = heatScoreUI + "%";
+
+            const verdict = document.getElementById('verdict');
+            const rec = document.getElementById('recommendation');
+
+            verdict.classList.remove('animate-update');
+            void verdict.offsetWidth;
+            verdict.classList.add('animate-update');
+
+            if (diff > 15) {
