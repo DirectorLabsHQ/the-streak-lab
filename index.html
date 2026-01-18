@@ -21,59 +21,83 @@
 
     <header class="p-6 border-b border-slate-800 bg-slate-900/50">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-tighter text-green-500">THE STREAK LAB <span class="text-white font-light text-sm ml-2 tracking-normal">v1.2</span></h1>
-            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold border border-slate-700 px-2 py-1 rounded">Pro Analytics</div>
+            <h1 class="text-2xl font-bold tracking-tighter text-green-500 underline decoration-green-900/30">THE STREAK LAB <span class="text-white font-light text-sm ml-1 tracking-normal italic">PRO</span></h1>
+            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold border border-slate-700 px-2 py-1 rounded">Beta Access</div>
         </div>
     </header>
 
     <main class="flex-grow max-w-4xl mx-auto p-6 w-full">
-        <div class="grid md:grid-cols-2 gap-8 mt-4">
+        
+        <div class="mb-10 text-center max-w-2xl mx-auto pt-4">
+            <h2 class="text-slate-400 uppercase tracking-[0.2em] text-[10px] font-bold mb-3">Streak Analysis Protocol</h2>
+            <p class="text-slate-300 text-lg leading-relaxed">Identify statistical anomalies by comparing a player's <span class="text-green-500 font-semibold underline decoration-green-900">Season Average</span> against their <span class="text-green-500 font-semibold underline decoration-green-900">Last 3 Games</span>.</p>
+            
+            <div class="flex justify-center gap-6 mt-6 text-[9px] uppercase tracking-widest text-slate-500 font-bold">
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 1. Set Baseline
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 2. Input Momentum
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 3. Get Heat Index
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
             
             <div class="bg-slate-900 p-8 rounded-2xl neon-border">
-                <h2 class="text-lg font-semibold mb-6 text-slate-300">Data Entry</h2>
+                <h2 class="text-xs uppercase tracking-widest font-bold mb-6 text-slate-500 border-b border-slate-800 pb-2">Intelligence Input</h2>
                 
-                <div class="space-y-5">
+                <div class="space-y-6">
                     <div>
-                        <label for="avg" class="block text-xs uppercase font-bold text-slate-500 mb-2">Season Average</label>
-                        <input type="number" id="avg" step="0.1" oninput="validateForm()" placeholder="e.g. 22.5" 
-                               class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white font-mono transition-all">
+                        <label for="avg" class="block text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-wide">Season Baseline (Ex: 22.5 PPG)</label>
+                        <input type="number" id="avg" step="0.1" oninput="validateForm()" placeholder="Enter Season Average" 
+                               aria-label="Season average"
+                               class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-green-500 text-white font-mono transition-all placeholder:text-slate-700">
                     </div>
 
                     <div>
-                        <label for="recent" class="block text-xs uppercase font-bold text-slate-500 mb-2">Recent Performance</label>
-                        <input type="number" id="recent" step="0.1" oninput="validateForm()" placeholder="e.g. 29.0" 
-                               class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white font-mono transition-all">
+                        <label for="recent" class="block text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-wide">Last 3 Games Avg (Ex: 30.0 PPG)</label>
+                        <input type="number" id="recent" step="0.1" oninput="validateForm()" placeholder="Enter Recent Average" 
+                               aria-label="Recent average performance"
+                               class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-green-500 text-white font-mono transition-all placeholder:text-slate-700">
                     </div>
 
                     <button id="analyzeBtn" onclick="calculateHeat()" disabled
-                            class="w-full bg-slate-700 text-slate-400 cursor-not-allowed font-bold py-4 rounded-lg transition-all uppercase tracking-widest shadow-lg">
-                        Analyze Trend
+                            class="w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-4 rounded-lg transition-all uppercase tracking-widest shadow-lg active:scale-95">
+                        Run Heat Check
                     </button>
                 </div>
             </div>
 
-            <div id="result-box" class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex flex-col justify-center items-center text-center shadow-2xl">
-                <div id="placeholder-text" class="text-slate-500">
-                    <p class="text-sm italic">Enter stats to trigger analysis.</p>
+            <div id="result-box" class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex flex-col justify-center items-center text-center shadow-2xl relative overflow-hidden">
+                <div id="placeholder-text" class="text-slate-600">
+                    <p class="text-xs uppercase tracking-widest">Awaiting Data Streams...</p>
                 </div>
                 
                 <div id="analysis" class="hidden w-full" aria-live="polite">
-                    <div class="text-xs uppercase font-bold text-slate-500 mb-2 tracking-widest">Heat Intensity</div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500 mb-2 tracking-widest">Calculated Momentum</div>
                     <div id="heat-score" class="text-7xl font-black mb-6 text-white tracking-tighter">0%</div>
                     
-                    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden mb-8 border border-slate-700">
-                        <div id="heat-bar" class="h-full heat-gradient" style="width: 0%"></div>
+                    <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden mb-8 border border-slate-800">
+                        <div id="heat-bar" class="h-full heat-gradient shadow-[0_0_10px_rgba(34,197,94,0.3)]" style="width: 0%"></div>
                     </div>
 
-                    <div id="verdict" class="text-xl font-black uppercase tracking-wider py-3 px-6 rounded-lg inline-block border border-opacity-20 mb-4"></div>
-                    <p id="recommendation" class="text-slate-400 text-sm leading-relaxed max-w-[280px] mx-auto italic border-t border-slate-800 pt-4 mt-2"></p>
+                    <div id="verdict" class="text-lg font-black uppercase tracking-wider py-3 px-6 rounded-lg inline-block border border-opacity-20 mb-4 transition-all"></div>
+                    <p id="recommendation" class="text-slate-400 text-[13px] leading-relaxed max-w-[280px] mx-auto italic border-t border-slate-800 pt-4 mt-2"></p>
                 </div>
             </div>
         </div>
+
+        <div class="mt-12 p-6 bg-slate-900/30 border border-slate-800 rounded-xl text-center max-w-xl mx-auto">
+            <p class="text-xs text-slate-500 italic">"Markets often overreact to short-term variance. The Heat Index visualizes when a player is truly 'Critical' or just tracking seasonal norms."</p>
+        </div>
     </main>
 
-    <footer class="p-8 text-center text-slate-700 text-[10px] tracking-widest uppercase">
-        &copy; 2026 The Streak Lab | Performance Intelligence
+    <footer class="p-8 text-center text-slate-700 text-[9px] tracking-[0.3em] uppercase">
+        &copy; 2026 THE STREAK LAB | DATA-DRIVEN ANALYSIS | <span class="text-red-900 font-bold">GAMBLE RESPONSIBLY</span>
     </footer>
 
     <script>
@@ -92,12 +116,12 @@
 
             if (!isNaN(avg) && avg > 0 && !isNaN(recent) && recent >= 0) {
                 btn.disabled = false;
-                btn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
-                btn.classList.add('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/30');
+                btn.classList.remove('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
+                btn.classList.add('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/20');
             } else {
                 btn.disabled = true;
-                btn.classList.add('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
-                btn.classList.remove('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/30');
+                btn.classList.add('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
+                btn.classList.remove('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/20');
             }
         }
 
@@ -113,23 +137,39 @@
             analysis.classList.remove('hidden');
 
             const diff = ((recent - avg) / avg) * 100;
-            let heatScoreUI = Math.min(Math.max(diff + 50, 0), 100);
+            let uiScale = Math.min(Math.max(diff + 50, 0), 100);
 
             const scoreEl = document.getElementById('heat-score');
-            scoreEl.innerText = Math.round(heatScoreUI) + "%";
+            scoreEl.innerText = Math.round(uiScale) + "%";
             scoreEl.classList.remove('animate-update');
             void scoreEl.offsetWidth; 
             scoreEl.classList.add('animate-update');
 
             const bar = document.getElementById('heat-bar');
-            bar.style.transition = "width 1s cubic-bezier(0.34, 1.56, 0.64, 1)";
-            bar.style.width = heatScoreUI + "%";
+            bar.style.transition = "width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)";
+            bar.style.width = uiScale + "%";
 
             const verdict = document.getElementById('verdict');
             const rec = document.getElementById('recommendation');
-
+            
             verdict.classList.remove('animate-update');
             void verdict.offsetWidth;
             verdict.classList.add('animate-update');
 
             if (diff > 15) {
+                verdict.innerText = "Critical Heat 🔥";
+                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-red-900/30 text-red-500 border-red-500 animate-update";
+                rec.innerText = `Performing ${Math.round(diff)}% above baseline. Statistically significant surge. Watch for regression.`;
+            } else if (diff < -10) {
+                verdict.innerText = "Ice Cold ❄️";
+                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-blue-900/30 text-blue-400 border-blue-400 animate-update";
+                rec.innerText = `Performance is ${Math.abs(Math.round(diff))}% below baseline. Possible fatigue or mismatch detected.`;
+            } else {
+                verdict.innerText = "Optimal Flow 📊";
+                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-green-900/30 text-green-500 border-green-500 animate-update";
+                rec.innerText = "Performance is consistent with season baseline. Reliable output detected.";
+            }
+        }
+    </script>
+</body>
+</html>
