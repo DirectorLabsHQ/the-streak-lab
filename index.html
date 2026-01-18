@@ -3,173 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Streak Lab | Heat Check v1.2</title>
+    <title>The Streak Lab | Momentum Diagnostic</title>
+    
+    <meta name="description" content="Quantify your habit consistency and momentum. A behavioral science tool by DirectorLabsHQ to visualize streak integrity.">
+    <meta name="author" content="DirectorLabsHQ">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .neon-border { border: 1px solid #22c55e; box-shadow: 0 0 15px #22c55e22; }
-        .heat-gradient { background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); }
-        @keyframes pulse-update {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; text-shadow: 0 0 10px #22c55e; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .animate-update { animation: pulse-update 0.4s ease-out; }
+        body { background-color: #0a0a0a; color: #e5e5e5; }
+        .safety-border { border-left: 4px solid #22c55e; } /* Momentum Green */
+        .card-bg { background: #171717; border: 1px solid #262626; }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+        .active-streak { animation: pulse-green 2s infinite; }
     </style>
 </head>
-<body class="flex flex-col min-h-screen font-sans">
+<body class="min-h-screen flex flex-col font-sans">
 
-    <header class="p-6 border-b border-slate-800 bg-slate-900/50">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-tighter text-green-500 underline decoration-green-900/30">THE STREAK LAB <span class="text-white font-light text-sm ml-1 tracking-normal italic">PRO</span></h1>
-            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold border border-slate-700 px-2 py-1 rounded">Beta Access</div>
+<header class="p-6 border-b border-neutral-800 bg-neutral-900/50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-black tracking-tighter text-green-500 italic uppercase">THE<span class="text-white">STREAK</span>LAB</h1>
+        <div class="text-[10px] font-bold text-neutral-500 tracking-widest uppercase">Behavioral Diagnostic</div>
+    </div>
+</header>
+
+<main class="flex-grow max-w-5xl mx-auto p-4 md:p-8 w-full">
+    <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <div>
+            <h2 class="text-3xl font-bold mb-2 text-white uppercase tracking-tight">Momentum Analysis</h2>
+            <p class="text-neutral-500 italic text-sm">Quantifying the neurological cost of inconsistency.</p>
         </div>
-    </header>
+        <button onclick="resetStreak()" class="text-[10px] font-bold text-neutral-500 hover:text-green-400 border border-neutral-800 px-4 py-2 rounded-lg transition-all uppercase tracking-widest active:scale-95">
+            Reset Momentum
+        </button>
+    </div>
 
-    <main class="flex-grow max-w-4xl mx-auto p-6 w-full">
+    <div class="grid lg:grid-cols-2 gap-6 lg:gap-10">
+        <div class="card-bg p-6 md:p-10 rounded-xl safety-border shadow-2xl">
+            <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-8 border-b border-neutral-800 pb-2">Streak Parameters</h3>
+            <div class="space-y-8">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-neutral-400 mb-3 italic tracking-wide">Current Streak (Days)</label>
+                    <input type="number" id="streakInput" oninput="analyzeMomentum()" min="0" placeholder="0" 
+                           class="w-full bg-neutral-900 border border-neutral-700 rounded-lg p-5 outline-none text-white font-mono focus:border-green-500 transition-all text-2xl shadow-inner">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-bg p-6 md:p-10 rounded-xl flex flex-col justify-center items-center text-center relative overflow-hidden">
+            <div id="placeholder" class="text-neutral-600 text-sm italic">Input streak data to calculate velocity...</div>
+
+            <div id="results" class="hidden w-full animate-fade-in">
+                <div class="mb-6">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-500 font-mono">Momentum Score</span>
+                </div>
+                
+                <div id="momentum-display" class="text-7xl md:text-9xl font-black text-green-500 tracking-tighter mb-4">0%</div>
+                
+                <div class="w-full bg-neutral-800 h-2 rounded-full overflow-hidden mb-8">
+                    <div id="momentum-bar" class="bg-green-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                </div>
+
+                <div class="text-left space-y-4">
+                    <div class="flex justify-between items-center border-b border-neutral-800 pb-2">
+                        <span class="text-[10px] font-bold text-neutral-500 uppercase">Status</span>
+                        <span id="streak-status" class="text-xs font-bold text-white uppercase tracking-widest">Initial Phase</span>
+                    </div>
+                    <p id="streak-insight" class="text-[11px] text-neutral-400 italic leading-relaxed">Habit formation requires 66 days on average. You are currently building neurological pathways.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-16 border-t border-neutral-800 pt-10 pb-10">
+        <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-green-500 mb-8 italic text-center">Behavioral Protocols</h3>
         
-        <div class="mb-10 text-center max-w-2xl mx-auto pt-4">
-            <h2 class="text-slate-400 uppercase tracking-[0.2em] text-[10px] font-bold mb-3">Streak Analysis Protocol</h2>
-            <p class="text-slate-300 text-lg leading-relaxed">Identify statistical anomalies by comparing a player's <span class="text-green-500 font-semibold underline decoration-green-900">Season Average</span> against their <span class="text-green-500 font-semibold underline decoration-green-900">Last 3 Games</span>.</p>
-            
-            <div class="flex justify-center gap-6 mt-6 text-[9px] uppercase tracking-widest text-slate-500 font-bold">
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 1. Set Baseline
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 2. Input Momentum
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span> 3. Get Heat Index
-                </div>
+        
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
+                <div class="text-green-500 font-black text-xl mb-3 italic">01.</div>
+                <h4 class="text-sm font-bold text-white mb-2 uppercase">The 66-Day Rule</h4>
+                <p class="text-neutral-500 text-xs leading-relaxed italic">Research suggests the "automaticity" of a habit peaks at 66 days. Streaks beyond this point require significantly less willpower.</p>
+            </div>
+            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
+                <div class="text-green-500 font-black text-xl mb-3 italic">02.</div>
+                <h4 class="text-sm font-bold text-white mb-2 uppercase">Momentum Decay</h4>
+                <p class="text-neutral-500 text-xs leading-relaxed italic">Missing a single day reduces momentum by 50%. Missing two days resets momentum to zero. Never miss twice.</p>
+            </div>
+            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
+                <div class="text-green-500 font-black text-xl mb-3 italic">03.</div>
+                <h4 class="text-sm font-bold text-white mb-2 uppercase">Neurological Load</h4>
+                <p class="text-neutral-500 text-xs leading-relaxed italic">High momentum (80%+) indicates that the behavior has moved from the prefrontal cortex to the basal ganglia.</p>
             </div>
         </div>
+    </div>
+</main>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            
-            <div class="bg-slate-900 p-8 rounded-2xl neon-border">
-                <h2 class="text-xs uppercase tracking-widest font-bold mb-6 text-slate-500 border-b border-slate-800 pb-2">Intelligence Input</h2>
-                
-                <div class="space-y-6">
-                    <div>
-                        <label for="avg" class="block text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-wide">Season Baseline (Ex: 22.5 PPG)</label>
-                        <input type="number" id="avg" step="0.1" oninput="validateForm()" placeholder="Enter Season Average" 
-                               aria-label="Season average"
-                               class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-green-500 text-white font-mono transition-all placeholder:text-slate-700">
-                    </div>
+<footer class="p-8 text-center text-neutral-700 text-[10px] tracking-[0.4em] uppercase mt-auto">
+    &copy; 2026 THE STREAK LAB | <span class="text-green-600 font-bold">DIRECTORLABS HQ</span>
+</footer>
 
-                    <div>
-                        <label for="recent" class="block text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-wide">Last 3 Games Avg (Ex: 30.0 PPG)</label>
-                        <input type="number" id="recent" step="0.1" oninput="validateForm()" placeholder="Enter Recent Average" 
-                               aria-label="Recent average performance"
-                               class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-green-500 text-white font-mono transition-all placeholder:text-slate-700">
-                    </div>
+<script>
+    function analyzeMomentum() {
+        const input = document.getElementById('streakInput');
+        const days = parseInt(input.value);
+        const results = document.getElementById('results');
+        const placeholder = document.getElementById('placeholder');
+        const display = document.getElementById('momentum-display');
+        const bar = document.getElementById('momentum-bar');
+        const status = document.getElementById('streak-status');
+        const insight = document.getElementById('streak-insight');
 
-                    <button id="analyzeBtn" onclick="calculateHeat()" disabled
-                            class="w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-4 rounded-lg transition-all uppercase tracking-widest shadow-lg active:scale-95">
-                        Run Heat Check
-                    </button>
-                </div>
-            </div>
-
-            <div id="result-box" class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex flex-col justify-center items-center text-center shadow-2xl relative overflow-hidden">
-                <div id="placeholder-text" class="text-slate-600">
-                    <p class="text-xs uppercase tracking-widest">Awaiting Data Streams...</p>
-                </div>
-                
-                <div id="analysis" class="hidden w-full" aria-live="polite">
-                    <div class="text-[10px] uppercase font-bold text-slate-500 mb-2 tracking-widest">Calculated Momentum</div>
-                    <div id="heat-score" class="text-7xl font-black mb-6 text-white tracking-tighter">0%</div>
-                    
-                    <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden mb-8 border border-slate-800">
-                        <div id="heat-bar" class="h-full heat-gradient shadow-[0_0_10px_rgba(34,197,94,0.3)]" style="width: 0%"></div>
-                    </div>
-
-                    <div id="verdict" class="text-lg font-black uppercase tracking-wider py-3 px-6 rounded-lg inline-block border border-opacity-20 mb-4 transition-all"></div>
-                    <p id="recommendation" class="text-slate-400 text-[13px] leading-relaxed max-w-[280px] mx-auto italic border-t border-slate-800 pt-4 mt-2"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-12 p-6 bg-slate-900/30 border border-slate-800 rounded-xl text-center max-w-xl mx-auto">
-            <p class="text-xs text-slate-500 italic">"Markets often overreact to short-term variance. The Heat Index visualizes when a player is truly 'Critical' or just tracking seasonal norms."</p>
-        </div>
-    </main>
-
-    <footer class="p-8 text-center text-slate-700 text-[9px] tracking-[0.3em] uppercase">
-        &copy; 2026 THE STREAK LAB | DATA-DRIVEN ANALYSIS | <span class="text-red-900 font-bold">GAMBLE RESPONSIBLY</span>
-    </footer>
-
-    <script>
-        window.onload = () => {
-            const savedAvg = localStorage.getItem('streakAvg');
-            const savedRecent = localStorage.getItem('streakRecent');
-            if(savedAvg) document.getElementById('avg').value = savedAvg;
-            if(savedRecent) document.getElementById('recent').value = savedRecent;
-            validateForm();
-        };
-
-        function validateForm() {
-            const avg = parseFloat(document.getElementById('avg').value);
-            const recent = parseFloat(document.getElementById('recent').value);
-            const btn = document.getElementById('analyzeBtn');
-
-            if (!isNaN(avg) && avg > 0 && !isNaN(recent) && recent >= 0) {
-                btn.disabled = false;
-                btn.classList.remove('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
-                btn.classList.add('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/20');
-            } else {
-                btn.disabled = true;
-                btn.classList.add('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
-                btn.classList.remove('bg-green-600', 'text-white', 'cursor-pointer', 'hover:bg-green-500', 'shadow-green-900/20');
-            }
+        if (!days || days <= 0) {
+            results.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            return;
         }
 
-        function calculateHeat() {
-            const avg = parseFloat(document.getElementById('avg').value);
-            const recent = parseFloat(document.getElementById('recent').value);
-            
-            localStorage.setItem('streakAvg', avg);
-            localStorage.setItem('streakRecent', recent);
+        results.classList.remove('hidden');
+        placeholder.classList.add('hidden');
 
-            document.getElementById('placeholder-text').classList.add('hidden');
-            const analysis = document.getElementById('analysis');
-            analysis.classList.remove('hidden');
+        // Momentum calculation (cap at 100% based on 66 days)
+        let momentum = Math.min(Math.round((days / 66) * 100), 100);
+        display.innerText = momentum + "%";
+        bar.style.width = momentum + "%";
 
-            const diff = ((recent - avg) / avg) * 100;
-            let uiScale = Math.min(Math.max(diff + 50, 0), 100);
-
-            const scoreEl = document.getElementById('heat-score');
-            scoreEl.innerText = Math.round(uiScale) + "%";
-            scoreEl.classList.remove('animate-update');
-            void scoreEl.offsetWidth; 
-            scoreEl.classList.add('animate-update');
-
-            const bar = document.getElementById('heat-bar');
-            bar.style.transition = "width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)";
-            bar.style.width = uiScale + "%";
-
-            const verdict = document.getElementById('verdict');
-            const rec = document.getElementById('recommendation');
-            
-            verdict.classList.remove('animate-update');
-            void verdict.offsetWidth;
-            verdict.classList.add('animate-update');
-
-            if (diff > 15) {
-                verdict.innerText = "Critical Heat 🔥";
-                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-red-900/30 text-red-500 border-red-500 animate-update";
-                rec.innerText = `Performing ${Math.round(diff)}% above baseline. Statistically significant surge. Watch for regression.`;
-            } else if (diff < -10) {
-                verdict.innerText = "Ice Cold ❄️";
-                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-blue-900/30 text-blue-400 border-blue-400 animate-update";
-                rec.innerText = `Performance is ${Math.abs(Math.round(diff))}% below baseline. Possible fatigue or mismatch detected.`;
-            } else {
-                verdict.innerText = "Optimal Flow 📊";
-                verdict.className = "text-lg font-black py-3 px-6 rounded-lg inline-block bg-green-900/30 text-green-500 border-green-500 animate-update";
-                rec.innerText = "Performance is consistent with season baseline. Reliable output detected.";
-            }
+        if (days < 21) {
+            status.innerText = "Cognitive Load Phase";
+            insight.innerText = "The habit is fragile. High willpower is required to maintain momentum.";
+        } else if (days < 66) {
+            status.innerText = "Structural Change Phase";
+            insight.innerText = "Neural pathways are strengthening. The friction of the task is decreasing.";
+        } else {
+            status.innerText = "Automaticity Achieved";
+            insight.innerText = "The behavior is now a part of your identity. Momentum is at maximum capacity.";
+            display.classList.add('active-streak');
         }
-    </script>
+    }
+
+    function resetStreak() {
+        document.getElementById('streakInput').value = '';
+        analyzeMomentum();
+    }
+</script>
 </body>
 </html>
