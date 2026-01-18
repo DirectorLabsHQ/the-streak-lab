@@ -1,0 +1,54 @@
+Yes — this is almost complete, but the calculateHeat() function is still cut off at the last line (scoreEl.innerText = …). Right now, the logic for the verdict text, recommendation, and animated verdict updates is missing.
+
+Here’s a fully complete calculateHeat() that finishes your v1.2 MVP:
+
+<script>
+function calculateHeat() {
+    const avg = parseFloat(document.getElementById('avg').value);
+    const recent = parseFloat(document.getElementById('recent').value);
+    
+    localStorage.setItem('streakAvg', avg);
+    localStorage.setItem('streakRecent', recent);
+
+    document.getElementById('placeholder-text').classList.add('hidden');
+    const analysis = document.getElementById('analysis');
+    analysis.classList.remove('hidden');
+
+    const diff = ((recent - avg) / avg) * 100;
+    let heatScoreUI = Math.min(Math.max(diff + 50, 0), 100);
+
+    // Update heat score with pulse animation
+    const scoreEl = document.getElementById('heat-score');
+    scoreEl.innerText = Math.round(heatScoreUI) + "%";
+    scoreEl.classList.remove('animate-update');
+    void scoreEl.offsetWidth; // trigger reflow
+    scoreEl.classList.add('animate-update');
+
+    // Animate heat bar
+    const bar = document.getElementById('heat-bar');
+    bar.style.transition = "width 1s cubic-bezier(0.34, 1.56, 0.64, 1)";
+    bar.style.width = heatScoreUI + "%";
+
+    // Verdict and recommendation
+    const verdict = document.getElementById('verdict');
+    const rec = document.getElementById('recommendation');
+
+    verdict.classList.remove('animate-update');
+    void verdict.offsetWidth; // trigger reflow
+    verdict.classList.add('animate-update');
+
+    if (diff > 15) {
+        verdict.innerText = "Critical Heat 🔥";
+        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-red-900/30 text-red-500 border-red-500 animate-update";
+        rec.innerText = "Performance is +15% above baseline. Strong surge detected. Watch for regression or breakout trends.";
+    } else if (diff > -10) {
+        verdict.innerText = "Optimal Flow 📈";
+        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-green-900/30 text-green-500 border-green-500 animate-update";
+        rec.innerText = "Performance is consistent with baseline. Reliable metrics for forecasting.";
+    } else {
+        verdict.innerText = "Cold Streak ❄️";
+        verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-blue-900/30 text-blue-400 border-blue-400 animate-update";
+        rec.innerText = "Performance is below baseline. Possible fatigue, mismatch, or tactical issue.";
+    }
+}
+</script>
