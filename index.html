@@ -12,7 +12,7 @@
         .tab-active { border-bottom: 4px solid #f97316; color: #f97316; }
         .star-active { color: #f97316; fill: #f97316; }
         .legend-badge { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; }
-        /* Smooth transitions for the UI */
+        .team-badge { background-color: #1e293b; color: #64748b; border: 1px solid #334155; font-size: 9px; padding: 1px 4px; border-radius: 4px; font-weight: 800; }
         .transition-all { transition: all 0.2s ease-in-out; }
     </style>
 </head>
@@ -21,15 +21,15 @@
     <div class="max-w-6xl mx-auto py-10 px-4">
         <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div>
-                <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
-                <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
+                <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase text-center md:text-left">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
+                <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic text-center md:text-left">Prop Intelligence for the Sharp Bettor</p>
             </div>
-            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold"></div>
+            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold self-center md:self-end"></div>
         </header>
 
         <div class="mb-6 p-3 bg-slate-800/30 border-l-4 border-orange-500 rounded-r text-[11px] text-slate-400">
             <span class="text-white font-bold uppercase tracking-tighter mr-2">Lab Note:</span> 
-            L10 Hit Rate = % of last 10 games where the player exceeded the betting threshold. Search by Name or Team (e.g. "GSW").
+            L10 Hit Rate = % of last 10 games exceeding the line. Search by Name or Team (GSW, LAL...).
         </div>
 
         <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
@@ -38,7 +38,7 @@
                        class="w-full bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
             </div>
             
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 md:gap-6">
                 <label class="flex items-center cursor-pointer group">
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-500 mr-3 transition-colors">Sharp Only (70%+)</span>
                     <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900 focus:ring-0">
@@ -49,27 +49,30 @@
             </div>
         </div>
 
-        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto border-b border-slate-800">
-            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active transition-all">Points</button>
-            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Rebounds</button>
-            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Assists</button>
-            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">3PM</button>
-            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Free Throws</button>
+        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto border-b border-slate-800 scrollbar-hide">
+            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active transition-all whitespace-nowrap">Points</button>
+            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Rebounds</button>
+            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Assists</button>
+            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">3PM</button>
+            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Free Throws</button>
         </div>
 
         <div class="bg-slate-800 rounded-xl shadow-2xl overflow-hidden border border-slate-700/50">
-            <table class="w-full text-left">
-                <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
-                    <tr>
-                        <th class="px-6 py-4 w-12 text-center">Fav</th>
-                        <th class="px-6 py-4">Player / Team</th>
-                        <th class="px-6 py-4 text-center">L10 Hit Rate</th>
-                        <th class="px-6 py-4">Last Game Summary</th>
-                        <th class="px-6 py-4 text-right italic">Sample</th>
-                    </tr>
-                </thead>
-                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm"></tbody>
-            </table>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
+                        <tr>
+                            <th class="px-6 py-4 w-12 text-center">Fav</th>
+                            <th class="px-6 py-4">Player / Team</th>
+                            <th class="px-6 py-4 text-center">L10 Hit Rate</th>
+                            <th class="px-6 py-4">Last Game Summary</th>
+                            <th class="px-6 py-4 text-right italic">Consistency</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm">
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -96,7 +99,10 @@
                 playerData = json.players;
                 document.getElementById('last-update').innerText = `LIVE REFRESH: ${json.last_updated}`;
                 filterData();
-            } catch (e) { console.error("Data Load Error", e); }
+            } catch (e) { 
+                console.error("Data Load Error", e);
+                document.getElementById('grid-body').innerHTML = `<tr><td colspan="5" class="p-10 text-center text-red-400 font-bold uppercase tracking-widest">Error Loading Live Data</td></tr>`;
+            }
         }
 
         function toggleFav(playerName) {
@@ -113,13 +119,13 @@
             showFavsOnly = !showFavsOnly;
             const btn = document.getElementById('fav-filter-btn');
             
-            // UX Pill Toggle Styling
-            btn.classList.toggle('text-orange-500', showFavsOnly);
-            btn.classList.toggle('text-slate-500', !showFavsOnly);
-            btn.classList.toggle('bg-slate-700', showFavsOnly);
-            btn.classList.toggle('px-4', showFavsOnly);
-            btn.classList.toggle('py-1', showFavsOnly);
-            btn.classList.toggle('rounded-full', showFavsOnly);
+            if (showFavsOnly) {
+                btn.classList.add('text-orange-500', 'bg-slate-700', 'px-4', 'py-1', 'rounded-full');
+                btn.classList.remove('text-slate-500');
+            } else {
+                btn.classList.remove('text-orange-500', 'bg-slate-700', 'px-4', 'py-1', 'rounded-full');
+                btn.classList.add('text-slate-500');
+            }
             
             filterData();
         }
@@ -139,7 +145,13 @@
             const sharpOnly = document.getElementById('sharp-toggle').checked;
             
             const filtered = playerData.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+                // Team-Aware Search Logic (Splits name if format is "Name TEAM")
+                const parts = p.name.split(' ');
+                const team = parts.length > 1 ? parts[parts.length - 1] : "";
+                
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
+                                     (team && team.toLowerCase().includes(searchTerm));
+                
                 const matchesSharp = sharpOnly ? Number(p[currentMetric]) >= 70 : true;
                 const matchesFav = showFavsOnly ? favorites.includes(p.name) : true;
                 return matchesSearch && matchesSharp && matchesFav;
@@ -152,11 +164,10 @@
             const body = document.getElementById('grid-body');
             const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
             
-            // Empty State Logic
             if (sorted.length === 0) {
                 body.innerHTML = `
                     <tr>
-                        <td colspan="5" class="px-6 py-20 text-center text-slate-500 text-sm italic">
+                        <td colspan="5" class="px-6 py-20 text-center text-slate-500 text-sm italic uppercase tracking-widest font-bold">
                             No athletes or teams match your current selection.
                         </td>
                     </tr>
@@ -169,9 +180,12 @@
                 const grade = getGrade(score);
                 const isFav = favorites.includes(p.name);
                 
-                // Extract name part only for legend check if name has team initials
-                const cleanName = p.name.split(' ').slice(0, -1).join(' ');
-                const isLegend = legends.some(l => p.name.includes(l));
+                // Deterministic Legend and Team Abbreviation extraction
+                const parts = p.name.split(' ');
+                const teamAbbr = parts.pop(); // Removes last word (Team)
+                const fullName = parts.join(' '); // Rejoins Name
+                
+                const isLegend = legends.some(l => fullName.startsWith(l));
                 
                 let heatStyle = 'heat-low';
                 if (score >= 80) heatStyle = 'heat-high';
@@ -183,9 +197,12 @@
                             <span class="${isFav ? 'star-active' : 'text-slate-700 group-hover:text-slate-500'} text-lg transition-colors">★</span>
                         </td>
                         <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-white uppercase tracking-tight">${p.name}</span>
-                                ${isLegend ? '<span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span>' : ''}
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-white uppercase tracking-tight">${fullName}</span>
+                                    <span class="team-badge">${teamAbbr}</span>
+                                </div>
+                                ${isLegend ? '<div><span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span></div>' : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
