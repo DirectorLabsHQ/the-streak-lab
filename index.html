@@ -28,8 +28,10 @@
         </header>
 
         <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-            <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team (e.g. GSW)..." 
-                   class="w-full md:w-96 bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
+            <div class="relative w-full md:w-96">
+                <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team..." 
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
             
             <div class="flex items-center gap-6">
                 <label class="flex items-center cursor-pointer group">
@@ -78,9 +80,7 @@
                 playerData = json.players || [];
                 document.getElementById('last-update').innerText = `UPDATED: ${json.last_updated || 'N/A'}`;
                 filterData();
-            } catch (e) {
-                console.error("Error loading JSON", e);
-            }
+            } catch (e) { console.error(e); }
         }
 
         function toggleFav(name) {
@@ -105,7 +105,6 @@
         function filterData() {
             const search = document.getElementById('player-search').value.toLowerCase();
             const sharp = document.getElementById('sharp-toggle').checked;
-            
             const filtered = playerData.filter(p => {
                 const nameStr = (p.name || p.display_name || "").toLowerCase();
                 const matchesSearch = nameStr.includes(search);
@@ -118,50 +117,18 @@
 
         function renderTable(data) {
             const body = document.getElementById('grid-body');
-            if (!data.length) {
-                body.innerHTML = '<tr><td colspan="4" class="py-10 text-center text-slate-500">No results found.</td></tr>';
-                return;
-            }
-
             body.innerHTML = data.sort((a,b) => (b[currentMetric] || 0) - (a[currentMetric] || 0)).map(p => {
                 const rawName = p.name || p.display_name || "Unknown";
                 const score = p[currentMetric] || 0;
                 
-                // EXTRACT TEAM FROM NAME (e.g., "Gary Trent Jr. MIL" -> Team: MIL)
+                // Smart Split: Look for 2-3 uppercase letters at the end
                 const tokens = rawName.trim().split(/\s+/);
                 const lastToken = tokens[tokens.length - 1];
                 const isTeamCode = /^[A-Z]{2,3}$/.test(lastToken);
                 
-                // Priority: p.team_code (new) > extracted last word (current)
-                const team = p.team_code || (isTeamCode ? tokens.pop() : "---");
+                // If we found a team code, use it. If not, team is empty string.
+                const team = p.team_code || (isTeamCode ? tokens.pop() : "");
                 const displayName = tokens.join(" ");
 
                 const isLegend = legends.some(l => displayName.startsWith(l));
-                const heat = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
-
-                return `
-                    <tr class="hover:bg-slate-700/30 border-b border-slate-700/30">
-                        <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${rawName}')">
-                            <span class="${favorites.includes(rawName) ? 'star-active' : 'text-slate-700'}">★</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-white uppercase">${displayName}</span>
-                                    <span class="team-badge uppercase">${team}</span>
-                                </div>
-                                ${isLegend ? '<span class="legend-badge text-[8px] px-1 rounded w-fit mt-1">LEGEND</span>' : ''}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <span class="px-3 py-1 rounded font-mono font-black ${heat}">${score}%</span>
-                        </td>
-                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game || '---'}</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-        loadData();
-    </script>
-</body>
-</html>
+                
