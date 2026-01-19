@@ -58,7 +58,7 @@
             <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Free Throws</button>
         </div>
 
-        <div class="bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50">
+        <div class="bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
@@ -99,7 +99,7 @@
                 playerData = json.players;
                 document.getElementById('last-update').innerText = `DATA REFRESH: ${json.last_updated}`;
                 filterData();
-            } catch (e) { console.error("Error loading data", e); }
+            } catch (e) { console.error("Error", e); }
         }
 
         function toggleFav(playerName) {
@@ -136,14 +136,12 @@
         function filterData() {
             const searchTerm = document.getElementById('player-search').value.toLowerCase();
             const sharpOnly = document.getElementById('sharp-toggle').checked;
-            
             const filtered = playerData.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(searchTerm);
                 const matchesSharp = sharpOnly ? Number(p[currentMetric]) >= 70 : true;
                 const matchesFav = showFavsOnly ? favorites.includes(p.name) : true;
                 return matchesSearch && matchesSharp && matchesFav;
             });
-
             renderTable(filtered);
         }
 
@@ -152,7 +150,7 @@
             const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
             
             if (sorted.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="py-20 text-center text-slate-500 font-bold uppercase italic">No Matches Found</td></tr>`;
+                body.innerHTML = `<tr><td colspan="5" class="py-20 text-center text-slate-500 italic uppercase">No Matches Found</td></tr>`;
                 return;
             }
 
@@ -161,15 +159,17 @@
                 const grade = getGrade(score);
                 const isFav = favorites.includes(p.name);
                 
-                // ULTIMATE CLEANING LOGIC:
-                // Splits by any whitespace, then filters out empty strings caused by trailing spaces
-                const tokens = p.name.trim().split(/\s+/).filter(t => t.length > 0);
+                // --- VALIDATION LOGIC ---
+                const tokens = p.name.trim().split(/\s+/).filter(Boolean);
+                const lastToken = tokens[tokens.length - 1];
                 
-                // Pop the last token as the team
-                const teamTag = tokens.length > 1 ? tokens.pop() : "---";
-                // Join the rest as the full name
+                // Matches 2 or 3 uppercase letters (GSW, NYK, GS, NY)
+                const isTeamCode = /^[A-Z]{2,3}$/.test(lastToken);
+                
+                const teamTag = isTeamCode ? tokens.pop() : null;
                 const fullName = tokens.join(" ");
-                
+                // ------------------------
+
                 const isLegend = legends.some(l => fullName.startsWith(l));
                 let heatStyle = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
 
@@ -182,7 +182,7 @@
                             <div class="flex flex-col gap-1">
                                 <div class="flex items-center gap-2">
                                     <span class="font-bold text-white uppercase tracking-tight">${fullName}</span>
-                                    <span class="team-badge uppercase">${teamTag}</span>
+                                    ${teamTag ? `<span class="team-badge uppercase">${teamTag}</span>` : ''}
                                 </div>
                                 ${isLegend ? '<div><span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span></div>' : ''}
                             </div>
@@ -199,7 +199,6 @@
                 `;
             }).join('');
         }
-
         loadData();
     </script>
 </body>
