@@ -1,40 +1,133 @@
-function getGrade(score) {
-    if (score >= 90) return { label: 'A+', color: 'bg-emerald-500' };
-    if (score >= 80) return { label: 'A', color: 'bg-green-500' };
-    if (score >= 70) return { label: 'B+', color: 'bg-blue-500' };
-    if (score >= 60) return { label: 'B', color: 'bg-indigo-500' };
-    return { label: 'C', color: 'bg-slate-600' };
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Streak Lab | NBA Prop Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .heat-high { background-color: #ef4444; color: white; border: 1px solid #7f1d1d; } 
+        .heat-med { background-color: #f97316; color: white; border: 1px solid #7c2d12; } 
+        .heat-low { background-color: #334155; color: #94a3b8; border: 1px solid #1e293b; }
+        .tab-active { border-bottom: 4px solid #f97316; color: #f97316; }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
 
-function renderTable() {
-    const body = document.getElementById('grid-body');
-    const sorted = [...playerData].sort((a, b) => b[currentMetric] - a[currentMetric]);
-    
-    body.innerHTML = sorted.map(p => {
-        const grade = getGrade(p[currentMetric]);
-        return `
-            <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
-                <td class="px-6 py-4">
-                    <div class="font-bold text-white">${p.name}</div>
-                    <div class="text-[10px] text-slate-500 uppercase tracking-tighter">Verified Rotation</div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="px-3 py-1 rounded font-mono font-black text-white ${p[currentMetric] >= 80 ? 'bg-red-600' : 'bg-slate-700'}">
-                            ${p[currentMetric]}%
-                        </span>
-                        <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded shadow-sm text-white">
-                            ${grade.label}
-                        </span>
-                    </div>
-                </td>
-                <td class="px-6 py-4 text-slate-300 font-medium font-mono text-xs">
-                    ${p.last_game}
-                </td>
-                <td class="px-6 py-4 text-right font-mono text-xs text-slate-500">
-                    ${p.consistency}
-                </td>
-            </tr>
-        `;
-    }).join('');
-}
+    <div class="max-w-6xl mx-auto py-10 px-4">
+        <header class="mb-10 flex justify-between items-end">
+            <div>
+                <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
+                <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
+            </div>
+            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest"></div>
+        </header>
+
+        <div class="mb-6 flex items-center justify-between border-b border-slate-800 pb-2">
+            <p class="text-[10px] text-slate-500 font-medium">
+                <span class="text-orange-500 font-bold">DEFINITION:</span> L10 Hit Rate = % of last 10 games where the prop threshold was exceeded.
+            </p>
+            <div class="flex gap-4 text-[9px] uppercase font-black tracking-widest">
+                <span class="text-red-500">A+ (90%+)</span>
+                <span class="text-orange-500">A (80%+)</span>
+                <span class="text-blue-400">B (60%+)</span>
+            </div>
+        </div>
+
+        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto">
+            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active transition-all">Points</button>
+            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Rebounds</button>
+            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Assists</button>
+            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">3PM</button>
+            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Free Throws</button>
+        </div>
+
+        <div class="bg-slate-800 rounded-xl shadow-2xl overflow-hidden border border-slate-700/50">
+            <table class="w-full text-left">
+                <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4">Player</th>
+                        <th class="px-6 py-4 text-center">L10 Hit Rate (Heat)</th>
+                        <th class="px-6 py-4">Last Game Summary</th>
+                        <th class="px-6 py-4 text-right italic">Samples</th>
+                    </tr>
+                </thead>
+                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let playerData = [];
+        let currentMetric = 'pts_heat';
+
+        function getGrade(score) {
+            if (score >= 90) return { label: 'A+', color: 'bg-emerald-500' };
+            if (score >= 80) return { label: 'A', color: 'bg-green-500' };
+            if (score >= 70) return { label: 'B+', color: 'bg-blue-500' };
+            if (score >= 60) return { label: 'B', color: 'bg-indigo-500' };
+            return { label: 'C', color: 'bg-slate-600' };
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch('streak_data.json');
+                const json = await response.json();
+                playerData = json.players;
+                document.getElementById('last-update').innerText = `DATA SYNCED: ${json.last_updated}`;
+                renderTable();
+            } catch (e) {
+                console.error("FATAL: streak_data.json not found. Run a local server.", e);
+            }
+        }
+
+        function updateView(metric) {
+            // Target only ID starting with "tab-" (Future-proofing)
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('tab-active', 'text-white');
+                btn.classList.add('text-slate-500');
+            });
+            document.getElementById(`tab-${metric}`).classList.add('tab-active', 'text-white');
+            currentMetric = metric;
+            renderTable();
+        }
+
+        function renderTable() {
+            const body = document.getElementById('grid-body');
+            // Force values to Numbers to avoid sorting errors
+            const sorted = [...playerData].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
+            
+            body.innerHTML = sorted.map(p => {
+                const score = Number(p[currentMetric]);
+                const grade = getGrade(score);
+                
+                // Tiered Heat Logic
+                let heatStyle = 'heat-low';
+                if (score >= 80) heatStyle = 'heat-high';
+                else if (score >= 65) heatStyle = 'heat-med';
+
+                return `
+                    <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
+                        <td class="px-6 py-4 font-bold text-white uppercase tracking-tight">${p.name}</td>
+                        <td class="px-6 py-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="px-3 py-1 rounded font-mono font-black text-white ${heatStyle}">
+                                    ${score}%
+                                </span>
+                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm">
+                                    ${grade.label}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-slate-400 font-mono text-xs uppercase">${p.last_game}</td>
+                        <td class="px-6 py-4 text-right font-mono text-[10px] text-slate-600">${p.consistency}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
