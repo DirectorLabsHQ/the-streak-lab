@@ -22,7 +22,7 @@
                 <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
                 <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
             </div>
-            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest"></div>
+            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold"></div>
         </header>
 
         <div class="mb-6 p-3 bg-slate-800/30 border-l-4 border-orange-500 rounded-r text-[11px] text-slate-400">
@@ -39,9 +39,9 @@
             <div class="flex items-center gap-6">
                 <label class="flex items-center cursor-pointer group">
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-500 mr-3 transition-colors">Sharp Only (70%+)</span>
-                    <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900">
+                    <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900 focus:ring-0">
                 </label>
-                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-orange-500 transition-colors">
+                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-orange-500 transition-all">
                     ⭐ Favorites Only
                 </button>
             </div>
@@ -92,7 +92,7 @@
                 const response = await fetch('streak_data.json');
                 const json = await response.json();
                 playerData = json.players;
-                document.getElementById('last-update').innerText = `LIVE REFRESH: ${json.last_updated}`;
+                document.getElementById('last-update').innerText = `LIVE: ${json.last_updated}`;
                 filterData();
             } catch (e) { console.error("Data Load Error", e); }
         }
@@ -110,13 +110,20 @@
         function toggleFavoritesOnly() {
             showFavsOnly = !showFavsOnly;
             const btn = document.getElementById('fav-filter-btn');
+            
+            // UX Pill Toggle Styling
             btn.classList.toggle('text-orange-500', showFavsOnly);
             btn.classList.toggle('text-slate-500', !showFavsOnly);
+            btn.classList.toggle('bg-slate-700', showFavsOnly);
+            btn.classList.toggle('px-3', showFavsOnly);
+            btn.classList.toggle('py-1', showFavsOnly);
+            btn.classList.toggle('rounded-full', showFavsOnly);
+            btn.classList.toggle('shadow-lg', showFavsOnly);
+            
             filterData();
         }
 
         function updateView(metric) {
-            // Refined Selector: Only target IDs starting with "tab-"
             document.querySelectorAll('[id^="tab-"]').forEach(btn => {
                 btn.classList.remove('tab-active', 'text-white');
                 btn.classList.add('text-slate-500');
@@ -144,26 +151,37 @@
             const body = document.getElementById('grid-body');
             const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
             
+            // Empty State Messaging
+            if (sorted.length === 0) {
+                body.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-6 py-20 text-center text-slate-500 text-sm italic">
+                            No athletes match your current search or filters.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
             body.innerHTML = sorted.map(p => {
                 const score = Number(p[currentMetric]);
                 const grade = getGrade(score);
                 const isFav = favorites.includes(p.name);
                 const isLegend = legends.includes(p.name);
                 
-                // Tiered Visual Language: High, Med, and Low
                 let heatStyle = 'heat-low';
                 if (score >= 80) heatStyle = 'heat-high';
                 else if (score >= 65) heatStyle = 'heat-med';
 
                 return `
                     <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
-                        <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${p.name}')">
-                            <span class="${isFav ? 'star-active' : 'text-slate-600'} text-lg">★</span>
+                        <td class="px-6 py-4 text-center cursor-pointer group" onclick="toggleFav('${p.name}')">
+                            <span class="${isFav ? 'star-active' : 'text-slate-700 group-hover:text-slate-500'} text-lg transition-colors">★</span>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-white uppercase tracking-tight">${p.name}</span>
-                                ${isLegend ? '<span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-md">LEGEND</span>' : ''}
+                                ${isLegend ? '<span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span>' : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
@@ -171,7 +189,7 @@
                                 <span class="px-3 py-1 rounded font-mono font-black text-white w-16 ${heatStyle}">
                                     ${score}%
                                 </span>
-                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm w-8 text-center">
+                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm w-8 text-center uppercase">
                                     ${grade.label}
                                 </span>
                             </div>
