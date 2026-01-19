@@ -14,6 +14,8 @@
         .legend-badge { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; }
         .team-badge { background-color: #1e293b; color: #64748b; border: 1px solid #334155; font-size: 9px; padding: 1px 4px; border-radius: 4px; font-weight: 800; }
         .transition-all { transition: all 0.2s ease-in-out; }
+        /* Smooth transition for table rows */
+        #grid-body tr { transition: opacity 0.2s ease; }
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
@@ -62,7 +64,7 @@
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
                         <tr>
-                            <th class="px-6 py-4 w-12 text-center text-center">Fav</th>
+                            <th class="px-6 py-4 w-12 text-center">Fav</th>
                             <th class="px-6 py-4">Player / Team</th>
                             <th class="px-6 py-4 text-center">L10 Hit Rate</th>
                             <th class="px-6 py-4">Last Game Summary</th>
@@ -82,6 +84,7 @@
         let currentMetric = 'pts_heat';
         let showFavsOnly = false;
 
+        // Legends list for auto-badging
         const legends = ["Stephen Curry", "LeBron James", "Kevin Durant", "Giannis Antetokounmpo", "Nikola Jokic", "Luka Doncic"];
 
         function getGrade(score) {
@@ -101,7 +104,7 @@
                 filterData();
             } catch (e) { 
                 console.error("Data Load Error", e);
-                document.getElementById('grid-body').innerHTML = `<tr><td colspan="5" class="p-10 text-center text-red-400 font-bold tracking-widest">ERROR LOADING DATA</td></tr>`;
+                document.getElementById('grid-body').innerHTML = `<tr><td colspan="5" class="p-10 text-center text-red-400 font-bold tracking-widest uppercase">Error Loading Live Data</td></tr>`;
             }
         }
 
@@ -118,11 +121,14 @@
         function toggleFavoritesOnly() {
             showFavsOnly = !showFavsOnly;
             const btn = document.getElementById('fav-filter-btn');
+            
+            // Toggle UI state for the button
             btn.classList.toggle('text-orange-500', showFavsOnly);
             btn.classList.toggle('bg-slate-700', showFavsOnly);
             btn.classList.toggle('px-4', showFavsOnly);
             btn.classList.toggle('py-1', showFavsOnly);
             btn.classList.toggle('rounded-full', showFavsOnly);
+            
             filterData();
         }
 
@@ -141,9 +147,11 @@
             const sharpOnly = document.getElementById('sharp-toggle').checked;
             
             const filtered = playerData.filter(p => {
+                // Multi-intent search (Name or Team)
                 const matchesSearch = p.name.toLowerCase().includes(searchTerm);
                 const matchesSharp = sharpOnly ? Number(p[currentMetric]) >= 70 : true;
                 const matchesFav = showFavsOnly ? favorites.includes(p.name) : true;
+                
                 return matchesSearch && matchesSharp && matchesFav;
             });
 
@@ -155,7 +163,13 @@
             const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
             
             if (sorted.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="px-6 py-20 text-center text-slate-500 italic uppercase font-bold tracking-widest">No matching athletes found.</td></tr>`;
+                body.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-6 py-20 text-center text-slate-500 text-sm italic uppercase tracking-widest font-bold">
+                            No athletes or teams match your current selection.
+                        </td>
+                    </tr>
+                `;
                 return;
             }
 
@@ -164,10 +178,12 @@
                 const grade = getGrade(score);
                 const isFav = favorites.includes(p.name);
                 
-                // Logic to separate Name from Team Token
-                const parts = p.name.split(' ');
-                const teamAbbr = parts.pop();
-                const fullName = parts.join(' ');
+                // DATA CLEANING: Extract Name vs Team from "First Last TEAM"
+                const tokens = p.name.split(' ');
+                const teamAbbr = tokens.pop(); // Always grabs the last word as the team
+                const fullName = tokens.join(' '); // Re-joins everything else as the name
+                
+                // Deterministic Legend check
                 const isLegend = legends.some(l => fullName.startsWith(l));
                 
                 let heatStyle = 'heat-low';
@@ -177,25 +193,33 @@
                 return `
                     <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
                         <td class="px-6 py-4 text-center cursor-pointer group" onclick="toggleFav('${p.name}')">
-                            <span class="${isFav ? 'star-active' : 'text-slate-700 group-hover:text-slate-500'} text-lg">★</span>
+                            <span class="${isFav ? 'star-active' : 'text-slate-700 group-hover:text-slate-500'} text-lg transition-colors">★</span>
                         </td>
                         <td class="px-6 py-4">
-                            <div class="flex flex-col">
+                            <div class="flex flex-col gap-1">
                                 <div class="flex items-center gap-2">
-                                    <span class="font-bold text-white uppercase">${fullName}</span>
+                                    <span class="font-bold text-white uppercase tracking-tight">${fullName}</span>
                                     <span class="team-badge">${teamAbbr}</span>
                                 </div>
-                                ${isLegend ? '<div><span class="legend-badge text-[8px] px-1.5 py-0.5 rounded">LEGEND</span></div>' : ''}
+                                ${isLegend ? '<div><span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span></div>' : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
-                                <span class="px-3 py-1 rounded font-mono font-black text-white w-16 ${heatStyle}">${score}%</span>
-                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded uppercase w-8 text-center">${grade.label}</span>
+                                <span class="px-3 py-1 rounded font-mono font-black text-white w-16 ${heatStyle}">
+                                    ${score}%
+                                </span>
+                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm w-8 text-center uppercase">
+                                    ${grade.label}
+                                </span>
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-slate-400 font-mono text-xs uppercase italic tracking-tighter">${p.last_game}</td>
-                        <td class="px-6 py-4 text-right font-mono text-[10px] text-slate-600">${p.consistency}</td>
+                        <td class="px-6 py-4 text-slate-400 font-mono text-[11px] uppercase italic tracking-tighter">
+                            ${p.last_game}
+                        </td>
+                        <td class="px-6 py-4 text-right font-mono text-[10px] text-slate-600 uppercase">
+                            ${p.consistency}
+                        </td>
                     </tr>
                 `;
             }).join('');
