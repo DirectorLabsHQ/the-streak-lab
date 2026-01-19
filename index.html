@@ -71,12 +71,12 @@
 
         const legends = ["Stephen Curry", "LeBron James", "Kevin Durant", "Giannis Antetokounmpo", "Nikola Jokic", "Luka Doncic"];
 
-        // HARDENED LIST: Official 2026 NBA Team Codes
+        // Official NBA Abbreviations (plus common variations)
         const NBA_TEAMS = new Set([
             "ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET",
-            "GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN",
-            "NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS",
-            "TOR","UTA","WAS"
+            "GSW","GS","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN",
+            "NOP","NO","NYK","NY","OKC","ORL","PHI","PHX","PHO","POR","SAC","SAS","SA",
+            "TOR","UTA","UTAH","WAS"
         ]);
 
         async function loadData() {
@@ -86,7 +86,7 @@
                 playerData = json.players || [];
                 document.getElementById('last-update').innerText = `UPDATED: ${json.last_updated || 'N/A'}`;
                 filterData();
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Error loading JSON", e); }
         }
 
         function toggleFav(name) {
@@ -111,6 +111,7 @@
         function filterData() {
             const search = document.getElementById('player-search').value.toLowerCase();
             const sharp = document.getElementById('sharp-toggle').checked;
+            
             const filtered = playerData.filter(p => {
                 const nameStr = (p.name || p.display_name || "").toLowerCase();
                 const matchesSearch = nameStr.includes(search);
@@ -127,20 +128,21 @@
                 const rawName = p.name || p.display_name || "Unknown";
                 const score = p[currentMetric] || 0;
                 
-                // HARDENED PARSING
-                const tokens = rawName.trim().split(/\s+/).filter(Boolean);
-                const rawLastToken = tokens[tokens.length - 1] || "";
-                
-                // 1. Clean punctuation (LAL, -> LAL)
-                const cleanedToken = rawLastToken.replace(/[^A-Z]/g, '');
-                
-                // 2. Validate against official list
-                const isTeamCode = NBA_TEAMS.has(cleanedToken);
-                
-                // 3. Only pop if it's a real team (handles Gary Trent Jr. correctly)
-                const team = p.team_code || (isTeamCode ? cleanedToken : "");
-                if (isTeamCode && !p.team_code) tokens.pop();
-                
+                // HYBRID LOGIC
+                let tokens = rawName.trim().split(/\s+/).filter(Boolean);
+                let team = p.team_code || "";
+
+                if (!team) {
+                    const rawLastToken = tokens[tokens.length - 1] || "";
+                    // Clean punctuation like LAL, or DEN*
+                    const cleanedToken = rawLastToken.replace(/[^A-Za-z]/g, '').toUpperCase();
+                    
+                    if (NBA_TEAMS.has(cleanedToken)) {
+                        team = cleanedToken;
+                        tokens.pop(); // Remove it from the name if it's a team
+                    }
+                }
+
                 const displayName = tokens.join(" ");
                 const isLegend = legends.some(l => displayName.startsWith(l));
                 const heat = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
