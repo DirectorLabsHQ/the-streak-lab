@@ -10,12 +10,14 @@
         .heat-med { background-color: #f97316; color: white; border: 1px solid #7c2d12; } 
         .heat-low { background-color: #334155; color: #94a3b8; border: 1px solid #1e293b; }
         .tab-active { border-bottom: 4px solid #f97316; color: #f97316; }
+        .star-active { color: #f97316; fill: #f97316; }
+        .legend-badge { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; }
     </style>
 </head>
 <body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
 
     <div class="max-w-6xl mx-auto py-10 px-4">
-        <header class="mb-10 flex justify-between items-end">
+        <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div>
                 <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
                 <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
@@ -23,18 +25,24 @@
             <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest"></div>
         </header>
 
-        <div class="mb-6 flex items-center justify-between border-b border-slate-800 pb-2">
-            <p class="text-[10px] text-slate-500 font-medium">
-                <span class="text-orange-500 font-bold">DEFINITION:</span> L10 Hit Rate = % of last 10 games where the prop threshold was exceeded.
-            </p>
-            <div class="flex gap-4 text-[9px] uppercase font-black tracking-widest">
-                <span class="text-red-500">A+ (90%+)</span>
-                <span class="text-orange-500">A (80%+)</span>
-                <span class="text-blue-400">B (60%+)</span>
+        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+            <div class="relative w-full md:w-96">
+                <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete Name..." 
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <label class="flex items-center cursor-pointer group">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-500 mr-3 transition-colors">Sharp Only (70%+)</span>
+                    <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900">
+                </label>
+                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-orange-500 transition-colors">
+                    ⭐ Favorites Only
+                </button>
             </div>
         </div>
 
-        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto">
+        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto border-b border-slate-800">
             <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active transition-all">Points</button>
             <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Rebounds</button>
             <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all">Assists</button>
@@ -46,21 +54,26 @@
             <table class="w-full text-left">
                 <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
                     <tr>
+                        <th class="px-6 py-4 w-12 text-center">Fav</th>
                         <th class="px-6 py-4">Player</th>
-                        <th class="px-6 py-4 text-center">L10 Hit Rate (Heat)</th>
+                        <th class="px-6 py-4 text-center">L10 Hit Rate</th>
                         <th class="px-6 py-4">Last Game Summary</th>
-                        <th class="px-6 py-4 text-right italic">Samples</th>
+                        <th class="px-6 py-4 text-right">Samples</th>
                     </tr>
                 </thead>
-                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm">
-                    </tbody>
+                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm"></tbody>
             </table>
         </div>
     </div>
 
     <script>
         let playerData = [];
+        let favorites = JSON.parse(localStorage.getItem('streakLabFavs')) || [];
         let currentMetric = 'pts_heat';
+        let showFavsOnly = false;
+
+        // List of veterans/superstars for "Legend" badge
+        const legends = ["LeBron James", "Kevin Durant", "Stephen Curry", "Giannis Antetokounmpo", "Luka Doncic", "Nikola Jokic"];
 
         function getGrade(score) {
             if (score >= 90) return { label: 'A+', color: 'bg-emerald-500' };
@@ -76,46 +89,85 @@
                 const json = await response.json();
                 playerData = json.players;
                 document.getElementById('last-update').innerText = `DATA SYNCED: ${json.last_updated}`;
-                renderTable();
+                filterData();
             } catch (e) {
-                console.error("FATAL: streak_data.json not found. Run a local server.", e);
+                console.error("Data Load Error:", e);
             }
         }
 
+        function toggleFav(playerName) {
+            if (favorites.includes(playerName)) {
+                favorites = favorites.filter(f => f !== playerName);
+            } else {
+                favorites.push(playerName);
+            }
+            localStorage.setItem('streakLabFavs', JSON.stringify(favorites));
+            filterData();
+        }
+
+        function toggleFavoritesOnly() {
+            showFavsOnly = !showFavsOnly;
+            const btn = document.getElementById('fav-filter-btn');
+            btn.classList.toggle('text-orange-500', showFavsOnly);
+            btn.classList.toggle('text-slate-500', !showFavsOnly);
+            filterData();
+        }
+
         function updateView(metric) {
-            // Target only ID starting with "tab-" (Future-proofing)
             document.querySelectorAll('[id^="tab-"]').forEach(btn => {
                 btn.classList.remove('tab-active', 'text-white');
                 btn.classList.add('text-slate-500');
             });
             document.getElementById(`tab-${metric}`).classList.add('tab-active', 'text-white');
             currentMetric = metric;
-            renderTable();
+            filterData();
         }
 
-        function renderTable() {
+        function filterData() {
+            const searchTerm = document.getElementById('player-search').value.toLowerCase();
+            const sharpOnly = document.getElementById('sharp-toggle').checked;
+            
+            const filtered = playerData.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+                const matchesSharp = sharpOnly ? Number(p[currentMetric]) >= 70 : true;
+                const matchesFav = showFavsOnly ? favorites.includes(p.name) : true;
+                return matchesSearch && matchesSharp && matchesFav;
+            });
+
+            renderTable(filtered);
+        }
+
+        function renderTable(data) {
             const body = document.getElementById('grid-body');
-            // Force values to Numbers to avoid sorting errors
-            const sorted = [...playerData].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
+            const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
             
             body.innerHTML = sorted.map(p => {
                 const score = Number(p[currentMetric]);
                 const grade = getGrade(score);
+                const isFav = favorites.includes(p.name);
+                const isLegend = legends.includes(p.name);
                 
-                // Tiered Heat Logic
                 let heatStyle = 'heat-low';
                 if (score >= 80) heatStyle = 'heat-high';
                 else if (score >= 65) heatStyle = 'heat-med';
 
                 return `
                     <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
-                        <td class="px-6 py-4 font-bold text-white uppercase tracking-tight">${p.name}</td>
+                        <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${p.name}')">
+                            <span class="${isFav ? 'star-active' : 'text-slate-600'} text-lg">★</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-white uppercase tracking-tight">${p.name}</span>
+                                ${isLegend ? '<span class="legend-badge text-[8px] px-1.5 py-0.5 rounded">LEGEND</span>' : ''}
+                            </div>
+                        </td>
                         <td class="px-6 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <span class="px-3 py-1 rounded font-mono font-black text-white ${heatStyle}">
                                     ${score}%
                                 </span>
-                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm">
+                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white uppercase">
                                     ${grade.label}
                                 </span>
                             </div>
