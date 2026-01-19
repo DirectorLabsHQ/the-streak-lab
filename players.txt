@@ -10,7 +10,6 @@ Nikola Jokic DEN
 Luka Doncic DAL
 Giannis Antetokounmpo MIL
 Shai Gilgeous-Alexander OKC
-Jayson Tatum BOS
 Kevin Durant PHX
 LeBron James LAL
 Anthony Davis LAL
@@ -24,12 +23,11 @@ Tyrese Haliburton IND
 De'Aaron Fox SAC
 Domantas Sabonis SAC
 Ja Morant MEM
-Damian Lillard MIL
 Victor Wembanyama SAS
 Chet Holmgren OKC
 Jalen Williams OKC
 Jalen Johnson ATL
-Trae Young ATL
+Trae Young WAS
 Zion Williamson NOP
 Brandon Ingram NOP
 CJ McCollum NOP
