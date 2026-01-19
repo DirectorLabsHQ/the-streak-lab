@@ -3,58 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streak Lab | Intelligence Dashboard</title>
+    <title>Streak Lab | Master Intelligence</title>
     <style>
-        :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #38bdf8; --hot: #ef4444; --warm: #f97316; --cold: #64748b; }
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #38bdf8; --hot: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
         
-        /* Tab Styling */
-        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #334155; padding: 5px; border-radius: 10px; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; color: #94a3b8; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s; }
-        .tab-btn.active { background: var(--accent); color: var(--bg); }
-
-        /* Search & Info */
-        .controls { margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        #searchBar { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: white; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
         .timestamp { font-size: 0.8rem; color: var(--accent); }
 
-        /* Table Styling */
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #334155; }
-        th { background: #1e293b; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; }
+        /* Search Bar & Tabs */
+        .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        #searchBar { flex-grow: 1; min-width: 300px; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: white; }
         
-        .rank { width: 40px; color: var(--accent); font-weight: bold; }
-        .heat-pill { padding: 5px 10px; border-radius: 6px; font-weight: 800; font-size: 0.9rem; min-width: 50px; display: inline-block; text-align: center; }
-        .last-game { font-size: 0.8rem; color: #94a3b8; }
+        .tabs { display: flex; gap: 5px; background: #334155; padding: 5px; border-radius: 10px; }
+        .tab-btn { padding: 8px 15px; border: none; background: transparent; color: #94a3b8; cursor: pointer; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
+        .tab-btn.active { background: var(--accent); color: var(--bg); }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; font-size: 0.9rem; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #1e293b; color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; }
         
-        .gsw-highlight { border-left: 4px solid #fde047; }
+        .heat-pill { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; display: inline-block; width: 40px; text-align: center; }
+        .gsw-row { border-left: 4px solid #fde047; }
+        .active-sort { color: var(--accent) !important; text-decoration: underline; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔥 Streak Lab Intelligence</h1>
-    <div class="controls">
-        <div id="update-time" class="timestamp">Syncing...</div>
-        <input type="text" id="searchBar" placeholder="Find athlete or team..." onkeyup="filterAndRender()">
+    <div class="header">
+        <div>
+            <h1 style="margin:0">🔥 Streak Lab</h1>
+            <div id="update-time" class="timestamp">Updating...</div>
+        </div>
+        <div id="methodology" style="font-size:0.75rem; opacity:0.6; text-align:right"></div>
     </div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('pts_heat', this)">POINTS</button>
-        <button class="tab-btn" onclick="switchTab('reb_heat', this)">REBOUNDS</button>
-        <button class="tab-btn" onclick="switchTab('ast_heat', this)">ASSISTS</button>
-        <button class="tab-btn" onclick="switchTab('tpm_heat', this)">3PM</button>
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Search player or team (LAL, GSW)..." onkeyup="filterAndRender()">
+        <div class="tabs">
+            <span style="align-self:center; font-size:0.7rem; padding:0 10px; color:#94a3b8">SORT BY:</span>
+            <button class="tab-btn active" onclick="setSort('pts_heat', this)">PTS</button>
+            <button class="tab-btn" onclick="setSort('reb_heat', this)">REB</button>
+            <button class="tab-btn" onclick="setSort('ast_heat', this)">AST</button>
+            <button class="tab-btn" onclick="setSort('tpm_heat', this)">3PM</button>
+        </div>
     </div>
 
     <table id="labTable">
         <thead>
             <tr>
-                <th class="rank">#</th>
                 <th>Athlete</th>
                 <th>Team</th>
-                <th id="heat-col-label">HEAT %</th>
-                <th>Last Game</th>
+                <th>PTS</th>
+                <th>REB</th>
+                <th>AST</th>
+                <th>3PM</th>
+                <th>Last Outing</th>
             </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -62,57 +69,58 @@
 </div>
 
 <script>
-    let rawData = [];
-    let currentStat = 'pts_heat';
+    let rawPlayers = [];
+    let currentSort = 'pts_heat';
 
-    async function loadLabData() {
-        const response = await fetch('streak_data.json');
-        const data = await response.json();
-        rawData = data.players;
-        document.getElementById('update-time').innerText = `Last Updated: ${data.last_updated} | ${data.lab_notes.benchmarks}`;
+    async function init() {
+        const res = await fetch('streak_data.json');
+        const data = await res.json();
+        rawPlayers = data.players;
+        document.getElementById('update-time').innerText = `Last Sync: ${data.last_updated}`;
+        document.getElementById('methodology').innerText = data.lab_notes.benchmarks;
         filterAndRender();
     }
 
-    function switchTab(statKey, btn) {
-        currentStat = statKey;
-        // Update UI
+    function setSort(key, btn) {
+        currentSort = key;
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('heat-col-label').innerText = statKey.split('_')[0].toUpperCase() + ' HEAT';
         filterAndRender();
     }
 
     function filterAndRender() {
         const query = document.getElementById('searchBar').value.toLowerCase();
         
-        // 1. Filter by Search
-        let filtered = rawData.filter(p => 
+        // 1. Filter + Defensive check on team_code
+        let filtered = rawPlayers.filter(p => 
             p.name.toLowerCase().includes(query) || 
-            p.team_code.toLowerCase().includes(query)
+            (p.team_code?.toLowerCase() || "").includes(query)
         );
 
-        // 2. Sort by current stat (Highest to Lowest)
-        filtered.sort((a, b) => b[currentStat] - a[currentStat]);
+        // 2. Sort + Defensive check for missing fields
+        filtered.sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
 
         const body = document.getElementById('tableBody');
-        body.innerHTML = filtered.map((p, index) => `
-            <tr class="${p.team_code === 'GSW' ? 'gsw-highlight' : ''}">
-                <td class="rank">${index + 1}</td>
+        body.innerHTML = filtered.map(p => `
+            <tr class="${p.team_code === 'GSW' ? 'gsw-row' : ''}">
                 <td><strong>${p.name}</strong></td>
-                <td><span style="opacity:0.7">${p.team_code}</span></td>
-                <td>${renderPill(p[currentStat])}</td>
-                <td class="last-game">${p.last_game}</td>
+                <td><span style="opacity:0.5">${p.team_code || '---'}</span></td>
+                <td>${renderPill(p.pts_heat, 'pts_heat')}</td>
+                <td>${renderPill(p.reb_heat, 'reb_heat')}</td>
+                <td>${renderPill(p.ast_heat, 'ast_heat')}</td>
+                <td>${renderPill(p.tpm_heat, 'tpm_heat')}</td>
+                <td style="color:#64748b; font-size:0.8rem">${p.last_game}</td>
             </tr>
         `).join('');
     }
 
-    function renderPill(val) {
+    function renderPill(val, key) {
         const color = val >= 80 ? '#ef4444' : (val >= 50 ? '#f97316' : '#475569');
-        return `<span class="heat-pill" style="background:${color}">${val}%</span>`;
+        const isBold = key === currentSort ? 'border: 1px solid white;' : '';
+        return `<span class="heat-pill" style="background:${color}; ${isBold}">${val}%</span>`;
     }
 
-    loadLabData();
+    init();
 </script>
-
 </body>
 </html>
