@@ -24,7 +24,7 @@
                 <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
                 <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
             </div>
-            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold"></div>
+            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold">LOADING...</div>
         </header>
 
         <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
@@ -41,7 +41,7 @@
         </div>
 
         <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter border-b border-slate-800 overflow-x-auto scrollbar-hide">
-            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active whitespace-nowrap text-white">Points</button>
+            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active text-white whitespace-nowrap">Points</button>
             <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">Rebounds</button>
             <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">Assists</button>
             <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">3PM</button>
@@ -58,7 +58,9 @@
                         <th class="px-6 py-4">Last Game Summary</th>
                     </tr>
                 </thead>
-                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm"></tbody>
+                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm">
+                    <tr><td colspan="4" class="text-center py-20 text-slate-500 animate-pulse uppercase font-black tracking-widest">Initialising Lab...</td></tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -71,22 +73,19 @@
 
         const legends = ["Stephen Curry", "LeBron James", "Kevin Durant", "Giannis Antetokounmpo", "Nikola Jokic", "Luka Doncic"];
 
-        const NBA_TEAMS = new Set([
-            "ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET",
-            "GSW","GS","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN",
-            "NOP","NO","NYK","NY","OKC","ORL","PHI","PHX","PHO","POR","SAC","SAS","SA",
-            "TOR","UTA","UTAH","WAS"
-        ]);
-
         async function loadData() {
             try {
-                const response = await fetch('streak_data.json');
+                // Fetching relative to the directory (best for GitHub Pages)
+                const response = await fetch('./streak_data.json');
+                if (!response.ok) throw new Error('File not found');
                 const json = await response.json();
+                
                 playerData = json.players || [];
                 document.getElementById('last-update').innerText = `UPDATED: ${json.last_updated || 'N/A'}`;
                 filterData();
             } catch (e) { 
-                console.error("Error loading JSON", e); 
+                console.error("Data Load Error:", e);
+                document.getElementById('grid-body').innerHTML = `<tr><td colspan="4" class="text-center py-20 text-red-500 uppercase font-black tracking-widest">Error: streak_data.json not found in repository</td></tr>`;
             }
         }
 
@@ -110,16 +109,13 @@
         }
 
         function filterData() {
-            const searchTerm = document.getElementById('player-search').value.toLowerCase();
-            const sharpOnly = document.getElementById('sharp-toggle').checked;
+            const searchInput = document.getElementById('player-search').value.toLowerCase();
+            const sharpToggle = document.getElementById('sharp-toggle').checked;
             
             const filtered = playerData.filter(p => {
-                // Multi-field search logic
-                const nameMatch = (p.name || "").toLowerCase().includes(searchTerm);
-                const teamMatch = (p.team_code || "").toLowerCase().includes(searchTerm);
-                
-                // Toggle filters
-                const passesSharp = sharpOnly ? (p[currentMetric] || 0) >= 70 : true;
+                const nameMatch = (p.name || "").toLowerCase().includes(searchInput);
+                const teamMatch = (p.team_code || "").toLowerCase().includes(searchInput);
+                const passesSharp = sharpToggle ? (p[currentMetric] || 0) >= 70 : true;
                 const passesFav = showFavsOnly ? favorites.includes(p.name) : true;
                 
                 return (nameMatch || teamMatch) && passesSharp && passesFav;
@@ -130,42 +126,34 @@
 
         function renderTable(data) {
             const body = document.getElementById('grid-body');
+            if (data.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" class="text-center py-20 text-slate-600 uppercase font-black tracking-widest">No matching athletes found</td></tr>`;
+                return;
+            }
+
             body.innerHTML = data.sort((a,b) => (b[currentMetric] || 0) - (a[currentMetric] || 0)).map(p => {
                 const rawName = p.name || "Unknown";
                 const score = p[currentMetric] || 0;
-                
-                let tokens = rawName.trim().split(/\s+/).filter(Boolean);
-                let team = p.team_code || "";
-
-                if (!team) {
-                    const rawLastToken = tokens[tokens.length - 1] || "";
-                    const cleanedToken = rawLastToken.replace(/[^A-Za-z]/g, '').toUpperCase();
-                    if (NBA_TEAMS.has(cleanedToken)) {
-                        team = cleanedToken;
-                        tokens.pop();
-                    }
-                }
-
-                const displayName = tokens.join(" ");
-                const isLegend = legends.some(l => displayName.startsWith(l));
-                const heat = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
+                const team = p.team_code || "";
+                const isLegend = legends.some(l => rawName.includes(l));
+                const heatClass = score >= 80 ? 'heat-high' : (score >= 70 ? 'heat-med' : 'heat-low');
 
                 return `
                     <tr class="hover:bg-slate-700/30 border-b border-slate-700/30">
                         <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${rawName}')">
-                            <span class="${favorites.includes(rawName) ? 'star-active' : 'text-slate-700'}">★</span>
+                            <span class="${favorites.includes(rawName) ? 'star-active' : 'text-slate-700'} text-lg">★</span>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
-                                    <span class="font-bold text-white uppercase">${displayName}</span>
+                                    <span class="font-bold text-white uppercase tracking-tight">${rawName}</span>
                                     ${team ? `<span class="team-badge uppercase">${team}</span>` : ''}
                                 </div>
                                 ${isLegend ? '<span class="legend-badge text-[8px] px-1 rounded w-fit mt-1">LEGEND</span>' : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <span class="px-3 py-1 rounded font-mono font-black ${heat}">${score}%</span>
+                            <span class="px-3 py-1 rounded font-mono font-black ${heatClass}">${score}%</span>
                         </td>
                         <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game || '---'}</td>
                     </tr>
