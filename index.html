@@ -13,66 +13,51 @@
         .star-active { color: #f97316; fill: #f97316; }
         .legend-badge { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; }
         .team-badge { background-color: #1e293b; color: #64748b; border: 1px solid #334155; font-size: 9px; padding: 1px 4px; border-radius: 4px; font-weight: 800; }
-        .transition-all { transition: all 0.2s ease-in-out; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
+<body class="bg-slate-900 text-white font-sans">
 
     <div class="max-w-6xl mx-auto py-10 px-4">
-        <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-center md:text-left">
+        <header class="mb-6 flex justify-between items-end">
             <div>
                 <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
                 <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
             </div>
-            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold mx-auto md:mx-0"></div>
+            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700"></div>
         </header>
 
-        <div class="mb-6 p-3 bg-slate-800/30 border-l-4 border-orange-500 rounded-r text-[11px] text-slate-400">
-            <span class="text-white font-bold uppercase tracking-tighter mr-2">Lab Note:</span> 
-            L10 Hit Rate = % of last 10 games exceeding the line. Search by Name or Team (GSW, LAL...).
-        </div>
-
-        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-            <div class="relative w-full md:w-96">
-                <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team..." 
-                       class="w-full bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
-            </div>
+        <div class="mb-8 bg-slate-800/50 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+            <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Name or Team..." 
+                   class="w-96 bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500">
             
             <div class="flex items-center gap-6">
                 <label class="flex items-center cursor-pointer group">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-500 mr-3 transition-colors uppercase">Sharp Only (70%+)</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 mr-3">Sharp Only (70%+)</span>
                     <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900">
                 </label>
-                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-orange-500 transition-all font-bold">
-                    ⭐ Favorites Only
-                </button>
+                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 font-bold">⭐ Favorites</button>
             </div>
         </div>
 
-        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter overflow-x-auto border-b border-slate-800 scrollbar-hide">
-            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active transition-all whitespace-nowrap">Points</button>
-            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Rebounds</button>
-            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Assists</button>
-            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">3PM</button>
-            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 hover:text-white transition-all whitespace-nowrap">Free Throws</button>
+        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter border-b border-slate-800">
+            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active">Points</button>
+            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500">Rebounds</button>
+            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500">Assists</button>
+            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500">3PM</button>
         </div>
 
         <div class="bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
-                        <tr>
-                            <th class="px-6 py-4 w-12 text-center">Fav</th>
-                            <th class="px-6 py-4">Player / Team</th>
-                            <th class="px-6 py-4 text-center">L10 Hit Rate</th>
-                            <th class="px-6 py-4">Last Game Summary</th>
-                            <th class="px-6 py-4 text-right italic font-mono">Sample</th>
-                        </tr>
-                    </thead>
-                    <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm"></tbody>
-                </table>
-            </div>
+            <table class="w-full text-left">
+                <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4 w-12 text-center">Fav</th>
+                        <th class="px-6 py-4">Player / Team</th>
+                        <th class="px-6 py-4 text-center">L10 Hit Rate</th>
+                        <th class="px-6 py-4">Last Game Summary</th>
+                    </tr>
+                </thead>
+                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm"></tbody>
+            </table>
         </div>
     </div>
 
@@ -84,62 +69,43 @@
 
         const legends = ["Stephen Curry", "LeBron James", "Kevin Durant", "Giannis Antetokounmpo", "Nikola Jokic", "Luka Doncic"];
 
-        function getGrade(score) {
-            if (score >= 90) return { label: 'A+', color: 'bg-emerald-500' };
-            if (score >= 80) return { label: 'A', color: 'bg-green-500' };
-            if (score >= 70) return { label: 'B+', color: 'bg-blue-500' };
-            if (score >= 60) return { label: 'B', color: 'bg-indigo-500' };
-            return { label: 'C', color: 'bg-slate-600' };
-        }
-
         async function loadData() {
             try {
                 const response = await fetch('streak_data.json');
                 const json = await response.json();
                 playerData = json.players;
-                document.getElementById('last-update').innerText = `DATA REFRESH: ${json.last_updated}`;
+                document.getElementById('last-update').innerText = json.last_updated;
                 filterData();
             } catch (e) { console.error("Error", e); }
         }
 
-        function toggleFav(playerName) {
-            if (favorites.includes(playerName)) {
-                favorites = favorites.filter(f => f !== playerName);
-            } else {
-                favorites.push(playerName);
-            }
+        function toggleFav(name) {
+            favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [...favorites, name];
             localStorage.setItem('streakLabFavs', JSON.stringify(favorites));
             filterData();
         }
 
         function toggleFavoritesOnly() {
             showFavsOnly = !showFavsOnly;
-            const btn = document.getElementById('fav-filter-btn');
-            btn.classList.toggle('text-orange-500', showFavsOnly);
-            btn.classList.toggle('bg-slate-700', showFavsOnly);
-            btn.classList.toggle('px-4', showFavsOnly);
-            btn.classList.toggle('py-1', showFavsOnly);
-            btn.classList.toggle('rounded-full', showFavsOnly);
+            document.getElementById('fav-filter-btn').classList.toggle('text-orange-500', showFavsOnly);
             filterData();
         }
 
         function updateView(metric) {
-            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
-                btn.classList.remove('tab-active', 'text-white');
-                btn.classList.add('text-slate-500');
-            });
+            document.querySelectorAll('[id^="tab-"]').forEach(b => b.classList.remove('tab-active', 'text-white'));
             document.getElementById(`tab-${metric}`).classList.add('tab-active', 'text-white');
             currentMetric = metric;
             filterData();
         }
 
         function filterData() {
-            const searchTerm = document.getElementById('player-search').value.toLowerCase();
-            const sharpOnly = document.getElementById('sharp-toggle').checked;
+            const search = document.getElementById('player-search').value.toLowerCase();
+            const sharp = document.getElementById('sharp-toggle').checked;
+            
             const filtered = playerData.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
-                const matchesSharp = sharpOnly ? Number(p[currentMetric]) >= 70 : true;
-                const matchesFav = showFavsOnly ? favorites.includes(p.name) : true;
+                const matchesSearch = p.display_name.toLowerCase().includes(search) || p.team_code.toLowerCase().includes(search);
+                const matchesSharp = sharp ? p[currentMetric] >= 70 : true;
+                const matchesFav = showFavsOnly ? favorites.includes(p.display_name) : true;
                 return matchesSearch && matchesSharp && matchesFav;
             });
             renderTable(filtered);
@@ -147,54 +113,29 @@
 
         function renderTable(data) {
             const body = document.getElementById('grid-body');
-            const sorted = [...data].sort((a, b) => Number(b[currentMetric]) - Number(a[currentMetric]));
-            
-            if (sorted.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="py-20 text-center text-slate-500 italic uppercase">No Matches Found</td></tr>`;
-                return;
-            }
-
-            body.innerHTML = sorted.map(p => {
-                const score = Number(p[currentMetric]);
-                const grade = getGrade(score);
-                const isFav = favorites.includes(p.name);
-                
-                // --- VALIDATION LOGIC ---
-                const tokens = p.name.trim().split(/\s+/).filter(Boolean);
-                const lastToken = tokens[tokens.length - 1];
-                
-                // Matches 2 or 3 uppercase letters (GSW, NYK, GS, NY)
-                const isTeamCode = /^[A-Z]{2,3}$/.test(lastToken);
-                
-                const teamTag = isTeamCode ? tokens.pop() : null;
-                const fullName = tokens.join(" ");
-                // ------------------------
-
-                const isLegend = legends.some(l => fullName.startsWith(l));
-                let heatStyle = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
+            body.innerHTML = data.sort((a,b) => b[currentMetric] - a[currentMetric]).map(p => {
+                const score = p[currentMetric];
+                const isLegend = legends.some(l => p.display_name.startsWith(l));
+                const heat = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
 
                 return `
-                    <tr class="hover:bg-slate-700/30 transition-all border-b border-slate-700/30">
-                        <td class="px-6 py-4 text-center cursor-pointer group" onclick="toggleFav('${p.name}')">
-                            <span class="${isFav ? 'star-active' : 'text-slate-700 group-hover:text-slate-500'} text-lg">★</span>
+                    <tr class="hover:bg-slate-700/30 border-b border-slate-700/30">
+                        <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${p.display_name}')">
+                            <span class="${favorites.includes(p.display_name) ? 'star-active' : 'text-slate-700'}">★</span>
                         </td>
                         <td class="px-6 py-4">
-                            <div class="flex flex-col gap-1">
+                            <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
-                                    <span class="font-bold text-white uppercase tracking-tight">${fullName}</span>
-                                    ${teamTag ? `<span class="team-badge uppercase">${teamTag}</span>` : ''}
+                                    <span class="font-bold text-white uppercase">${p.display_name}</span>
+                                    <span class="team-badge">${p.team_code}</span>
                                 </div>
-                                ${isLegend ? '<div><span class="legend-badge text-[8px] px-1.5 py-0.5 rounded shadow-sm">LEGEND</span></div>' : ''}
+                                ${isLegend ? '<span class="legend-badge text-[8px] px-1 rounded w-fit">LEGEND</span>' : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <span class="px-3 py-1 rounded font-mono font-black text-white w-16 ${heatStyle}">${score}%</span>
-                                <span class="${grade.color} text-[10px] font-black px-2 py-0.5 rounded text-white shadow-sm w-8 text-center uppercase">${grade.label}</span>
-                            </div>
+                            <span class="px-3 py-1 rounded font-mono font-black ${heat}">${score}%</span>
                         </td>
-                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic tracking-tighter">${p.last_game}</td>
-                        <td class="px-6 py-4 text-right font-mono text-[10px] text-slate-600 uppercase italic font-bold">${p.consistency}</td>
+                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game}</td>
                     </tr>
                 `;
             }).join('');
