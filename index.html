@@ -3,164 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Streak Lab | Performance Heat Index</title>
+    <title>The Streak Lab | Prop Intelligence Grid</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0a0a0a; color: #e5e5e5; }
-        .safety-border { border-left: 4px solid #ef4444; } /* Heat Red */
-        .card-bg { background: #171717; border: 1px solid #262626; }
-        @keyframes updatePulse { 0% { opacity: 0.5; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
-        .animate-update { animation: updatePulse 0.4s ease-out; }
+        .heat-high { background-color: #ef4444; color: white; border: 1px solid #7f1d1d; } /* Hot */
+        .heat-med { background-color: #f97316; color: white; border: 1px solid #7c2d12; }  /* Warm */
+        .heat-low { background-color: #334155; color: #94a3b8; border: 1px solid #1e293b; } /* Cold */
+        .tab-active { border-bottom: 4px solid #f97316; color: #f97316; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans">
+<body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
 
-<header class="p-6 border-b border-neutral-800 bg-neutral-900/50">
-    <div class="max-w-5xl mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-black tracking-tighter text-red-500 italic uppercase">THE<span class="text-white">STREAK</span>LAB</h1>
-        <div class="text-[10px] font-bold text-neutral-500 tracking-widest uppercase">Variance Diagnostic</div>
-    </div>
-</header>
-
-<main class="flex-grow max-w-5xl mx-auto p-4 md:p-8 w-full">
-    <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
-        <div>
-            <h2 class="text-3xl font-bold mb-2 text-white uppercase tracking-tight">Heat Index Analysis</h2>
-            <p class="text-neutral-500 italic text-sm">Identifying performance surges and regression risks.</p>
-        </div>
-        <button onclick="resetLab()" class="text-[10px] font-bold text-neutral-500 hover:text-red-400 border border-neutral-800 px-4 py-2 rounded-lg transition-all uppercase tracking-widest">
-            Reset Baseline
-        </button>
-    </div>
-
-    <div class="grid lg:grid-cols-2 gap-6 lg:gap-10">
-        <div class="card-bg p-6 md:p-10 rounded-xl safety-border shadow-2xl">
-            <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-8 border-b border-neutral-800 pb-2 italic">Data Entry</h3>
-            <div class="space-y-8">
-                <div>
-                    <label class="block text-xs font-bold uppercase text-neutral-400 mb-3 italic">Season Average (Baseline)</label>
-                    <input type="number" id="avg" oninput="calculateHeat()" placeholder="e.g. 52.5" 
-                           class="w-full bg-neutral-900 border border-neutral-700 rounded-lg p-5 outline-none text-white font-mono focus:border-red-500 transition-all text-2xl shadow-inner">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-neutral-400 mb-3 italic">Recent Performance (Last 5-10)</label>
-                    <input type="number" id="recent" oninput="calculateHeat()" placeholder="e.g. 65.0" 
-                           class="w-full bg-neutral-900 border border-neutral-700 rounded-lg p-5 outline-none text-white font-mono focus:border-red-500 transition-all text-2xl shadow-inner">
-                </div>
+    <div class="max-w-6xl mx-auto py-10 px-4">
+        <header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-5xl font-black italic tracking-tighter text-white">THE STREAK <span class="text-orange-500">LAB</span></h1>
+                <p class="text-slate-400 font-medium uppercase tracking-widest text-sm mt-1">Advanced NBA Prop Intelligence • 2026 Edition</p>
             </div>
+            <div id="last-update" class="text-xs font-mono text-slate-500 bg-slate-800 px-3 py-1 rounded-full border border-slate-700"></div>
+        </header>
+
+        <div class="flex gap-6 mb-6 border-b border-slate-800 text-sm font-bold uppercase tracking-wider overflow-x-auto pb-2">
+            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 transition-all tab-active">Points</button>
+            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 transition-all text-slate-500 hover:text-white">Rebounds</button>
+            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 transition-all text-slate-500 hover:text-white">Assists</button>
+            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 transition-all text-slate-500 hover:text-white">3PM</button>
+            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 transition-all text-slate-500 hover:text-white">Free Throws</button>
         </div>
 
-        <div class="card-bg p-6 md:p-10 rounded-xl flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <div id="placeholder-text" class="text-neutral-600 text-sm italic">Synchronizing variance metrics...</div>
+        <div class="bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-slate-700">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-900/50 text-slate-500 uppercase text-xs font-black">
+                    <tr>
+                        <th class="px-6 py-4">Player</th>
+                        <th class="px-6 py-4 text-center">Heat Score</th>
+                        <th class="px-6 py-4">Recent Performance (Last Game)</th>
+                        <th class="px-6 py-4 text-right">L10 Samples</th>
+                    </tr>
+                </thead>
+                <tbody id="grid-body" class="divide-y divide-slate-700/50">
+                    </tbody>
+            </table>
+        </div>
 
-            <div id="analysis" class="hidden w-full animate-fade-in">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-500 font-mono mb-4 block">Calculated Heat Score</span>
-                <div id="heat-score" class="text-7xl md:text-9xl font-black text-white tracking-tighter mb-4">0%</div>
-                
-                <div class="w-full bg-neutral-800 h-3 rounded-full overflow-hidden mb-8">
-                    <div id="heat-bar" class="bg-gradient-to-r from-blue-500 via-green-500 to-red-500 h-full" style="width: 0%"></div>
-                </div>
-
-                <div id="verdict" class="mb-4"></div>
-                <p id="recommendation" class="text-xs text-neutral-400 italic leading-relaxed max-w-xs mx-auto"></p>
-            </div>
+        <div class="mt-6 flex items-center justify-between text-xs text-slate-500 italic">
+            <p>* Heat Score represents % of last 10 games hitting betting thresholds.</p>
+            <p>NBA API Stealth V3.2 Active</p>
         </div>
     </div>
 
-    <div class="mt-16 border-t border-neutral-800 pt-10 pb-10">
-        <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-red-500 mb-8 italic text-center">Diagnostic Protocols</h3>
-        
-        
+    <script>
+        let playerData = [];
+        let currentMetric = 'pts_heat';
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
-                <div class="text-red-500 font-black text-xl mb-3 italic">01.</div>
-                <h4 class="text-sm font-bold text-white mb-2 uppercase">Baseline Variance</h4>
-                <p class="text-neutral-500 text-xs leading-relaxed italic">By comparing a long-term average to short-term results, we identify "Heat"—performance that deviates significantly from the mean.</p>
-            </div>
-            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
-                <div class="text-red-500 font-black text-xl mb-3 italic">02.</div>
-                <h4 class="text-sm font-bold text-white mb-2 uppercase">Mean Reversion</h4>
-                <p class="text-neutral-500 text-xs leading-relaxed italic">Extreme heat scores (+15%) often signal a coming regression. Strategic decisions should account for this inevitable return to the baseline.</p>
-            </div>
-            <div class="bg-neutral-900/40 p-6 rounded-xl border border-neutral-800">
-                <div class="text-red-500 font-black text-xl mb-3 italic">03.</div>
-                <h4 class="text-sm font-bold text-white mb-2 uppercase">Decision Logic</h4>
-                <p class="text-neutral-500 text-xs leading-relaxed italic"><strong>Critical Heat:</strong> Ride the surge but tighten risk.<br><strong>Optimal Flow:</strong> High reliability.<br><strong>Cold Streak:</strong> Investigation required.</p>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer class="p-8 text-center text-neutral-700 text-[10px] tracking-[0.4em] uppercase mt-auto">
-    &copy; 2026 THE STREAK LAB | <span class="text-red-600 font-bold">DIRECTORLABS HQ</span>
-</footer>
-
-<script>
-    // Your original logic integrated perfectly:
-    function calculateHeat() {
-        const avg = parseFloat(document.getElementById('avg').value);
-        const recent = parseFloat(document.getElementById('recent').value);
-        
-        if (!avg || !recent) return;
-
-        localStorage.setItem('streakAvg', avg);
-        localStorage.setItem('streakRecent', recent);
-
-        document.getElementById('placeholder-text').classList.add('hidden');
-        const analysis = document.getElementById('analysis');
-        analysis.classList.remove('hidden');
-
-        const diff = ((recent - avg) / avg) * 100;
-        let heatScoreUI = Math.min(Math.max(diff + 50, 0), 100);
-
-        const scoreEl = document.getElementById('heat-score');
-        scoreEl.innerText = Math.round(heatScoreUI) + "%";
-        scoreEl.classList.remove('animate-update');
-        void scoreEl.offsetWidth; 
-        scoreEl.classList.add('animate-update');
-
-        const bar = document.getElementById('heat-bar');
-        bar.style.transition = "width 1s cubic-bezier(0.34, 1.56, 0.64, 1)";
-        bar.style.width = heatScoreUI + "%";
-
-        const verdict = document.getElementById('verdict');
-        const rec = document.getElementById('recommendation');
-
-        verdict.classList.remove('animate-update');
-        void verdict.offsetWidth; 
-        verdict.classList.add('animate-update');
-
-        if (diff > 15) {
-            verdict.innerText = "Critical Heat 🔥";
-            verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-red-900/30 text-red-500 border border-red-500/50 animate-update";
-            rec.innerText = "Performance is +15% above baseline. Strong surge detected. Watch for regression.";
-        } else if (diff > -10) {
-            verdict.innerText = "Optimal Flow 📈";
-            verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-green-900/30 text-green-500 border border-green-500/50 animate-update";
-            rec.innerText = "Performance is consistent with baseline. Reliable metrics for forecasting.";
-        } else {
-            verdict.innerText = "Cold Streak ❄️";
-            verdict.className = "text-xl font-black py-3 px-6 rounded-lg inline-block bg-blue-900/30 text-blue-400 border border-blue-400/50 animate-update";
-            rec.innerText = "Performance is below baseline. Possible fatigue or tactical mismatch.";
+        async function loadData() {
+            try {
+                const response = await fetch('streak_data.json');
+                const json = await response.json();
+                playerData = json.players;
+                document.getElementById('last-update').innerText = `LIVE: ${json.last_updated}`;
+                renderTable();
+            } catch (e) { console.error("Data load failed", e); }
         }
-    }
 
-    function resetLab() {
-        document.getElementById('avg').value = '';
-        document.getElementById('recent').value = '';
-        document.getElementById('analysis').classList.add('hidden');
-        document.getElementById('placeholder-text').classList.remove('hidden');
-        localStorage.clear();
-    }
+        function updateView(metric) {
+            // Update UI Tabs
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('tab-active', 'text-white'));
+            document.querySelectorAll('button').forEach(btn => btn.classList.add('text-slate-500'));
+            document.getElementById(`tab-${metric}`).classList.add('tab-active', 'text-white');
+            
+            currentMetric = metric;
+            renderTable();
+        }
 
-    window.onload = () => {
-        const sAvg = localStorage.getItem('streakAvg');
-        const sRecent = localStorage.getItem('streakRecent');
-        if (sAvg) document.getElementById('avg').value = sAvg;
-        if (sRecent) document.getElementById('recent').value = sRecent;
-        if (sAvg && sRecent) calculateHeat();
-    };
-</script>
+        function renderTable() {
+            const body = document.getElementById('grid-body');
+            body.innerHTML = '';
+
+            // Sort by current heat
+            const sorted = [...playerData].sort((a, b) => b[currentMetric] - a[currentMetric]);
+
+            sorted.forEach(p => {
+                const score = p[currentMetric];
+                let heatClass = 'heat-low';
+                if (score >= 80) heatClass = 'heat-high';
+                else if (score >= 60) heatClass = 'heat-med';
+
+                const row = `
+                    <tr class="hover:bg-slate-700/30 transition-all cursor-default group">
+                        <td class="px-6 py-5">
+                            <div class="font-black text-white group-hover:text-orange-400 transition-colors">${p.name}</div>
+                        </td>
+                        <td class="px-6 py-5 text-center">
+                            <span class="inline-block w-16 py-1 rounded font-mono font-black text-sm ${heatClass}">
+                                ${score}%
+                            </span>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="text-sm text-slate-300 font-medium">${p.last_game}</div>
+                        </td>
+                        <td class="px-6 py-5 text-right font-mono text-xs text-slate-500">
+                            ${p.consistency}
+                        </td>
+                    </tr>
+                `;
+                body.innerHTML += row;
+            });
+        }
+
+        loadData();
+    </script>
 </body>
 </html>
