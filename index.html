@@ -3,165 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Streak Lab | NBA Prop Intelligence</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Streak Lab | NBA Intelligence</title>
     <style>
-        .heat-high { background-color: #ef4444; color: white; border: 1px solid #7f1d1d; } 
-        .heat-med { background-color: #f97316; color: white; border: 1px solid #7c2d12; } 
-        .heat-low { background-color: #334155; color: #94a3b8; border: 1px solid #1e293b; }
-        .tab-active { border-bottom: 4px solid #f97316; color: #f97316; }
-        .star-active { color: #f97316; fill: #f97316; }
-        .legend-badge { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; }
-        .team-badge { background-color: #1e293b; color: #64748b; border: 1px solid #334155; font-size: 9px; padding: 1px 4px; border-radius: 4px; font-weight: 800; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #38bdf8;
+            --hot: #ef4444;
+            --warm: #f97316;
+            --cold: #64748b;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 20px;
+        }
+
+        .lab-info {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .timestamp {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .player-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .player-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .team-tag {
+            background: #334155;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .heat-container {
+            margin-top: 15px;
+        }
+
+        .heat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .heat-bar-bg {
+            height: 8px;
+            background: #334155;
+            width: 150px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .heat-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .last-game {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans selection:bg-orange-500/30">
+<body>
 
-    <div class="max-w-6xl mx-auto py-10 px-4">
-        <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div>
-                <h1 class="text-5xl font-black italic tracking-tighter text-white uppercase">THE STREAK <span class="text-orange-500 font-bold">LAB</span></h1>
-                <p class="text-slate-400 mt-1 uppercase tracking-widest text-[10px] font-bold italic">Prop Intelligence for the Sharp Bettor</p>
-            </div>
-            <div id="last-update" class="text-[10px] font-mono text-slate-500 bg-slate-800/50 px-3 py-1 rounded border border-slate-700 uppercase tracking-widest font-bold">LOADING...</div>
-        </header>
-
-        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-            <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team (e.g. GSW)..." 
-                   class="w-full md:w-96 bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
-            
-            <div class="flex items-center gap-6">
-                <label class="flex items-center cursor-pointer group">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 mr-3">Sharp Only (70%+)</span>
-                    <input type="checkbox" id="sharp-toggle" onchange="filterData()" class="w-4 h-4 accent-orange-500 rounded border-slate-700 bg-slate-900">
-                </label>
-                <button onclick="toggleFavoritesOnly()" id="fav-filter-btn" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-orange-500 font-bold">⭐ Favorites</button>
-            </div>
-        </div>
-
-        <div class="flex gap-6 mb-8 text-xs font-black uppercase tracking-tighter border-b border-slate-800 overflow-x-auto scrollbar-hide">
-            <button onclick="updateView('pts_heat')" id="tab-pts_heat" class="pb-2 px-2 tab-active text-white whitespace-nowrap">Points</button>
-            <button onclick="updateView('reb_heat')" id="tab-reb_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">Rebounds</button>
-            <button onclick="updateView('ast_heat')" id="tab-ast_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">Assists</button>
-            <button onclick="updateView('tpm_heat')" id="tab-tpm_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">3PM</button>
-            <button onclick="updateView('ft_heat')" id="tab-ft_heat" class="pb-2 px-2 text-slate-500 whitespace-nowrap">Free Throws</button>
-        </div>
-
-        <div class="bg-slate-800 rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
-            <table class="w-full text-left">
-                <thead class="bg-slate-900/80 text-slate-500 uppercase text-[10px] font-black tracking-widest">
-                    <tr>
-                        <th class="px-6 py-4 w-12 text-center">Fav</th>
-                        <th class="px-6 py-4">Player / Team</th>
-                        <th class="px-6 py-4 text-center">L10 Hit Rate</th>
-                        <th class="px-6 py-4">Last Game Summary</th>
-                    </tr>
-                </thead>
-                <tbody id="grid-body" class="divide-y divide-slate-700/30 text-sm">
-                    <tr><td colspan="4" class="text-center py-20 text-slate-500 animate-pulse uppercase font-black tracking-widest">Initialising Lab...</td></tr>
-                </tbody>
-            </table>
+    <div class="header">
+        <h1>🔥 Streak Lab Intelligence</h1>
+        <div id="update-time" class="timestamp">Loading updates...</div>
+        
+        <div class="lab-info" id="lab-notes">
+            <strong>Lab Methodology:</strong> Loading methodology...
         </div>
     </div>
 
+    <div class="legend">
+        <span><b style="color:var(--hot)">●</b> 80%+ Burning Hot</span>
+        <span><b style="color:var(--warm)">●</b> 50%+ Warm</span>
+        <span><b style="color:var(--cold)">●</b> <50% Cold</span>
+    </div>
+
+    <div class="grid" id="player-grid">
+        </div>
+
     <script>
-        let playerData = [];
-        let favorites = JSON.parse(localStorage.getItem('streakLabFavs')) || [];
-        let currentMetric = 'pts_heat';
-        let showFavsOnly = false;
-
-        const legends = ["Stephen Curry", "LeBron James", "Kevin Durant", "Giannis Antetokounmpo", "Nikola Jokic", "Luka Doncic"];
-
-        async function loadData() {
+        async function loadLabData() {
             try {
-                // Fetching relative to the directory (best for GitHub Pages)
-                const response = await fetch('./streak_data.json');
-                if (!response.ok) throw new Error('File not found');
-                const json = await response.json();
-                
-                playerData = json.players || [];
-                document.getElementById('last-update').innerText = `UPDATED: ${json.last_updated || 'N/A'}`;
-                filterData();
-            } catch (e) { 
-                console.error("Data Load Error:", e);
-                document.getElementById('grid-body').innerHTML = `<tr><td colspan="4" class="text-center py-20 text-red-500 uppercase font-black tracking-widest">Error: streak_data.json not found in repository</td></tr>`;
-            }
-        }
+                const response = await fetch('streak_data.json');
+                const data = await response.json();
 
-        function toggleFav(name) {
-            favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [...favorites, name];
-            localStorage.setItem('streakLabFavs', JSON.stringify(favorites));
-            filterData();
-        }
-
-        function toggleFavoritesOnly() {
-            showFavsOnly = !showFavsOnly;
-            document.getElementById('fav-filter-btn').classList.toggle('text-orange-500', showFavsOnly);
-            filterData();
-        }
-
-        function updateView(metric) {
-            document.querySelectorAll('[id^="tab-"]').forEach(b => b.classList.remove('tab-active', 'text-white'));
-            document.getElementById(`tab-${metric}`).classList.add('tab-active', 'text-white');
-            currentMetric = metric;
-            filterData();
-        }
-
-        function filterData() {
-            const searchInput = document.getElementById('player-search').value.toLowerCase();
-            const sharpToggle = document.getElementById('sharp-toggle').checked;
-            
-            const filtered = playerData.filter(p => {
-                const nameMatch = (p.name || "").toLowerCase().includes(searchInput);
-                const teamMatch = (p.team_code || "").toLowerCase().includes(searchInput);
-                const passesSharp = sharpToggle ? (p[currentMetric] || 0) >= 70 : true;
-                const passesFav = showFavsOnly ? favorites.includes(p.name) : true;
-                
-                return (nameMatch || teamMatch) && passesSharp && passesFav;
-            });
-
-            renderTable(filtered);
-        }
-
-        function renderTable(data) {
-            const body = document.getElementById('grid-body');
-            if (data.length === 0) {
-                body.innerHTML = `<tr><td colspan="4" class="text-center py-20 text-slate-600 uppercase font-black tracking-widest">No matching athletes found</td></tr>`;
-                return;
-            }
-
-            body.innerHTML = data.sort((a,b) => (b[currentMetric] || 0) - (a[currentMetric] || 0)).map(p => {
-                const rawName = p.name || "Unknown";
-                const score = p[currentMetric] || 0;
-                const team = p.team_code || "";
-                const isLegend = legends.some(l => rawName.includes(l));
-                const heatClass = score >= 80 ? 'heat-high' : (score >= 70 ? 'heat-med' : 'heat-low');
-
-                return `
-                    <tr class="hover:bg-slate-700/30 border-b border-slate-700/30">
-                        <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${rawName}')">
-                            <span class="${favorites.includes(rawName) ? 'star-active' : 'text-slate-700'} text-lg">★</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-white uppercase tracking-tight">${rawName}</span>
-                                    ${team ? `<span class="team-badge uppercase">${team}</span>` : ''}
-                                </div>
-                                ${isLegend ? '<span class="legend-badge text-[8px] px-1 rounded w-fit mt-1">LEGEND</span>' : ''}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <span class="px-3 py-1 rounded font-mono font-black ${heatClass}">${score}%</span>
-                        </td>
-                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game || '---'}</td>
-                    </tr>
+                // 1. Update Header Info
+                document.getElementById('update-time').innerText = `Last Updated: ${data.last_updated}`;
+                document.getElementById('lab-notes').innerHTML = `
+                    <strong>Methodology:</strong> ${data.lab_notes.methodology}<br>
+                    <strong>Benchmarks:</strong> ${data.lab_notes.benchmarks}
                 `;
-            }).join('');
+
+                // 2. Load Player Cards
+                const grid = document.getElementById('player-grid');
+                grid.innerHTML = '';
+
+                data.players.forEach(player => {
+                    const card = document.createElement('div');
+                    card.className = 'player-card';
+
+                    // Color logic for the bars
+                    const getColor = (val) => val >= 80 ? '#ef4444' : val >= 50 ? '#f97316' : '#64748b';
+
+                    card.innerHTML = `
+                        <div class="player-name">
+                            ${player.name} <span class="team-tag">${player.team_code}</span>
+                        </div>
+                        <div class="heat-container">
+                            ${renderHeatBar('PTS', player.pts_heat, getColor(player.pts_heat))}
+                            ${renderHeatBar('REB', player.reb_heat, getColor(player.reb_heat))}
+                            ${renderHeatBar('AST', player.ast_heat, getColor(player.ast_heat))}
+                            ${renderHeatBar('3PM', player.tpm_heat, getColor(player.tpm_heat))}
+                        </div>
+                        <div class="last-game">Last Game: ${player.last_game}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error("Error loading Lab data:", err);
+                document.getElementById('update-time').innerText = "Sync Error: Check JSON File";
+            }
         }
-        
-        loadData();
+
+        function renderHeatBar(label, value, color) {
+            return `
+                <div class="heat-row">
+                    <span>${label}</span>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:0.8rem; width:30px">${value}%</span>
+                        <div class="heat-bar-bg">
+                            <div class="heat-fill" style="width:${value}%; background-color:${color}"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        loadLabData();
     </script>
 </body>
 </html>
