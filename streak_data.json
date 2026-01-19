@@ -1,0 +1,145 @@
+{
+    "last_updated": "2026-01-19",
+    "players": [
+        {
+            "name": "CJ McCollum",
+            "pts_heat": 80,
+            "reb_heat": 30,
+            "ast_heat": 70,
+            "tpm_heat": 50,
+            "ft_heat": 60,
+            "last_game": "11 PTS, 7 REB, 4 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Jalen Johnson",
+            "pts_heat": 60,
+            "reb_heat": 90,
+            "ast_heat": 100,
+            "tpm_heat": 40,
+            "ft_heat": 70,
+            "last_game": "12 PTS, 8 REB, 5 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Vit Krejci",
+            "pts_heat": 0,
+            "reb_heat": 10,
+            "ast_heat": 20,
+            "tpm_heat": 50,
+            "ft_heat": 30,
+            "last_game": "3 PTS, 1 REB, 0 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Nickeil Alexander-Walker",
+            "pts_heat": 70,
+            "reb_heat": 40,
+            "ast_heat": 40,
+            "tpm_heat": 100,
+            "ft_heat": 70,
+            "last_game": "18 PTS, 2 REB, 6 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Larry Nance Jr.",
+            "pts_heat": 10,
+            "reb_heat": 0,
+            "ast_heat": 90,
+            "tpm_heat": 10,
+            "ft_heat": 30,
+            "last_game": "8 PTS, 2 REB, 9 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "De'Andre Hunter",
+            "pts_heat": 30,
+            "reb_heat": 50,
+            "ast_heat": 40,
+            "tpm_heat": 50,
+            "ft_heat": 60,
+            "last_game": "16 PTS, 3 REB, 4 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Bogdan Bogdanovic",
+            "pts_heat": 0,
+            "reb_heat": 30,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "ft_heat": 0,
+            "last_game": "4 PTS, 3 REB, 1 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Giannis Antetokounmpo",
+            "pts_heat": 100,
+            "reb_heat": 90,
+            "ast_heat": 60,
+            "tpm_heat": 10,
+            "ft_heat": 100,
+            "last_game": "21 PTS, 5 REB, 1 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Myles Turner",
+            "pts_heat": 30,
+            "reb_heat": 60,
+            "ast_heat": 0,
+            "tpm_heat": 80,
+            "ft_heat": 60,
+            "last_game": "5 PTS, 3 REB, 3 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Kevin Porter Jr.",
+            "pts_heat": 50,
+            "reb_heat": 50,
+            "ast_heat": 90,
+            "tpm_heat": 10,
+            "ft_heat": 50,
+            "last_game": "0 PTS, 1 REB, 2 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "AJ Green",
+            "pts_heat": 0,
+            "reb_heat": 20,
+            "ast_heat": 10,
+            "tpm_heat": 80,
+            "ft_heat": 0,
+            "last_game": "6 PTS, 0 REB, 1 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Ryan Rollins",
+            "pts_heat": 40,
+            "reb_heat": 80,
+            "ast_heat": 70,
+            "tpm_heat": 60,
+            "ft_heat": 40,
+            "last_game": "6 PTS, 7 REB, 7 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Bobby Portis",
+            "pts_heat": 30,
+            "reb_heat": 80,
+            "ast_heat": 0,
+            "tpm_heat": 80,
+            "ft_heat": 30,
+            "last_game": "13 PTS, 6 REB, 3 AST",
+            "consistency": "10/10 Games"
+        },
+        {
+            "name": "Gary Trent Jr.",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 40,
+            "ft_heat": 0,
+            "last_game": "3 PTS, 0 REB, 1 AST",
+            "consistency": "10/10 Games"
+        }
+    ]
+}
