@@ -28,7 +28,7 @@
         </header>
 
         <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-            <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team..." 
+            <input type="text" id="player-search" onkeyup="filterData()" placeholder="Search Athlete or Team (e.g. GSW)..." 
                    class="w-full md:w-96 bg-slate-900 border border-slate-700 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-orange-500 transition-colors">
             
             <div class="flex items-center gap-6">
@@ -79,8 +79,7 @@
                 document.getElementById('last-update').innerText = `UPDATED: ${json.last_updated || 'N/A'}`;
                 filterData();
             } catch (e) {
-                console.error("Critical: Could not load JSON", e);
-                document.getElementById('grid-body').innerHTML = `<tr><td colspan="4" class="py-10 text-center text-red-400">Error loading streak_data.json</td></tr>`;
+                console.error("Error loading JSON", e);
             }
         }
 
@@ -108,11 +107,8 @@
             const sharp = document.getElementById('sharp-toggle').checked;
             
             const filtered = playerData.filter(p => {
-                // DEFENSIVE CHECK: Use whichever name key exists
                 const nameStr = (p.name || p.display_name || "").toLowerCase();
-                const teamStr = (p.team_code || "").toLowerCase();
-                
-                const matchesSearch = nameStr.includes(search) || teamStr.includes(search);
+                const matchesSearch = nameStr.includes(search);
                 const matchesSharp = sharp ? (p[currentMetric] || 0) >= 70 : true;
                 const matchesFav = showFavsOnly ? favorites.includes(p.name || p.display_name) : true;
                 return matchesSearch && matchesSharp && matchesFav;
@@ -123,21 +119,20 @@
         function renderTable(data) {
             const body = document.getElementById('grid-body');
             if (!data.length) {
-                body.innerHTML = '<tr><td colspan="4" class="py-10 text-center text-slate-500">No matching players found.</td></tr>';
+                body.innerHTML = '<tr><td colspan="4" class="py-10 text-center text-slate-500">No results found.</td></tr>';
                 return;
             }
 
             body.innerHTML = data.sort((a,b) => (b[currentMetric] || 0) - (a[currentMetric] || 0)).map(p => {
-                // DEFENSIVE CHECK: Handle missing name or metric
-                const rawName = p.name || p.display_name || "Unknown Player";
+                const rawName = p.name || p.display_name || "Unknown";
                 const score = p[currentMetric] || 0;
                 
-                // Logic to separate Team from Name if it's combined (e.g., "Gary Trent Jr. MIL")
+                // EXTRACT TEAM FROM NAME (e.g., "Gary Trent Jr. MIL" -> Team: MIL)
                 const tokens = rawName.trim().split(/\s+/);
                 const lastToken = tokens[tokens.length - 1];
                 const isTeamCode = /^[A-Z]{2,3}$/.test(lastToken);
                 
-                // If JSON has 'team_code', use it. Otherwise, extract from name.
+                // Priority: p.team_code (new) > extracted last word (current)
                 const team = p.team_code || (isTeamCode ? tokens.pop() : "---");
                 const displayName = tokens.join(" ");
 
@@ -145,7 +140,7 @@
                 const heat = score >= 80 ? 'heat-high' : (score >= 65 ? 'heat-med' : 'heat-low');
 
                 return `
-                    <tr class="hover:bg-slate-700/30 border-b border-slate-700/30 transition-colors">
+                    <tr class="hover:bg-slate-700/30 border-b border-slate-700/30">
                         <td class="px-6 py-4 text-center cursor-pointer" onclick="toggleFav('${rawName}')">
                             <span class="${favorites.includes(rawName) ? 'star-active' : 'text-slate-700'}">★</span>
                         </td>
@@ -153,7 +148,7 @@
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
                                     <span class="font-bold text-white uppercase">${displayName}</span>
-                                    <span class="team-badge">${team}</span>
+                                    <span class="team-badge uppercase">${team}</span>
                                 </div>
                                 ${isLegend ? '<span class="legend-badge text-[8px] px-1 rounded w-fit mt-1">LEGEND</span>' : ''}
                             </div>
@@ -161,7 +156,7 @@
                         <td class="px-6 py-4 text-center">
                             <span class="px-3 py-1 rounded font-mono font-black ${heat}">${score}%</span>
                         </td>
-                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game || 'N/A'}</td>
+                        <td class="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase italic">${p.last_game || '---'}</td>
                     </tr>
                 `;
             }).join('');
