@@ -6,16 +6,30 @@
     <title>Streak Lab | Master Intelligence</title>
     <style>
         :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #38bdf8; --hot: #ef4444; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; }
         
-        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
-        .timestamp { font-size: 0.8rem; color: var(--accent); }
+        /* Intelligence Brief */
+        .intel-brief { background: #1e293b; border-left: 4px solid var(--accent); padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+        .intel-brief h2 { margin-top: 0; font-size: 1.1rem; color: var(--accent); text-transform: uppercase; }
+        .intel-brief p { margin: 5px 0; font-size: 0.9rem; color: #94a3b8; }
 
-        /* Search Bar & Tabs */
-        .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .timestamp { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
+
+        /* Controls Area */
+        .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
         #searchBar { flex-grow: 1; min-width: 300px; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: white; }
         
+        /* Toggle Switch */
+        .switch-wrapper { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: bold; color: #94a3b8; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--hot); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
         .tabs { display: flex; gap: 5px; background: #334155; padding: 5px; border-radius: 10px; }
         .tab-btn { padding: 8px 15px; border: none; background: transparent; color: #94a3b8; cursor: pointer; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
         .tab-btn.active { background: var(--accent); color: var(--bg); }
@@ -27,18 +41,30 @@
         
         .heat-pill { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; display: inline-block; width: 40px; text-align: center; }
         .gsw-row { border-left: 4px solid #fde047; }
-        .active-sort { color: var(--accent) !important; text-decoration: underline; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <div class="intel-brief">
+        <h2>🔬 Streak Lab Intelligence Brief</h2>
+        <p>This dashboard monitors performance "Heat"—the percentage of the last 10 games an athlete exceeded their projected prop line.</p>
+        <p><strong>Benchmarks:</strong> Points (20+) • Rebounds (7+) • Assists (5+) • 3PM (3+)</p>
+    </div>
+
     <div class="header">
         <div>
             <h1 style="margin:0">🔥 Streak Lab</h1>
             <div id="update-time" class="timestamp">Updating...</div>
         </div>
-        <div id="methodology" style="font-size:0.75rem; opacity:0.6; text-align:right"></div>
+        
+        <div class="switch-wrapper">
+            <span>SHARP MODE (80%+)</span>
+            <label class="switch">
+                <input type="checkbox" id="sharpToggle" onchange="filterAndRender()">
+                <span class="slider"></span>
+            </label>
+        </div>
     </div>
 
     <div class="controls">
@@ -77,7 +103,6 @@
         const data = await res.json();
         rawPlayers = data.players;
         document.getElementById('update-time').innerText = `Last Sync: ${data.last_updated}`;
-        document.getElementById('methodology').innerText = data.lab_notes.benchmarks;
         filterAndRender();
     }
 
@@ -90,14 +115,16 @@
 
     function filterAndRender() {
         const query = document.getElementById('searchBar').value.toLowerCase();
+        const sharpOnly = document.getElementById('sharpToggle').checked;
         
-        // 1. Filter + Defensive check on team_code
-        let filtered = rawPlayers.filter(p => 
-            p.name.toLowerCase().includes(query) || 
-            (p.team_code?.toLowerCase() || "").includes(query)
-        );
+        // 1. Filter: Search + Sharp Toggle + Defensive Check
+        let filtered = rawPlayers.filter(p => {
+            const matchesSearch = p.name.toLowerCase().includes(query) || (p.team_code?.toLowerCase() || "").includes(query);
+            const isSharp = sharpOnly ? (p[currentSort] >= 80) : true;
+            return matchesSearch && isSharp;
+        });
 
-        // 2. Sort + Defensive check for missing fields
+        // 2. Sort
         filtered.sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
 
         const body = document.getElementById('tableBody');
@@ -116,8 +143,8 @@
 
     function renderPill(val, key) {
         const color = val >= 80 ? '#ef4444' : (val >= 50 ? '#f97316' : '#475569');
-        const isBold = key === currentSort ? 'border: 1px solid white;' : '';
-        return `<span class="heat-pill" style="background:${color}; ${isBold}">${val}%</span>`;
+        const highlight = key === currentSort ? 'outline: 2px solid white;' : '';
+        return `<span class="heat-pill" style="background:${color}; ${highlight}">${val}%</span>`;
     }
 
     init();
