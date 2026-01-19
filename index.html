@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streak Lab | Master Intelligence</title>
+    
+    <title>NBA Player Prop Trends & Heat Map | Streak Lab Intelligence</title>
+    <meta name="description" content="Real-time NBA player prop analytics and streak tracking. Identify hot trends for points, rebounds, assists, and 3PM. Professional betting intelligence for NBA athletes.">
+    <meta name="keywords" content="NBA player props, player prop trends, NBA betting intelligence, GSW player stats, basketball streak lab">
+    
+    <meta property="og:title" content="Streak Lab | NBA Player Prop Intelligence">
+    <meta property="og:description" content="Track which NBA players are burning hot vs their prop lines.">
+    <meta property="og:type" content="website">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Streak Lab Intelligence",
+      "description": "Analytics tool for tracking NBA player performance streaks and prop bet hit rates.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <style>
         :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #38bdf8; --hot: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; }
         
-        /* Intelligence Brief */
+        /* SEO Content Section */
         .intel-brief { background: #1e293b; border-left: 4px solid var(--accent); padding: 20px; border-radius: 8px; margin-bottom: 25px; }
         .intel-brief h2 { margin-top: 0; font-size: 1.1rem; color: var(--accent); text-transform: uppercase; }
         .intel-brief p { margin: 5px 0; font-size: 0.9rem; color: #94a3b8; }
@@ -17,11 +41,11 @@
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .timestamp { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
 
-        /* Controls Area */
+        /* Controls */
         .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
         #searchBar { flex-grow: 1; min-width: 300px; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: white; }
         
-        /* Toggle Switch */
+        /* Sharp Toggle */
         .switch-wrapper { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: bold; color: #94a3b8; }
         .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -46,52 +70,60 @@
 <body>
 
 <div class="container">
-    <div class="intel-brief">
-        <h2>🔬 Streak Lab Intelligence Brief</h2>
-        <p>This dashboard monitors performance "Heat"—the percentage of the last 10 games an athlete exceeded their projected prop line.</p>
-        <p><strong>Benchmarks:</strong> Points (20+) • Rebounds (7+) • Assists (5+) • 3PM (3+)</p>
-    </div>
-
-    <div class="header">
-        <div>
-            <h1 style="margin:0">🔥 Streak Lab</h1>
-            <div id="update-time" class="timestamp">Updating...</div>
+    <header>
+        <div class="intel-brief">
+            <h2>🔬 NBA Streak Lab: Player Prop Intelligence Brief</h2>
+            <p>Our <strong>NBA Streak Lab</strong> provides advanced analytics on player performance trends. We track the "Heat Index"—the percentage of the last 10 games an athlete has exceeded standard betting benchmarks.</p>
+            <p><strong>Current NBA Benchmarks:</strong> Points (20+) • Rebounds (7+) • Assists (5+) • 3PM (3+). Data is updated daily to provide the most accurate <strong>NBA player prop trends</strong> for the 2025-26 season.</p>
         </div>
-        
-        <div class="switch-wrapper">
-            <span>SHARP MODE (80%+)</span>
-            <label class="switch">
-                <input type="checkbox" id="sharpToggle" onchange="filterAndRender()">
-                <span class="slider"></span>
-            </label>
-        </div>
-    </div>
 
-    <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search player or team (LAL, GSW)..." onkeyup="filterAndRender()">
+        <div class="header">
+            <div>
+                <h1 style="margin:0">🔥 NBA Player Prop Streak Lab</h1>
+                <div id="update-time" class="timestamp">Syncing Lab Data...</div>
+            </div>
+            
+            <div class="switch-wrapper">
+                <span>SHARP MODE (80%+)</span>
+                <label class="switch" aria-label="Toggle Sharp Mode">
+                    <input type="checkbox" id="sharpToggle" onchange="filterAndRender()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <nav class="controls">
+        <input type="text" id="searchBar" placeholder="Search player or team (LAL, GSW)..." onkeyup="filterAndRender()" aria-label="Search athletes">
         <div class="tabs">
-            <span style="align-self:center; font-size:0.7rem; padding:0 10px; color:#94a3b8">SORT BY:</span>
-            <button class="tab-btn active" onclick="setSort('pts_heat', this)">PTS</button>
-            <button class="tab-btn" onclick="setSort('reb_heat', this)">REB</button>
-            <button class="tab-btn" onclick="setSort('ast_heat', this)">AST</button>
+            <span style="align-self:center; font-size:0.7rem; padding:0 10px; color:#94a3b8">RANK BY:</span>
+            <button class="tab-btn active" onclick="setSort('pts_heat', this)">POINTS</button>
+            <button class="tab-btn" onclick="setSort('reb_heat', this)">REBOUNDS</button>
+            <button class="tab-btn" onclick="setSort('ast_heat', this)">ASSISTS</button>
             <button class="tab-btn" onclick="setSort('tpm_heat', this)">3PM</button>
         </div>
-    </div>
+    </nav>
 
-    <table id="labTable">
-        <thead>
-            <tr>
-                <th>Athlete</th>
-                <th>Team</th>
-                <th>PTS</th>
-                <th>REB</th>
-                <th>AST</th>
-                <th>3PM</th>
-                <th>Last Outing</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
+    <main>
+        <table id="labTable">
+            <thead>
+                <tr>
+                    <th>NBA Athlete</th>
+                    <th>Team</th>
+                    <th>PTS Heat</th>
+                    <th>REB Heat</th>
+                    <th>AST Heat</th>
+                    <th>3PM Heat</th>
+                    <th>Last Game</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </main>
+
+    <footer style="margin-top: 40px; font-size: 0.75rem; color: #64748b; text-align: center;">
+        <p>&copy; 2026 Streak Lab Intelligence. All player data sourced from official NBA performance logs. Responsible gaming only.</p>
+    </footer>
 </div>
 
 <script>
@@ -99,11 +131,15 @@
     let currentSort = 'pts_heat';
 
     async function init() {
-        const res = await fetch('streak_data.json');
-        const data = await res.json();
-        rawPlayers = data.players;
-        document.getElementById('update-time').innerText = `Last Sync: ${data.last_updated}`;
-        filterAndRender();
+        try {
+            const res = await fetch('streak_data.json');
+            const data = await res.json();
+            rawPlayers = data.players;
+            document.getElementById('update-time').innerText = `Last Updated: ${data.last_updated} EST`;
+            filterAndRender();
+        } catch (e) {
+            document.getElementById('update-time').innerText = "Update Pending...";
+        }
     }
 
     function setSort(key, btn) {
@@ -117,14 +153,12 @@
         const query = document.getElementById('searchBar').value.toLowerCase();
         const sharpOnly = document.getElementById('sharpToggle').checked;
         
-        // 1. Filter: Search + Sharp Toggle + Defensive Check
         let filtered = rawPlayers.filter(p => {
             const matchesSearch = p.name.toLowerCase().includes(query) || (p.team_code?.toLowerCase() || "").includes(query);
             const isSharp = sharpOnly ? (p[currentSort] >= 80) : true;
             return matchesSearch && isSharp;
         });
 
-        // 2. Sort
         filtered.sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
 
         const body = document.getElementById('tableBody');
