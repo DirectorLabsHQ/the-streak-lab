@@ -112,13 +112,12 @@
             const search = document.getElementById('player-search').value.toLowerCase();
             const sharp = document.getElementById('sharp-toggle').checked;
             
-            const filtered = playerData.filter(p => {
-                const nameStr = (p.name || p.display_name || "").toLowerCase();
-                const matchesSearch = nameStr.includes(search);
-                const matchesSharp = sharp ? (p[currentMetric] || 0) >= 70 : true;
-                const matchesFav = showFavsOnly ? favorites.includes(p.name || p.display_name) : true;
-                return matchesSearch && matchesSharp && matchesFav;
-            });
+           const filtered = players.filter(p => {
+    const search = searchTerm.toLowerCase();
+    // This checks BOTH the name and the team_code
+    return p.name.toLowerCase().includes(search) || 
+           p.team_code.toLowerCase().includes(search);
+});
             renderTable(filtered);
         }
 
