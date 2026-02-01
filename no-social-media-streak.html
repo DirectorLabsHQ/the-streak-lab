@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Social Media Experiment – Digital Detox Reset | The Streak Lab</title>
+  <meta name="description" content="Eliminate social media for 30 days and track changes in focus, anxiety, productivity, sleep, and real-life connections. Privacy-first local streak tracker — no apps, no accounts, no guilt." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="No Social Media Experiment – Digital Detox Reset | The Streak Lab" />
+  <meta property="og:description" content="30-day social media detox. Reclaim attention, reduce anxiety, find more time. Private browser tracking — start anytime." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thestreaklab.com/no-social-media-streak" />
+  <meta property="og:image" content="https://thestreaklab.com/images/og-no-social-media.jpg" />
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="No Social Media Experiment – Digital Detox Reset | The Streak Lab" />
+  <meta name="twitter:description" content="30-day no social media challenge with simple local tracking. Reclaim your attention and see what changes." />
+
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --muted: #555;
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --border: #e5e5e5;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: #1a1a1a;
+      margin: 0;
+      line-height: 1.6;
+    }
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+    h2 { font-size: 1.5rem; margin: 3rem 0 0.75rem; font-weight: 600; }
+    h3, h4 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+    .muted { color: var(--muted); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    #calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin: 1.25rem 0;
+    }
+    .day {
+      text-align: center;
+      padding: 10px 4px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      min-height: 60px;
+      background: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .day.completed {
+      background: #d4f4dd;
+      border-color: #38a169;
+      font-weight: bold;
+    }
+    .day.missed {
+      background: #ffecec;
+      border-color: #e53e3e;
+    }
+    .day.today {
+      border: 3px solid #1a1a1a;
+      background: #f0f0f0;
+    }
+    .day.future {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .day.has-note {
+      box-shadow: inset 0 0 0 3px #3182ce;
+    }
+    #stats { margin: 1.5rem 0; padding: 1rem; background: #f0f0f0; border-radius: 6px; }
+    #note-section { margin-top: 1.5rem; display: none; }
+    #note-input { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; min-height: 80px; }
+    .cta, .secondary-btn {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .cta { background: var(--primary); color: white; border: none; }
+    .cta:hover { opacity: 0.9; }
+    .secondary-btn { background: #e0e0e0; color: #333; border: none; }
+    .secondary-btn:hover { background: #d0d0d0; }
+    .insight {
+      background: #f8f9fa;
+      border-left: 4px solid #6c757d;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    footer {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 0.75rem;
+    }
+    footer a:hover { color: var(--primary); text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .nav-links.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">The Streak Lab</a>
+      <div class="hamburger" aria-label="Toggle menu" id="hamburgerBtn">☰</div>
+      <div class="nav-links" id="navMenu">
+        <a href="/">Home</a>
+        <a href="/experiments">All Experiments</a>
+        <a href="/how-tracking-works">How Tracking Works</a>
+        <a href="/about">About</a>
+        <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1>No Social Media Experiment</h1>
+    <p class="muted">
+      Eliminate social media (scrolling, posting, stories, reels, etc.) for 30 days. Observe changes in focus, anxiety levels, productivity, sleep quality, real-world relationships, and mental space.
+    </p>
+
+    <div class="card">
+      <h3>Goal</h3>
+      <p>Test how removing social media affects your attention and daily experience — without pressure to make it permanent.</p>
+    </div>
+
+    <div class="card">
+      <h3>Rules</h3>
+      <ul>
+        <li><strong>Win</strong>: No intentional scrolling or posting on social platforms for the full calendar day.</li>
+        <li><strong>Minimum viable win</strong>: Brief checks for urgent messages (e.g., family) are allowed if pre-defined.</li>
+        <li><strong>Start date</strong>: Any day — no need to wait for a perfect moment.</li>
+        <li><strong>Duration</strong>: 30 days (extend or stop early if it makes sense).</li>
+      </ul>
+    </div>
+
+    <!-- Tracker configuration -->
+    <div 
+      data-experiment-key="no-social-media-30day"
+      data-total-days="30"
+      data-experiment-name="No Social Media Experiment"
+    ></div>
+
+    <div class="card">
+      <h2>Your 30-Day Tracker</h2>
+      
+      <div id="stats">
+        <strong>Current streak:</strong> <span id="current-streak">0</span> days<br>
+        <strong>Longest streak:</strong> <span id="longest-streak">0</span> days<br>
+        <strong>Completion:</strong> <span id="percent-complete">0</span>% • 
+        Days since start: <span id="days-elapsed">0</span>
+      </div>
+
+      <div id="calendar-grid"></div>
+
+      <div id="note-section">
+        <h3>Note for Day <span id="note-day"></span></h3>
+        <textarea id="note-input" placeholder="How was your focus/productivity today? Mood? Any urges or replacement behaviors? What did you do with the extra time?"></textarea>
+        <button class="secondary-btn" onclick="saveNote()">Save Note</button>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <button class="cta" onclick="resetTracker()">Reset This Experiment</button>
+        <button class="secondary-btn" onclick="exportSummary()">Export Summary (txt)</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Quick Tips</h3>
+      <ul>
+        <li>Replace the habit: keep a book, journal, podcast, or walk ready for downtime moments.</li>
+        <li>Lower friction: delete apps from home screen, use grayscale mode, set strict phone-down times.</li>
+        <li>Common wins: deeper focus, less comparison anxiety, better sleep, more meaningful conversations — often noticeable by day 5–12.</li>
+        <li>Slip up? Mark it and restart the next day — this is a detox experiment, not a moral test.</li>
+      </ul>
+    </div>
+
+    <div class="insight">
+      <h3>Streak Insight</h3>
+      <p>
+        Social media detox streaks most frequently break between days 5–15 due to FOMO, boredom, or work-related "necessity."<br>
+        If you reach day 14 at ≥80% completion, the mental clarity and reclaimed time usually make continuing feel natural rather than effortful.
+      </p>
+    </div>
+
+    <p class="muted" style="text-align:center; margin:2rem 0;">
+      Want more experiments like this?<br>
+      Get one new streak idea per week. <a href="/subscribe" style="color:#1a1a1a; text-decoration:underline;">Join the low-volume list</a> — unsubscribe anytime.
+    </p>
+
+    <p style="text-align:center; margin:3rem 0;">
+      <a class="cta" href="/">← Back to Home</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2026 The Streak Lab. All rights reserved.</p>
+    <p>
+      <a href="/privacy">Privacy Policy</a> •
+      <a href="/about">About</a> •
+      <a href="/how-tracking-works">How Tracking Works</a> •
+      <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+    </p>
+  </footer>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/streak-tracker.js"></script>
+
+</body>
+</html>

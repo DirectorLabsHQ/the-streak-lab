@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Experiments – 30-Day Habit Resets | The Streak Lab</title>
+  <meta name="description" content="Choose your 30-day habit reset: no drinking, no sugar, early bedtime, daily walking, stretching, reading, no social media — tracked privately in your browser." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="All Experiments – 30-Day Habit Resets | The Streak Lab" />
+  <meta property="og:description" content="Simple, private 30-day challenges: alcohol, sugar, social media, sleep, movement, reading. Local tracking, no accounts, no guilt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thestreaklab.com/experiments" />
+  <meta property="og:image" content="https://thestreaklab.com/images/og-experiments.jpg" />
+
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --muted: #555;
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --border: #e5e5e5;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: #1a1a1a;
+      margin: 0;
+      line-height: 1.6;
+    }
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .muted {
+      color: var(--muted);
+    }
+    .intro-guide {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .experiment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .experiment-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .experiment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .experiment-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+    }
+    .experiment-card .tags {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .start-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.4rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .start-btn:hover {
+      opacity: 0.9;
+    }
+    footer {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 0.75rem;
+    }
+    footer a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .nav-links.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">The Streak Lab</a>
+      <div class="hamburger" aria-label="Toggle menu" id="hamburgerBtn">☰</div>
+      <div class="nav-links" id="navMenu">
+        <a href="/">Home</a>
+        <a href="/experiments">All Experiments</a>
+        <a href="/how-tracking-works">How Tracking Works</a>
+        <a href="/about">About</a>
+        <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1>All Experiments</h1>
+    <p class="muted" style="font-size:1.1rem; margin-bottom:1rem;">
+      Choose a 30-day reset. Track privately in your browser. No accounts, no guilt — just your own data.
+    </p>
+
+    <div class="intro-guide">
+      <p>
+        Not sure where to begin?<br>
+        <strong>Most people start with Daily Walking or Daily Reading</strong> — low friction, high signal.
+      </p>
+    </div>
+
+    <div class="experiment-grid">
+      <div class="experiment-card">
+        <h3>30-Day No Drinking</h3>
+        <p class="tags muted">High impact · Medium difficulty</p>
+        <p>Zero alcohol reset. Watch sleep, energy, mood, and focus improve.</p>
+        <a href="/30-day-no-drinking-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>30-Day No Sugar</h3>
+        <p class="tags muted">High impact · Medium-high difficulty</p>
+        <p>Cut added sugar. Observe stable energy, fewer cravings, clearer skin.</p>
+        <a href="/30-day-no-sugar-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>Early Bedtime</h3>
+        <p class="tags muted">Medium impact · Medium difficulty</p>
+        <p>Consistent early sleep. Track better mornings, energy, and mood.</p>
+        <a href="/early-bedtime-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>Daily Walking</h3>
+        <p class="tags muted">Beginner-friendly · Low friction</p>
+        <p>Walk every day. See gains in energy, stress relief, and movement.</p>
+        <a href="/daily-walking-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>Daily Stretching</h3>
+        <p class="tags muted">Beginner-friendly · Low friction</p>
+        <p>Stretch daily. Improve flexibility, posture, tension, and recovery.</p>
+        <a href="/daily-stretching-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>Daily Reading</h3>
+        <p class="tags muted">Beginner-friendly · Low friction</p>
+        <p>Read every day. Build focus, knowledge, creativity, and calm.</p>
+        <a href="/reading-streak" class="start-btn">Start This Experiment</a>
+      </div>
+
+      <div class="experiment-card">
+        <h3>No Social Media</h3>
+        <p class="tags muted">High impact · Medium-high difficulty</p>
+        <p>30-day detox. Reclaim attention, reduce anxiety, find more time.</p>
+        <a href="/no-social-media-streak" class="start-btn">Start This Experiment</a>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center; margin-top:3rem; background:#f8f9fa;">
+      <p style="font-size:1.1rem; margin:0;">
+        Want a new experiment idea every month or so?<br>
+        <a href="/subscribe" style="color:var(--primary); font-weight:600; text-decoration:underline;">Join the low-volume list</a> — unsubscribe anytime.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 The Streak Lab. All rights reserved.</p>
+    <p>
+      <a href="/privacy">Privacy Policy</a> •
+      <a href="/about">About</a> •
+      <a href="/how-tracking-works">How Tracking Works</a> •
+      <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+    </p>
+  </footer>
+
+  <script src="/js/nav.js"></script>
+
+</body>
+</html>

@@ -1,212 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>NBA Player Prop Trends & Heat Map | L10 Streak Lab 2026</title>
-    <meta name="description" content="Free NBA player prop intelligence tool. Track L10 performance streaks for points, rebounds, assists, and 3PM. Identify hot betting trends with our real-time Heat Map.">
-    <meta name="keywords" content="NBA player prop trends, player prop streaks, NBA betting intelligence, GSW player props, NBA player heat map, last 10 games stats">
-    <link rel="canonical" href="https://yourdomain.com/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Streak Lab — Simple 30-Day Habit Experiments</title>
+  <meta name="description" content="Run simple 30-day habit experiments: no drinking, no sugar, early bedtime, daily walking, stretching, reading, no social media. Track privately in your browser — no apps, no accounts, no guilt." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Streak Lab — Simple 30-Day Habit Experiments" />
+  <meta property="og:description" content="Time-boxed habit resets to test what actually works for you. Track locally, no guilt if you stop. No logins, no tracking — just your own data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thestreaklab.com" />
+  <meta property="og:image" content="https://thestreaklab.com/images/og-streaklab.jpg" />
 
-    <meta property="og:title" content="NBA Player Prop Streak Lab | Real-Time Betting Intelligence">
-    <meta property="og:description" content="See who is burning hot vs their prop lines. Data-driven trends for PTS, REB, AST, and 3PM.">
-    <meta property="og:type" content="website">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "NBA Streak Lab",
-      "url": "https://yourdomain.com/",
-      "description": "An advanced analytics dashboard tracking NBA player performance streaks and prop bet hit rates.",
-      "applicationCategory": "SportsApplication",
-      "genre": "Sports Analytics",
-      "about": {
-        "@type": "Thing",
-        "name": "NBA Player Props"
-      }
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
     }
-    </script>
-
-    <style>
-        :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #38bdf8; --hot: #ef4444; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        
-        /* SEO Header Section */
-        .intel-brief { background: #1e293b; border-left: 4px solid var(--accent); padding: 25px; border-radius: 10px; margin-bottom: 30px; }
-        .intel-brief h2 { margin-top: 0; font-size: 1.2rem; color: var(--accent); }
-        .intel-brief p { margin: 10px 0; color: #94a3b8; font-size: 0.95rem; }
-
-        .header-ui { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .timestamp { font-size: 0.85rem; color: var(--accent); font-weight: bold; }
-
-        /* Dashboard UI */
-        .controls { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; align-items: center; }
-        #searchBar { flex-grow: 1; min-width: 280px; padding: 14px; border-radius: 8px; border: 1px solid #475569; background: var(--card-bg); color: white; font-size: 1rem; }
-        
-        .switch-wrapper { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: bold; color: #94a3b8; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 22px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--hot); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        .tabs { display: flex; gap: 5px; background: #334155; padding: 5px; border-radius: 10px; }
-        .tab-btn { padding: 10px 18px; border: none; background: transparent; color: #94a3b8; cursor: pointer; border-radius: 6px; font-weight: bold; font-size: 0.85rem; transition: 0.2s; }
-        .tab-btn.active { background: var(--accent); color: var(--bg); }
-
-        /* Data Table */
-        .table-container { overflow-x: auto; border-radius: 12px; background: var(--card-bg); }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #334155; }
-        th { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .heat-pill { padding: 5px 10px; border-radius: 5px; font-weight: 800; font-size: 0.85rem; display: inline-block; width: 45px; text-align: center; }
-        .gsw-row { border-left: 4px solid #fde047; }
-
-        /* SEO Footer Content */
-        .seo-article { margin-top: 60px; padding-top: 40px; border-top: 1px solid #334155; color: #cbd5e1; }
-        .seo-article h2 { color: var(--text); font-size: 1.5rem; }
-        .seo-article h3 { color: var(--accent); font-size: 1.1rem; margin-top: 25px; }
-        .seo-article p { margin-bottom: 15px; max-width: 850px; }
-    </style>
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+    }
+    h1, h2, h3 {
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 3.5rem;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      margin: 0.75rem 0;
+    }
+    ul {
+      padding-left: 1.25rem;
+    }
+    li {
+      margin: 0.4rem 0;
+    }
+    .muted {
+      color: #555;
+    }
+    .hero-sub {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: 6px;
+      background: #1a1a1a;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .cta:hover {
+      opacity: 0.9;
+    }
+    .browse-link {
+      display: block;
+      margin: 2rem 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .browse-link a {
+      color: #1a1a1a;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e5e5;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 0.75rem;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <main>
-        <article class="intel-brief">
-            <header>
-                <h2>🔬 NBA Player Prop Intelligence Dashboard</h2>
-                <p>Welcome to the <strong>Streak Lab</strong>, a high-density analytics tool for identifying <strong>NBA player prop trends</strong>. We monitor the "Heat Index"—the percentage of the last 10 games (L10) an athlete has surpassed specific performance benchmarks.</p>
-                <p><strong>Tracking Benchmarks:</strong> 20+ Points, 7+ Rebounds, 5+ Assists, and 3+ 3PM. Data is synced directly from official NBA game logs to assist in identifying <strong>sharp betting trends</strong>.</p>
-            </header>
-        </article>
-
-        <section class="header-ui">
-            <div>
-                <h1 style="margin:0; font-size: 1.8rem;">🔥 NBA Streak Lab</h1>
-                <div id="update-time" class="timestamp">Syncing 2026 Data...</div>
-            </div>
-            
-            <div class="switch-wrapper">
-                <span>SHARP MODE (80%+)</span>
-                <label class="switch" title="Filter for high-probability streaks">
-                    <input type="checkbox" id="sharpToggle" onchange="filterAndRender()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-        </section>
-
-        <nav class="controls">
-            <input type="text" id="searchBar" placeholder="Search player or team (LAL, GSW, NYK)..." onkeyup="filterAndRender()">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="setSort('pts_heat', this)">POINTS</button>
-                <button class="tab-btn" onclick="setSort('reb_heat', this)">REBOUNDS</button>
-                <button class="tab-btn" onclick="setSort('ast_heat', this)">ASSISTS</button>
-                <button class="tab-btn" onclick="setSort('tpm_heat', this)">3PM</button>
-            </div>
-        </nav>
-
-        <div class="table-container">
-            <table id="labTable">
-                <thead>
-                    <tr>
-                        <th>Athlete</th>
-                        <th>Team</th>
-                        <th>PTS</th>
-                        <th>REB</th>
-                        <th>AST</th>
-                        <th>3PM</th>
-                        <th>Last Outing</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
-
-        <section class="seo-article">
-            <h2>Why Track NBA Player Performance Streaks?</h2>
-            <p>In <strong>NBA prop betting</strong>, historical averages often hide the reality of a player's current form. A player averaging 20 points per game might actually be on a cold streak, while a bench player might be seeing increased usage due to injuries. The <strong>Streak Lab Heat Index</strong> reveals the current momentum of 98+ key athletes.</p>
-            
-            <h3>How to Use Our NBA Heat Map</h3>
-            <p>Our dashboard allows you to toggle "Sharp Mode," which instantly filters the league to show only athletes with an 80% or higher hit rate over their last 10 games. This is essential for identifying high-probability <strong>over/under picks</strong> and building winning parlays.</p>
-            
-            <h3>Data Methodology & Reliability</h3>
-            <p>All data is processed using Python via the <code>nba_api</code>, ensuring the statistics are pulled from official league sources. We update the <strong>NBA Prop Trends</strong> daily at 10:00 AM EST to reflect the previous night's results. By analyzing the frequency of "hits" rather than just raw averages, we provide a clearer picture of player consistency.</p>
-        </section>
-    </main>
-
-    <footer class="mt-20 pb-10 text-center border-t border-neutral-900 pt-8">
-    <p class="text-neutral-500 text-[10px] uppercase tracking-widest mb-4">
-        &copy; 2026 Academic Athlete Lab. Research-Backed Diagnostics.
+  <main>
+    <!-- HERO -->
+    <h1>The Streak Lab</h1>
+    <p class="muted hero-sub">
+      Simple 30-Day Habit Experiments
     </p>
-    <div class="flex justify-center gap-6 text-[10px] font-mono uppercase tracking-tighter">
-        <a href="index.html" class="text-neutral-400 hover:text-white transition-colors">Home</a>
-        <a href="privacy.html" class="text-neutral-400 hover:text-white transition-colors">Privacy Policy</a>
-        <a href="terms.html" class="text-neutral-400 hover:text-white transition-colors">Terms of Service</a>
+    <p class="muted">
+      Run small, time-boxed tests on your habits. Track privately in your browser. No apps, no accounts, no guilt — just observable data.
+    </p>
+
+    <!-- HOW IT WORKS -->
+    <h2>How this works</h2>
+    <ul>
+      <li>Choose <strong>one</strong> experiment (usually 30 days)</li>
+      <li>Track progress locally in your browser</li>
+      <li>Adjust or stop anytime — this is data, not discipline</li>
+    </ul>
+    <p class="muted">
+      Most people run <strong>1–3 experiments per year</strong>.
+    </p>
+
+    <!-- PRIMARY CTA -->
+    <h2>Start here</h2>
+    <div class="card">
+      <h3>30-Day No Drinking Experiment</h3>
+      <p>
+        A simple reset to observe sleep, energy, focus, and habits — tracked privately on this device.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:1rem;">
+        Optional: interactive 30-day calendar saved only in your browser.
+      </p>
+      <a class="cta" href="/30-day-no-drinking-streak">
+        Start this experiment →
+      </a>
     </div>
-</footer>
-</div>
 
-<script>
-    let rawPlayers = [];
-    let currentSort = 'pts_heat';
+    <!-- BROWSE ALL -->
+    <p class="browse-link muted">
+      Want to see the full list?<br>
+      <a href="/experiments">Browse all 7 experiments →</a>
+    </p>
 
-    async function init() {
-        try {
-            const res = await fetch('streak_data.json');
-            const data = await res.json();
-            rawPlayers = data.players;
-            document.getElementById('update-time').innerText = `Last Updated: ${data.last_updated}`;
-            filterAndRender();
-        } catch (e) {
-            document.getElementById('update-time').innerText = "Update Error - Check Data Source";
-        }
-    }
+    <!-- OTHER EXPERIMENTS -->
+    <h2>Other experiments</h2>
+    <div class="card">
+      <h3>Reset</h3>
+      <ul>
+        <li><a href="/30-day-no-sugar-streak">30-Day No Sugar Experiment</a></li>
+        <li><a href="/early-bedtime-streak">Early Bedtime Experiment</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Move</h3>
+      <ul>
+        <li><a href="/daily-walking-streak">Daily Walking Streak</a></li>
+        <li><a href="/daily-stretching-streak">Daily Stretching Streak</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Focus</h3>
+      <ul>
+        <li><a href="/reading-streak">Daily Reading Streak</a></li>
+        <li><a href="/no-social-media-streak">No Social Media Experiment</a></li>
+      </ul>
+    </div>
 
-    function setSort(key, btn) {
-        currentSort = key;
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filterAndRender();
-    }
+    <!-- PHILOSOPHY -->
+    <h2>What this is (and isn’t)</h2>
+    <ul>
+      <li>Not a productivity app</li>
+      <li>Not medical advice</li>
+      <li>Not a forever commitment</li>
+      <li>No streak shaming</li>
+    </ul>
+    <p class="muted">
+      Just small, observable experiments.
+    </p>
 
-    function filterAndRender() {
-        const query = document.getElementById('searchBar').value.toLowerCase();
-        const sharpOnly = document.getElementById('sharpToggle').checked;
-        
-        let filtered = rawPlayers.filter(p => {
-            const matchesSearch = p.name.toLowerCase().includes(query) || (p.team_code?.toLowerCase() || "").includes(query);
-            const isSharp = sharpOnly ? (p[currentSort] >= 80) : true;
-            return matchesSearch && isSharp;
-        });
+    <!-- PRIVACY & EMAIL TEASE -->
+    <h2>Privacy-first by design</h2>
+    <p>
+      Tracking happens locally in your browser. No accounts. No data collection. No emails required.
+    </p>
+    <p class="muted" style="margin-top:1.5rem;">
+      Want occasional new experiments? <a href="/subscribe" style="color:#1a1a1a; text-decoration:underline;">Join the low-volume list</a> — unsubscribe anytime.
+    </p>
 
-        filtered.sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
-
-        const body = document.getElementById('tableBody');
-        body.innerHTML = filtered.map(p => `
-            <tr class="${p.team_code === 'GSW' ? 'gsw-row' : ''}">
-                <td><strong>${p.name}</strong></td>
-                <td><span style="opacity:0.5">${p.team_code || '---'}</span></td>
-                <td>${renderPill(p.pts_heat, 'pts_heat')}</td>
-                <td>${renderPill(p.reb_heat, 'reb_heat')}</td>
-                <td>${renderPill(p.ast_heat, 'ast_heat')}</td>
-                <td>${renderPill(p.tpm_heat, 'tpm_heat')}</td>
-                <td style="color:#64748b; font-size:0.8rem">${p.last_game}</td>
-            </tr>
-        `).join('');
-    }
-
-    function renderPill(val, key) {
-        const color = val >= 80 ? '#ef4444' : (val >= 50 ? '#f97316' : '#475569');
-        const highlight = key === currentSort ? 'outline: 2px solid white;' : '';
-        return `<span class="heat-pill" style="background:${color}; ${highlight}">${val}%</span>`;
-    }
-
-    init();
-</script>
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 The Streak Lab. All rights reserved.</p>
+      <p>
+        <a href="/privacy">Privacy Policy</a> •
+        <a href="/about">About</a> •
+        <a href="/how-tracking-works">How Tracking Works</a> •
+        <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+      </p>
+    </footer>
+  </main>
 </body>
 </html>

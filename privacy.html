@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – The Streak Lab</title>
+  <meta name="description" content="The Streak Lab Privacy Policy: We collect no personal data. All tracking happens locally in your browser. No accounts, no servers, no third-party tracking." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Privacy Policy – The Streak Lab" />
+  <meta property="og:description" content="We collect nothing. Your habit experiment data stays on your device only — no accounts, no servers, no tracking pixels." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thestreaklab.com/privacy" />
+  <meta property="og:image" content="https://thestreaklab.com/images/og-privacy.jpg" />
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Privacy Policy – The Streak Lab" />
+  <meta name="twitter:description" content="Zero personal data collection. Local-only tracking in your browser. No accounts, no tracking." />
+
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --muted: #555;
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --border: #e5e5e5;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: #1a1a1a;
+      margin: 0;
+      line-height: 1.6;
+    }
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+    h2 { font-size: 1.5rem; margin: 2.5rem 0 0.75rem; font-weight: 600; }
+    .muted { color: var(--muted); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    footer {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 0.75rem;
+    }
+    footer a:hover { color: var(--primary); text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .nav-links.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">The Streak Lab</a>
+      <div class="hamburger" aria-label="Toggle menu" id="hamburgerBtn">☰</div>
+      <div class="nav-links" id="navMenu">
+        <a href="/">Home</a>
+        <a href="/experiments">All Experiments</a>
+        <a href="/how-tracking-works">How Tracking Works</a>
+        <a href="/about">About</a>
+        <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="muted" style="font-size:1.1rem; margin-bottom:2rem;">
+      Last updated: February 1, 2026
+    </p>
+
+    <div class="card">
+      <h2>We Collect Nothing</h2>
+      <p>
+        The Streak Lab collects **no personal data** of any kind. There are no accounts, no logins, no emails required, no cookies for tracking, no analytics scripts, no third-party pixels, and no server-side storage.
+      </p>
+      <p>
+        All progress (start date, completed days, missed days, notes) is stored **exclusively in your browser** using localStorage — the same technology websites use to remember preferences like dark mode.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>How Your Data Stays Private</h2>
+      <ul>
+        <li><strong>Local only</strong>: Your streak data never leaves your device. We have no way to access it — even if we wanted to.</li>
+        <li><strong>No server</strong>: We do not send anything to our servers (or anyone else's). No logs, no IP addresses, no device fingerprints.</li>
+        <li><strong>No third parties</strong>: No Google Analytics, no Facebook Pixel, no ad networks, no email marketing tools embedded on the site.</li>
+        <li><strong>No accounts</strong>: Because there are none, there are no passwords, no email lists (unless you voluntarily subscribe via the link — see below), no profile data.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Optional Email Subscription</h2>
+      <p>
+        The only way we ever collect any information is if you voluntarily join our low-volume email list (via the "Join the low-volume list" link on pages).
+      </p>
+      <ul>
+        <li>We use a third-party service (e.g., Buttondown or Substack) to manage subscriptions.</li>
+        <li>We only send occasional new experiment ideas (1–2 per month at most).</li>
+        <li>You can unsubscribe instantly from any email.</li>
+        <li>We do not sell, rent, or share your email address with anyone.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>What Happens If You Clear Browser Data?</h2>
+      <p>
+        All your streak progress is deleted — because it's stored only on your device. This is the trade-off for total privacy. We have no backup or recovery method.
+      </p>
+      <p class="muted">
+        Tip: Use the "Export Summary" button on each experiment page to save a text file of your progress before clearing data.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Changes to This Policy</h2>
+      <p>
+        If we ever make changes (unlikely, since we collect nothing), we will update this page and note the date above. Continued use of the site constitutes acceptance of any changes.
+      </p>
+    </div>
+
+    <p style="text-align:center; margin:3rem 0;">
+      Questions? Feel free to reach out via X: <a href="https://x.com/TheRealPT3">@TheRealPT3</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2026 The Streak Lab. All rights reserved.</p>
+    <p>
+      <a href="/privacy">Privacy Policy</a> •
+      <a href="/about">About</a> •
+      <a href="/how-tracking-works">How Tracking Works</a> •
+      <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+    </p>
+  </footer>
+
+  <script src="/js/nav.js"></script>
+
+</body>
+</html>

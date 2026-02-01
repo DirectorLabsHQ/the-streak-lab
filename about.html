@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About The Streak Lab – Simple, Private Habit Experiments</title>
+  <meta name="description" content="The Streak Lab is a privacy-first collection of 30-day habit experiments. Track locally in your browser — no accounts, no data collection, no guilt. Just observable self-experiments." />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="About The Streak Lab – Simple, Private Habit Experiments" />
+  <meta property="og:description" content="No apps, no logins, no tracking. Just clean, local streak tools for real habit resets. Built for curious people who want data without the surveillance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thestreaklab.com/about" />
+  <meta property="og:image" content="https://thestreaklab.com/images/og-about.jpg" />
+
+  <style>
+    /* Identical base styles as other pages */
+    :root { --primary: #1a1a1a; --muted: #555; --bg: #fafafa; --card-bg: #ffffff; --border: #e5e5e5; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: #1a1a1a; margin: 0; line-height: 1.6; }
+    nav { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: 720px; margin: 0 auto; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.25rem; color: var(--primary); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--primary); }
+    .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+    main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 2.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+    h2 { font-size: 1.5rem; margin: 3rem 0 0.75rem; font-weight: 600; }
+    .muted { color: var(--muted); }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+    footer { background: white; border-top: 1px solid var(--border); padding: 2rem 1.25rem; text-align: center; font-size: 0.9rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 0.75rem; }
+    footer a:hover { color: var(--primary); text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); padding: 1rem; }
+      .nav-links.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">The Streak Lab</a>
+      <div class="hamburger" aria-label="Toggle menu" id="hamburgerBtn">☰</div>
+      <div class="nav-links" id="navMenu">
+        <a href="/">Home</a>
+        <a href="/experiments">All Experiments</a>
+        <a href="/how-tracking-works">How Tracking Works</a>
+        <a href="/about">About</a>
+        <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1>About The Streak Lab</h1>
+    <p class="muted" style="font-size:1.1rem; margin-bottom:2rem;">
+      Simple, private 30-day habit experiments. No apps, no accounts, no guilt — just your own observable data.
+    </p>
+
+    <div class="card">
+      <h2>Why We Built This</h2>
+      <p>
+        Most habit trackers want your email, your data, your subscription. We wanted the opposite: zero friction, maximum privacy, real experimentation.
+      </p>
+      <p>
+        Inspired by "don't break the chain" calendars, Atomic Habits-style resets, and the idea that small, time-boxed tests beat vague "lifestyle changes."
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>What We Are (and Aren't)</h2>
+      <ul>
+        <li><strong>We are:</strong> A free collection of browser-based streak trackers</li>
+        <li><strong>We are:</strong> 100% local — your progress never leaves your device</li>
+        <li><strong>We are:</strong> Focused on curiosity and observation, not perfection</li>
+        <li><strong>We aren't:</strong> A productivity app with notifications or gamification</li>
+        <li><strong>We aren't:</strong> Medical, financial, or psychological advice</li>
+        <li><strong>We aren't:</strong> Collecting any data about you</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>How It Started</h2>
+      <p>
+        The original Streak Lab was an NBA player prop streak dashboard. We loved the "heat index" concept — tracking hot/cold runs with clear data.
+      </p>
+      <p>
+        We realized the same mechanics (streaks, regression, no-shame resets) could apply to personal habits. So we rebuilt it from the ground up — privacy-first, evergreen, and guilt-free.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Our Philosophy</h2>
+      <ul>
+        <li>30 days is long enough to see change, short enough to finish.</li>
+        <li>Minimum viable wins beat impossible standards.</li>
+        <li>Data without judgment — misses are information, not failure.</li>
+        <li>Privacy is non-negotiable in 2026.</li>
+      </ul>
+    </div>
+
+    <p style="text-align:center; margin:3rem 0;">
+      <a class="cta" href="/experiments" style="padding:0.8rem 1.8rem; background:var(--primary); color:white; border-radius:6px; text-decoration:none;">See All Experiments →</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2026 The Streak Lab. All rights reserved.</p>
+    <p>
+      <a href="/privacy">Privacy Policy</a> •
+      <a href="/about">About</a> •
+      <a href="/how-tracking-works">How Tracking Works</a> •
+      <a href="https://nba.thestreaklab.com">Legacy NBA Streaks</a>
+    </p>
+  </footer>
+
+  <script src="/js/nav.js"></script>
+
+</body>
+</html>
