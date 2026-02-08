@@ -1,6 +1,6 @@
 Stephen Curry GSW
 Buddy Hield GSW
-Jonathan Kuminga GSW
+Jonathan Kuminga ATL
 Brandin Podziemski GSW
 Trayce Jackson-Davis GSW
 Moses Moody GSW
@@ -47,7 +47,7 @@ Jaylen Brown BOS
 Derrick White BOS
 Kristaps Porzingis BOS
 Bam Adebayo MIA
-Jimmy Butler MIA
+Jimmy Butler GSW
 Tyler Herro MIA
 Karl-Anthony Towns NYK
 Rudy Gobert MIN
@@ -59,8 +59,8 @@ Evan Mobley CLE
 Darius Garland CLE
 Myles Turner IND
 Pascal Siakam IND
-Coby White CHI
-Zach LaVine CHI
+Coby White CHA
+Zach LaVine SAC
 Josh Giddey CHI
 Anfernee Simons POR
 Jerami Grant POR
@@ -70,8 +70,8 @@ RJ Barrett TOR
 Cam Thomas BKN
 Nic Claxton BKN
 Cameron Johnson BKN
-Jordan Poole WAS
-Kyle Kuzma WAS
+Jordan Poole NOP
+Kyle Kuzma MIL
 Bilal Coulibaly WAS
 Terry Rozier MIA
 Dejounte Murray NOP
@@ -89,10 +89,10 @@ Miles Bridges CHA
 LaMelo Ball CHA
 Brandon Miller CHA
 Ivica Zubac LAC
-James Harden LAC
+James Harden CLE
 Kawhi Leonard LAC
 Norman Powell LAC
 Aaron Gordon DEN
-Michael Porter Jr. DEN
-Brook Lopez MIL
+Michael Porter Jr. NJ
+Brook Lopez LAC
 Quinten Post GSW
