@@ -8,33 +8,11 @@ TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
 # YOUR HARDCODED PLAYER LIST (Extracted from players.txt)
 PLAYER_LIST = [
-    "Stephen Curry GSW", "Jonathan Kuminga ATL", "Buddy Hield ATL", "Brandin Podziemski GSW",
-    "Trayce Jackson-Davis GSW", "Moses Moody GSW", "De'Anthony Melton GSW", "Kyle Anderson MIA",
-    "Nikola Jokic DEN", "Luka Doncic DAL", "Giannis Antetokounmpo MIL", "Shai Gilgeous-Alexander OKC",
-    "Kevin Durant PHX", "LeBron James LAL", "Anthony Davis WAS", "Joel Embiid PHI", "Tyrese Maxey PHI",
-    "Devin Booker PHX", "Anthony Edwards MIN", "Jalen Brunson NYK", "Donovan Mitchell CLE",
-    "Tyrese Haliburton IND", "De'Aaron Fox SAS", "Domantas Sabonis SAC", "Ja Morant MEM",
-    "Victor Wembanyama SAS", "Chet Holmgren OKC", "Jalen Williams OKC", "Jalen Johnson ATL",
-    "Trae Young WAS", "Zion Williamson NOP", "Brandon Ingram NOP", "CJ McCollum NOP",
-    "Alperen Sengun HOU", "Fred VanVleet HOU", "Jalen Green HOU", "Paolo Banchero ORL",
-    "Franz Wagner ORL", "Jalen Suggs ORL", "Cade Cunningham DET", "Jaden Ivey DET",
-    "Lauri Markkanen UTA", "Mikal Bridges NYK", "OG Anunoby NYK", "Josh Hart NYK",
-    "Jaylen Brown BOS", "Derrick White BOS", "Kristaps Porzingis GSW", "Bam Adebayo MIA",
-    "Jimmy Butler GSW", "Tyler Herro MIA", "Karl-Anthony Towns NYK", "Rudy Gobert MIN",
-    "Julius Randle MIN", "Naz Reid MIN", "Donte DiVincenzo MIN", "Jarrett Allen CLE",
-    "Evan Mobley CLE", "Darius Garland LAC", "Myles Turner IND", "Pascal Siakam IND",
-    "Coby White CHA", "Zach LaVine SAC", "Josh Giddey CHI", "Anfernee Simons POR",
-    "Jerami Grant POR", "Scottie Barnes TOR", "Immanuel Quickley TOR", "RJ Barrett TOR",
-    "Cam Thomas MIL", "Nic Claxton BKN", "Cameron Johnson BKN", "Jordan Poole NOP",
-    "Kyle Kuzma MIL", "Bilal Coulibaly WAS", "Terry Rozier MIA", "Dejounte Murray NOP",
-    "Clint Capela ATL", "Bogdan Bogdanovic ATL", "Dyson Daniels ATL", "Jalen Duren DET",
-    "Ausar Thompson DET", "Keyonte George UTA", "Walker Kessler UTA", "John Collins UTA",
-    "Scoot Henderson POR", "Shaedon Sharpe POR", "Amen Thompson HOU", "Jabari Smith Jr HOU",
-    "Benedict Mathurin IND", "Aaron Nesmith IND", "Jaden McDaniels MIN", "Austin Reaves LAL",
-    "D'Angelo Russell LAL", "Malik Monk SAC", "Herb Jones NOP", "Trey Murphy III NOP",
-    "Jabari Smith Jr. HOU", "Miles Bridges CHA", "LaMelo Ball CHA", "Brandon Miller CHA",
-    "Ivica Zubac LAC", "James Harden CLE", "Kawhi Leonard LAC", "Norman Powell LAC",
-    "Aaron Gordon DEN", "Michael Porter Jr. BKN", "Brook Lopez LAC", "Quinten Post GSW"
+    "Stephen Curry GSW", 
+    "Luka Doncic DAL", 
+    "LeBron James LAL", 
+    "Kevin Durant PHX", 
+    "Victor Wembanyama SAS"
 ]
 
 def get_player_stats(player_name, team_code):
