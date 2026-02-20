@@ -3,134 +3,72 @@ import json
 from datetime import datetime
 import time
 
+# Targets for "Heat Index" (Last 10 Games)
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
-
 
 def safe_float(val):
     try:
-        return float(str(val).strip())
+        return float(str(val).strip()) if val else 0.0
     except:
         return 0.0
 
-
-def get_player_id(player_name):
-    try:
-        url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=5&type=player"
-        res = requests.get(url, timeout=10).json()
-
-        for item in res.get('items', []):
-            if isinstance(item, dict) and item.get('type') == 'player':
-                return item.get('id')
-
-        return None
-    except Exception as e:
-        print(f"❌ ID error for {player_name}: {e}")
-        return None
-
-
-def get_stat_index(labels, keys):
-    for key in keys:
-        if key in labels:
-            return labels.index(key)
-    return None
-
-
-def extract_data(data, player_name):
-    labels = []
-    entries = []
-
-    # --- NEW ESPN STRUCTURE (SAFE) ---
-    regular = data.get('regularSeason')
-
-    if isinstance(regular, dict):
-        groups = regular.get('groups', [])
-
-        if isinstance(groups, list):
-            for group in groups:
-                if isinstance(group, dict):  # 🔥 prevents crash
-                    if not labels:
-                        labels = group.get('labels', [])
-                    entries.extend(group.get('entries', []))
-
-    # --- FALLBACKS ---
-    if not entries:
-        if isinstance(data.get('events'), list):
-            entries = data.get('events', [])
-            labels = data.get('labels', [])
-
-    if not entries:
-        if isinstance(data.get('entries'), list):
-            entries = data.get('entries', [])
-            labels = data.get('labels', [])
-
-    if not entries:
-        season = data.get('season', {})
-        if isinstance(season, dict):
-            entries = season.get('entries', [])
-            labels = data.get('labels', [])
-
-    # Final validation
-    if not labels or not entries:
-        print(f"⚠️ No valid data for {player_name}")
-        return None, None
-
-    return labels, entries
-
-
 def get_player_stats(player_name, team_code):
     try:
-        player_id = get_player_id(player_name)
-        if not player_id:
-            print(f"❌ No ID for {player_name}")
-            return None
-
-        url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{player_id}/gamelog"
+        # 1. Search for Player ID
+        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
+        res = requests.get(search_url, timeout=10).json()
+        if 'items' not in res or not res['items']: return None
+        p_id = res['items'][0]['id']
+        
+        # 2. Fetch Gamelog (FORCED REGULAR SEASON 2026)
+        # Adding season=2026 and seasontype=2 (Regular Season) is the fix for empty logs
+        url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{p_id}/gamelog?season=2026&seasontype=2"
         data = requests.get(url, timeout=10).json()
 
-        labels, entries = extract_data(data, player_name)
+        # 3. Comprehensive Entry Hunting
+        entries = []
+        
+        # Check standard entries first
+        if 'entries' in data:
+            entries = data['entries']
+        
+        # Check nested season groups (common in v3)
+        if not entries and 'season' in data:
+            entries = data['season'].get('entries', [])
+            
+        # Check regularSeason groups (2026 specific)
+        if not entries and 'regularSeason' in data:
+            groups = data['regularSeason'].get('groups', [])
+            for group in groups:
+                entries.extend(group.get('entries', []))
 
-        if not labels or not entries:
+        if not entries:
             return None
 
-        # Stat indices
-        p_idx = get_stat_index(labels, ['PTS'])
-        r_idx = get_stat_index(labels, ['REB'])
-        a_idx = get_stat_index(labels, ['AST'])
+        # 4. Map Stat Labels
+        labels = data.get('labels', [])
+        def get_idx(key):
+            return labels.index(key) if key in labels else None
 
-        m_idx = get_stat_index(labels, ['3PM'])
-        if m_idx is None:
-            m_idx = get_stat_index(labels, ['3PT'])
+        p_idx = get_idx('PTS')
+        r_idx = get_idx('REB')
+        a_idx = get_idx('AST')
+        m_idx = get_idx('3PM') or get_idx('3PT')
 
-        # Filter valid games
-        valid_games = [e for e in entries if isinstance(e, dict) and e.get('stats')]
-
+        # Filter and sort
+        valid_games = [e for e in entries if e.get('stats')]
         valid_games.sort(key=lambda x: x.get('gameDate', ''), reverse=True)
         recent_games = valid_games[:10]
-
-        if not recent_games:
-            print(f"⚠️ No recent games for {player_name}")
-            return None
+        
+        if not recent_games: return None
 
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
-
         for game in recent_games:
-            stats = game.get('stats', [])
-
-            if p_idx is not None and len(stats) > p_idx:
-                if safe_float(stats[p_idx]) >= TARGETS['pts']:
-                    hits['pts'] += 1
-
-            if r_idx is not None and len(stats) > r_idx:
-                if safe_float(stats[r_idx]) >= TARGETS['reb']:
-                    hits['reb'] += 1
-
-            if a_idx is not None and len(stats) > a_idx:
-                if safe_float(stats[a_idx]) >= TARGETS['ast']:
-                    hits['ast'] += 1
-
-            if m_idx is not None and len(stats) > m_idx:
-                if safe_float(stats[m_idx]) >= TARGETS['tpm']:
-                    hits['tpm'] += 1
+            s = game.get('stats', [])
+            if p_idx is not None and safe_float(s[p_idx]) >= TARGETS['pts']: hits['pts'] += 1
+            if r_idx is not None and safe_float(s[r_idx]) >= TARGETS['reb']: hits['reb'] += 1
+            if a_idx is not None and safe_float(s[a_idx]) >= TARGETS['ast']: hits['ast'] += 1
+            if m_idx is not None and safe_float(s[m_idx]) >= TARGETS['tpm']: hits['tpm'] += 1
 
         return {
             "name": player_name,
@@ -141,49 +79,31 @@ def get_player_stats(player_name, team_code):
             "tpm_heat": int((hits['tpm'] / len(recent_games)) * 100),
             "last_game": recent_games[0].get('gameDate', '')[:10]
         }
-
-    except Exception as e:
-        print(f"❌ Error with {player_name}: {e}")
+    except Exception:
         return None
-
 
 def main():
     player_data = []
+    with open('nba-streaks/players.txt', 'r') as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-    try:
-        with open('nba-streaks/players.txt', 'r') as f:
-            lines = [line.strip() for line in f if line.strip()]
-    except:
-        print("❌ Could not find nba-streaks/players.txt")
-        return
-
-    print(f"🏀 Syncing {len(lines)} players...")
-
+    print(f"🏀 Syncing {len(lines)} athletes for The Streak Lab...")
     for line in lines:
         parts = line.split()
         team = parts[-1]
         name = " ".join(parts[:-1])
-
         stats = get_player_stats(name, team)
-
         if stats:
             player_data.append(stats)
-            print(f"✅ {name}")
+            print(f"✅ {name} ({stats['pts_heat']}% PTS Heat)")
         else:
-            print(f"⚠️ Skipped {name}")
+            print(f"⚠️ Skipping {name}: No recent game data found.")
+        time.sleep(0.5)
 
-        time.sleep(0.6)
-
-    output = {
-        "last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
-        "players": player_data
-    }
-
+    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"), "players": player_data}
     with open('nba-streaks/streak_data.json', 'w') as f:
         json.dump(output, f, indent=4)
-
-    print(f"🚀 SUCCESS: {len(player_data)} players saved")
-
+    print(f"🚀 SUCCESS: {len(player_data)} players processed.")
 
 if __name__ == "__main__":
     main()
