@@ -2,36 +2,53 @@ import requests
 import json
 from datetime import datetime
 import time
-import os
 
-# Benchmarks for Heat Index
+# Targets for your site's "Heat" mode
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
 def get_player_stats(player_name, team_code):
     try:
-        # STEP 1: Capture Athlete ID
-        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name}&limit=1&type=player"
-        res = requests.get(search_url, timeout=10).json()
-        if 'items' not in res or not res['items']: return None
-        player_id = res['items'][0]['id']
+        # STEP 1: CAPTURE THE SEARCH JSON
+        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
+        search_res = requests.get(search_url, timeout=10).json()
+        
+        if 'items' not in search_res or not search_res['items']:
+            return None
+        
+        # Extract the Key ID
+        player_id = search_res['items'][0]['id']
 
-        # STEP 2: Capture Gamelog JSON
+        # STEP 2: CAPTURE THE GAMELOG JSON
         log_url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{player_id}/gamelog"
-        logs = requests.get(log_url, timeout=10).json()
-        events = logs.get('events', [])[:10]
-        if not events: return None
+        log_res = requests.get(log_url, timeout=10).json()
+        
+        # Pull the 'Labels' (Headers) and 'Events' (Last games)
+        labels = log_res.get('labels', [])
+        events = log_res.get('events', [])[:10]
+        
+        if not labels or not events:
+            return None
 
-        # STEP 3: EXTRACT STATS (Corrected List Indices)
-        # Index Map: 3=PTS, 10=REB, 11=AST, 14=3PM
+        # STEP 3: MAP THE STATS DYNAMICALLY
+        # This finds exactly where PTS, REB, etc., are located in the list
+        idx = {
+            'pts': labels.index('PTS') if 'PTS' in labels else None,
+            'reb': labels.index('REB') if 'REB' in labels else None,
+            'ast': labels.index('AST') if 'AST' in labels else None,
+            'tpm': labels.index('3PM') if '3PM' in labels else None
+        }
+
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
+        
         for event in events:
             stats = event.get('stats', [])
-            if len(stats) > 14:
-                if float(stats[3]) >= TARGETS['pts']: hits['pts'] += 1
-                if float(stats[10]) >= TARGETS['reb']: hits['reb'] += 1
-                if float(stats[11]) >= TARGETS['ast']: hits['ast'] += 1
-                if float(stats[14]) >= TARGETS['tpm']: hits['tpm'] += 1
+            # We check the mapped index and compare to our targets
+            if idx['pts'] is not None and float(stats[idx['pts']]) >= TARGETS['pts']: hits['pts'] += 1
+            if idx['reb'] is not None and float(stats[idx['reb']]) >= TARGETS['reb']: hits['reb'] += 1
+            if idx['ast'] is not None and float(stats[idx['ast']]) >= TARGETS['ast']: hits['ast'] += 1
+            if idx['tpm'] is not None and float(stats[idx['tpm']]) >= TARGETS['tpm']: hits['tpm'] += 1
 
+        # Calculate the percentage for the dashboard
         return {
             "name": player_name,
             "team_code": team_code,
@@ -42,37 +59,34 @@ def get_player_stats(player_name, team_code):
             "last_game": f"{events[0]['gameDate'][:10]}"
         }
     except Exception as e:
-        print(f"⚠️ Failed to capture {player_name}: {e}")
+        print(f"⚠️ Failed {player_name}: {e}")
         return None
 
 def main():
-    # Load all players from your file
     player_data = []
+    # Read your .txt file with the 114+ players
     try:
         with open('nba-streaks/players.txt', 'r') as f:
-            lines = f.readlines()
+            lines = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print("❌ Error: players.txt not found in nba-streaks/ folder.")
+        print("❌ Could not find players.txt")
         return
 
     print(f"🏀 Starting sync for {len(lines)} athletes...")
 
     for line in lines:
-        line = line.strip()
-        if not line: continue
-        
         parts = line.split()
-        team = parts[-1]
-        name = " ".join(parts[:-1])
+        team_code = parts[-1]
+        player_name = " ".join(parts[:-1])
         
-        stats = get_player_stats(name, team)
+        stats = get_player_stats(player_name, team_code)
         if stats:
             player_data.append(stats)
-            print(f"✅ {name} synced.")
+            print(f"✅ {player_name} synced.")
         
-        time.sleep(0.6) # Anti-blocking delay
+        time.sleep(0.7) # Safety delay
 
-    # Save the captured data
+    # Save the final capture to your JSON file
     output = {
         "last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
         "players": player_data
@@ -81,7 +95,7 @@ def main():
     with open('nba-streaks/streak_data.json', 'w') as f:
         json.dump(output, f, indent=4)
     
-    print(f"🚀 SUCCESS: {len(player_data)} players processed into JSON.")
+    print(f"🚀 SUCCESS: {len(player_data)} players processed.")
 
 if __name__ == "__main__":
     main()
