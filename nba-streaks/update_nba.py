@@ -3,107 +3,83 @@ import json
 from datetime import datetime
 import time
 
-# Targets for "Heat Index" (Last 10 Games)
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
-def safe_float(val):
-    try:
-        return float(str(val).strip()) if val else 0.0
-    except:
-        return 0.0
-
-def get_player_stats(player_name, team_code):
+def get_player_stats_deep(player_name, team_code):
     try:
         # 1. Search for Player ID
         search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
-        res = requests.get(search_url, timeout=10).json()
-        if 'items' not in res or not res['items']: return None
-        p_id = res['items'][0]['id']
+        s_res = requests.get(search_url, timeout=10).json()
+        p_id = s_res['items'][0]['id']
+
+        # 2. Get the Event IDs (Last 10 Regular Season games)
+        events_url = f"https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2026/types/2/athletes/{p_id}/events?limit=10"
+        events_data = requests.get(events_url, timeout=10).json()
         
-        # 2. Fetch Gamelog (FORCED REGULAR SEASON 2026)
-        # Adding season=2026 and seasontype=2 (Regular Season) is the fix for empty logs
-        url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{p_id}/gamelog?season=2026&seasontype=2"
-        data = requests.get(url, timeout=10).json()
-
-        # 3. Comprehensive Entry Hunting
-        entries = []
+        event_items = events_data.get('items', [])
+        if not event_items: return None
         
-        # Check standard entries first
-        if 'entries' in data:
-            entries = data['entries']
-        
-        # Check nested season groups (common in v3)
-        if not entries and 'season' in data:
-            entries = data['season'].get('entries', [])
-            
-        # Check regularSeason groups (2026 specific)
-        if not entries and 'regularSeason' in data:
-            groups = data['regularSeason'].get('groups', [])
-            for group in groups:
-                entries.extend(group.get('entries', []))
-
-        if not entries:
-            return None
-
-        # 4. Map Stat Labels
-        labels = data.get('labels', [])
-        def get_idx(key):
-            return labels.index(key) if key in labels else None
-
-        p_idx = get_idx('PTS')
-        r_idx = get_idx('REB')
-        a_idx = get_idx('AST')
-        m_idx = get_idx('3PM') or get_idx('3PT')
-
-        # Filter and sort
-        valid_games = [e for e in entries if e.get('stats')]
-        valid_games.sort(key=lambda x: x.get('gameDate', ''), reverse=True)
-        recent_games = valid_games[:10]
-        
-        if not recent_games: return None
-
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
-        for game in recent_games:
-            s = game.get('stats', [])
-            if p_idx is not None and safe_float(s[p_idx]) >= TARGETS['pts']: hits['pts'] += 1
-            if r_idx is not None and safe_float(s[r_idx]) >= TARGETS['reb']: hits['reb'] += 1
-            if a_idx is not None and safe_float(s[a_idx]) >= TARGETS['ast']: hits['ast'] += 1
-            if m_idx is not None and safe_float(s[m_idx]) >= TARGETS['tpm']: hits['tpm'] += 1
+        last_game_date = ""
+        games_processed = 0
 
+        # 3. Drill into each Game Summary
+        for item in event_items:
+            game_id = item['$ref'].split('/')[-1].split('?')[0]
+            summary_url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={game_id}"
+            game_data = requests.get(summary_url, timeout=10).json()
+
+            # Find player in the boxscore
+            for team_box in game_data.get('boxscore', {}).get('players', []):
+                stats_group = team_box.get('statistics', [{}])[0]
+                keys = stats_group.get('keys', [])
+                
+                for p_entry in stats_group.get('athletes', []):
+                    if p_entry.get('athlete', {}).get('id') == p_id:
+                        s = p_entry.get('stats', [])
+                        
+                        def get_v(key):
+                            return float(s[keys.index(key)]) if key in keys else 0.0
+
+                        if get_v('pts') >= TARGETS['pts']: hits['pts'] += 1
+                        if get_v('reb') >= TARGETS['reb']: hits['reb'] += 1
+                        if get_v('ast') >= TARGETS['ast']: hits['ast'] += 1
+                        if get_v('3pm') >= TARGETS['tpm']: hits['tpm'] += 1
+                        
+                        if not last_game_date:
+                            last_game_date = game_data.get('header', {}).get('competitions', [{}])[0].get('date', '')[:10]
+                        games_processed += 1
+            
+            time.sleep(1) # Crucial: prevents ESPN from blocking your GitHub Action IP
+
+        if games_processed == 0: return None
         return {
-            "name": player_name,
-            "team_code": team_code,
-            "pts_heat": int((hits['pts'] / len(recent_games)) * 100),
-            "reb_heat": int((hits['reb'] / len(recent_games)) * 100),
-            "ast_heat": int((hits['ast'] / len(recent_games)) * 100),
-            "tpm_heat": int((hits['tpm'] / len(recent_games)) * 100),
-            "last_game": recent_games[0].get('gameDate', '')[:10]
+            "name": player_name, "team_code": team_code,
+            "pts_heat": int((hits['pts']/games_processed)*100),
+            "reb_heat": int((hits['reb']/games_processed)*100),
+            "ast_heat": int((hits['ast']/games_processed)*100),
+            "tpm_heat": int((hits['tpm']/games_processed)*100),
+            "last_game": last_game_date
         }
-    except Exception:
-        return None
+    except: return None
 
 def main():
     player_data = []
     with open('nba-streaks/players.txt', 'r') as f:
-        lines = [line.strip() for line in f if line.strip()]
+        lines = [l.strip() for l in f if l.strip()]
 
-    print(f"🏀 Syncing {len(lines)} athletes for The Streak Lab...")
+    print(f"🚀 Deep Scan started for {len(lines)} athletes...")
     for line in lines:
         parts = line.split()
-        team = parts[-1]
-        name = " ".join(parts[:-1])
-        stats = get_player_stats(name, team)
+        team, name = parts[-1], " ".join(parts[:-1])
+        stats = get_player_stats_deep(name, team)
         if stats:
             player_data.append(stats)
-            print(f"✅ {name} ({stats['pts_heat']}% PTS Heat)")
-        else:
-            print(f"⚠️ Skipping {name}: No recent game data found.")
-        time.sleep(0.5)
+            print(f"✅ {name}")
+        else: print(f"❌ {name}")
 
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"), "players": player_data}
     with open('nba-streaks/streak_data.json', 'w') as f:
-        json.dump(output, f, indent=4)
-    print(f"🚀 SUCCESS: {len(player_data)} players processed.")
+        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M"), "players": player_data}, f, indent=4)
 
 if __name__ == "__main__":
     main()
