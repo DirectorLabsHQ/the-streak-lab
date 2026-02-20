@@ -1,37 +1,42 @@
-name: NBA Auto Update
+name: NBA Streak Lab Daily Sync
 
 on:
   schedule:
-    # Runs at 10:00 AM UTC (approx. 5:00 AM EST) every day
-    - cron: '0 10 * * *'
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+    # Runs at 09:00 UTC (4:00 AM EST) every day
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    # Allows you to run this manually from the "Actions" tab
 
 jobs:
-  build:
+  deep-scan-update:
     runs-on: ubuntu-latest
+    # Increased timeout to 6 hours to handle the Deep Scan logic safely
+    timeout-minutes: 360
+
     permissions:
-      contents: write # Important for saving the JSON back to your repo
+      contents: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install requests
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-      - name: Run the script
-        # This points to the script inside your folder
+      - name: Run Deep Scan Script
         run: python nba-streaks/update_nba.py
 
-      - name: Save results to the repo
+      - name: Commit and Push Results
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add nba-streaks/streak_data.json
-          git commit -m "Auto-update NBA Heat Index" || exit 0
-          git push
+          # Only commit if there are actual changes to the data
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update NBA Heat Index: $(date +'%Y-%m-%d')" && git push)
