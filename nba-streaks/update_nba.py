@@ -7,52 +7,44 @@ TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
 def safe_float(val):
     try:
-        # Trims spaces and handles 'DNP' or '--' by returning 0.0
         return float(str(val).strip()) if val else 0.0
     except:
         return 0.0
 
 def find_label(labels, possible_names):
+    if not isinstance(labels, list): return None
     for name in possible_names:
         if name in labels:
             return labels.index(name)
     return None
 
-def get_player_id(player_name):
-    # STEP 1: Search for active NBA players specifically
-    url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=5&type=player"
-    try:
-        res = requests.get(url, timeout=10).json()
-        for item in res.get('items', []):
-            # Filtering for 'player' type ensures we don't get team results or retired legends
-            if item.get('type') == 'player':
-                return item.get('id')
-    except Exception as e:
-        print(f"❌ Search Error for {player_name}: {e}")
-    return None
-
 def get_player_stats(player_name, team_code):
     try:
-        player_id = get_player_id(player_name)
-        if not player_id:
-            print(f"❌ No Active ID found for {player_name}")
-            return None
+        # STEP 1: Search
+        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=5&type=player"
+        search_res = requests.get(search_url, timeout=10).json()
+        
+        player_id = None
+        for item in search_res.get('items', []):
+            if item.get('type') == 'player':
+                player_id = item.get('id')
+                break
+        
+        if not player_id: return None
 
-        # STEP 2: Fetch Gamelog JSON
+        # STEP 2: Gamelog
         url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{player_id}/gamelog"
         res = requests.get(url, timeout=10).json()
 
-        labels = res.get('labels', [])
-        events = res.get('events', [])
+        labels = res.get('labels')
+        events = res.get('events')
 
-        if not labels or not events:
-            print(f"⚠️ No recent games for {player_name} (likely inactive/injured)")
+        # TYPE SAFETY CHECK: Ensure these are lists, not dictionaries or None
+        if not isinstance(labels, list) or not isinstance(events, list):
+            print(f"⚠️ Invalid data format for {player_name}")
             return None
 
-        # Get the 10 most recent games
-        recent_games = events[:10]
-
-        # STEP 3: Map labels to indices (Handles 3PM vs 3PT)
+        # STEP 3: Map and Calculate
         idx = {
             'pts': find_label(labels, ['PTS']),
             'reb': find_label(labels, ['REB']),
@@ -61,61 +53,55 @@ def get_player_stats(player_name, team_code):
         }
 
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
+        recent_games = events[:10] 
 
         for game in recent_games:
+            # Another safety check for the individual game stats
             stats = game.get('stats', [])
-            # Only count if the index exists AND the stat value is numeric
-            if idx['pts'] is not None and safe_float(stats[idx['pts']]) >= TARGETS['pts']: hits['pts'] += 1
-            if idx['reb'] is not None and safe_float(stats[idx['reb']]) >= TARGETS['reb']: hits['reb'] += 1
-            if idx['ast'] is not None and safe_float(stats[idx['ast']]) >= TARGETS['ast']: hits['ast'] += 1
-            if idx['tpm'] is not None and safe_float(stats[idx['tpm']]) >= TARGETS['tpm']: hits['tpm'] += 1
+            if not isinstance(stats, list): continue
+            
+            if idx['pts'] is not None and len(stats) > idx['pts']:
+                if safe_float(stats[idx['pts']]) >= TARGETS['pts']: hits['pts'] += 1
+            if idx['reb'] is not None and len(stats) > idx['reb']:
+                if safe_float(stats[idx['reb']]) >= TARGETS['reb']: hits['reb'] += 1
+            if idx['ast'] is not None and len(stats) > idx['ast']:
+                if safe_float(stats[idx['ast']]) >= TARGETS['ast']: hits['ast'] += 1
+            if idx['tpm'] is not None and len(stats) > idx['tpm']:
+                if safe_float(stats[idx['tpm']]) >= TARGETS['tpm']: hits['tpm'] += 1
 
         return {
             "name": player_name,
             "team_code": team_code,
-            "pts_heat": int((hits['pts'] / len(recent_games)) * 100),
-            "reb_heat": int((hits['reb'] / len(recent_games)) * 100),
-            "ast_heat": int((hits['ast'] / len(recent_games)) * 100),
-            "tpm_heat": int((hits['tpm'] / len(recent_games)) * 100),
-            "last_game": recent_games[0].get('gameDate', '')[:10]
+            "pts_heat": int((hits['pts'] / len(recent_games)) * 100) if recent_games else 0,
+            "reb_heat": int((hits['reb'] / len(recent_games)) * 100) if recent_games else 0,
+            "ast_heat": int((hits['ast'] / len(recent_games)) * 100) if recent_games else 0,
+            "tpm_heat": int((hits['tpm'] / len(recent_games)) * 100) if recent_games else 0,
+            "last_game": recent_games[0].get('gameDate', '')[:10] if recent_games else "N/A"
         }
     except Exception as e:
-        print(f"❌ Critical Error with {player_name}: {e}")
+        print(f"❌ Error with {player_name}: {e}")
         return None
 
 def main():
     player_data = []
-    try:
-        with open('nba-streaks/players.txt', 'r') as f:
-            lines = [line.strip() for line in f if line.strip()]
-    except:
-        print("❌ Could not open players.txt")
-        return
+    with open('nba-streaks/players.txt', 'r') as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-    print(f"🏀 Syncing {len(lines)} athletes for The Streak Lab...")
-
+    print(f"🏀 Syncing {len(lines)} players...")
     for line in lines:
         parts = line.split()
         team_code = parts[-1]
         player_name = " ".join(parts[:-1])
-
         stats = get_player_stats(player_name, team_code)
         if stats:
             player_data.append(stats)
-            print(f"✅ {player_name} synced.")
-        
-        # Slightly longer sleep to be respectful of the API with 100+ players
+            print(f"✅ {player_name}")
         time.sleep(0.7)
 
-    output = {
-        "last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
-        "players": player_data
-    }
-
+    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"), "players": player_data}
     with open('nba-streaks/streak_data.json', 'w') as f:
         json.dump(output, f, indent=4)
-
-    print(f"🚀 DONE: {len(player_data)} players saved to JSON.")
+    print(f"🚀 DONE: {len(player_data)} players saved.")
 
 if __name__ == "__main__":
     main()
