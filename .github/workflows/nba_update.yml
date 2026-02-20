@@ -28,6 +28,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add streak_data.json
+          git add nba-streaks/streak_data.json
           git commit -m "Auto-update NBA stats" || exit 0
           git push
