@@ -3,50 +3,44 @@ import json
 from datetime import datetime
 import time
 
-# Benchmarks for Heat Index
+# Benchmarks for your Heat Index
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
-# YOUR HARDCODED PLAYER LIST (Extracted from players.txt)
+# Updated Roster (Hardcoded for maximum reliability)
 PLAYER_LIST = [
-    "Stephen Curry GSW", 
-    "Luka Doncic DAL", 
-    "LeBron James LAL", 
-    "Kevin Durant PHX", 
-    "Victor Wembanyama SAS"
+    "Stephen Curry GSW", "Luka Doncic DAL", "LeBron James LAL", 
+    "Kevin Durant PHX", "Victor Wembanyama SAS"
 ]
 
 def get_player_stats(player_name, team_code):
     try:
-        # STEP 1: CAPTURE ATHLETE ID
-        # We use the common search API to find the ID based on the name
+        # STEP 1: Capture Athlete ID
         search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name}&limit=1&type=player"
         res = requests.get(search_url, timeout=10).json()
         
-        # Check if we actually captured an ID
         if 'items' not in res or not res['items']:
-            print(f"❌ Capture Failed: Could not find ID for {player_name}")
             return None
-            
         player_id = res['items'][0]['id']
 
-        # STEP 2: CAPTURE GAMELOG JSON
+        # STEP 2: Capture Gamelog JSON
         log_url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{player_id}/gamelog"
         logs = requests.get(log_url, timeout=10).json()
         
         events = logs.get('events', [])[:10]
         if not events:
-            print(f"❌ Capture Failed: No recent games in JSON for {player_name}")
             return None
 
-        # STEP 3: EXTRACT STATS FROM CAPTURED JSON
+        # STEP 3: The Fix (Access by key, not by slice index)
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
         for event in events:
-            stats = event['stats']
-            # ESPN Gamelog Index: Pts(3), Reb(10), Ast(11), 3PM(14)
-            if float(stats[3]) >= TARGETS['pts']: hits['pts'] += 1
-            if float(stats[10]) >= TARGETS['reb']: hits['reb'] += 1
-            if float(stats[11]) >= TARGETS['ast']: hits['ast'] += 1
-            if float(stats[14]) >= TARGETS['tpm']: hits['tpm'] += 1
+            # We must look for the "stats" dictionary inside each game event
+            s = event.get('stats', {})
+            
+            # Use .get() to avoid errors if a stat is missing for a game
+            if float(s.get('points', 0)) >= TARGETS['pts']: hits['pts'] += 1
+            if float(s.get('rebounds', 0)) >= TARGETS['reb']: hits['reb'] += 1
+            if float(s.get('assists', 0)) >= TARGETS['ast']: hits['ast'] += 1
+            if float(s.get('threePointFieldGoalsMade', 0)) >= TARGETS['tpm']: hits['tpm'] += 1
 
         return {
             "name": player_name,
@@ -75,14 +69,13 @@ def main():
             player_data.append(stats)
             print(f"✅ {name} synced.")
         
-        time.sleep(0.2) # Prevent ESPN rate limiting
+        time.sleep(0.5) # Increased delay to prevent ESPN rate-limiting
 
     output = {
         "last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
         "players": player_data
     }
 
-    # Saves to the same folder for your GitHub Action
     with open('nba-streaks/streak_data.json', 'w') as f:
         json.dump(output, f, indent=4)
     print(f"🚀 SUCCESS: {len(player_data)} players processed.")
