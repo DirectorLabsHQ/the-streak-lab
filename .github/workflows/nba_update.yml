@@ -22,7 +22,7 @@ jobs:
         run: pip install requests
 
       - name: Run the script
-        run: python update_nba.py
+        run: python nba-streaks/update_nba.py
 
       - name: Save results to the repo
         run: |
