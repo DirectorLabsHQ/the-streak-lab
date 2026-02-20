@@ -1,46 +1,43 @@
-import requests
-import json
-from datetime import datetime
-import time
-
-TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
-
-def safe_float(val):
-    try:
-        return float(str(val).strip()) if val else 0.0
-    except:
-        return 0.0
-
 def get_player_stats(player_name, team_code):
     try:
-        # STEP 1: Better Search (v2)
+        # 1. Search for Player ID
         search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
         res = requests.get(search_url, timeout=10).json()
         if 'items' not in res or not res['items']: return None
         p_id = res['items'][0]['id']
-
-        # STEP 2: The "Site" Gamelog (v2 is more stable for L10)
-        # This endpoint is designed for the web dashboard and is almost never 'nested'
+        
+        # 2. Fetch Gamelog
         url = f"https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/athletes/{p_id}/gamelog"
         data = requests.get(url, timeout=10).json()
 
-        # In v2, the path is: entries -> stats
-        # We look for the most recent regular season entries
-        season_data = data.get('season', {})
-        entries = season_data.get('entries', [])
+        # 3. UNIVERSAL PATH FINDER: Check all possible locations for game lists
+        # ESPN 2026 uses 'regularSeason' -> 'groups' -> 'entries'
+        entries = []
+        if 'regularSeason' in data:
+            # New 2026 nested structure
+            groups = data['regularSeason'].get('groups', [])
+            for group in groups:
+                entries.extend(group.get('entries', []))
         
+        # Fallback for older API versions or different season phases
         if not entries:
-            print(f"⚠️ No games in v2 log for {player_name}")
+            entries = data.get('season', {}).get('entries', [])
+        if not entries:
+            entries = data.get('entries', [])
+
+        if not entries:
+            print(f"⚠️ Path Error for {player_name} (ID: {p_id})")
             return None
 
-        # Stats in v2 are often pre-labeled in a list
-        # Standard Index: 3=PTS, 10=REB, 11=AST, 14=3PM
+        # Sort entries by date (most recent first) and take 10
+        entries.sort(key=lambda x: x.get('gameDate', ''), reverse=True)
         recent_games = entries[:10]
+        
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
-
         for game in recent_games:
             s = game.get('stats', [])
             if len(s) > 14:
+                # v2 Map: 3=PTS, 10=REB, 11=AST, 14=3PM
                 if safe_float(s[3]) >= TARGETS['pts']: hits['pts'] += 1
                 if safe_float(s[10]) >= TARGETS['reb']: hits['reb'] += 1
                 if safe_float(s[11]) >= TARGETS['ast']: hits['ast'] += 1
@@ -58,27 +55,3 @@ def get_player_stats(player_name, team_code):
     except Exception as e:
         print(f"❌ Error with {player_name}: {e}")
         return None
-
-def main():
-    player_data = []
-    with open('nba-streaks/players.txt', 'r') as f:
-        lines = [line.strip() for line in f if line.strip()]
-
-    print(f"🏀 Syncing {len(lines)} athletes via v2 Engine...")
-    for line in lines:
-        parts = line.split()
-        team = parts[-1]
-        name = " ".join(parts[:-1])
-        stats = get_player_stats(name, team)
-        if stats:
-            player_data.append(stats)
-            print(f"✅ {name}")
-        time.sleep(0.6)
-
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %I:%M %p"), "players": player_data}
-    with open('nba-streaks/streak_data.json', 'w') as f:
-        json.dump(output, f, indent=4)
-    print(f"🚀 SUCCESS: {len(player_data)} players processed.")
-
-if __name__ == "__main__":
-    main()
