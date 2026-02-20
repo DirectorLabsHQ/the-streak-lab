@@ -54,7 +54,7 @@ def get_nba_stats():
             continue 
 
     # 3. Save as 'nba_live_streaks.json' for your legacy site to read
-    with open('nba_live_streaks.json', 'w') as f:
+    with open('streak_data.json', 'w') as f:
         json.dump(streak_list, f, indent=2)
     
     print(f"Update Complete: Captured {len(streak_list)} player performances.")
