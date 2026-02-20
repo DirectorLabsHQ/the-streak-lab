@@ -1,4 +1,626 @@
 {
-    "last_updated": "2026-02-20 18:52",
-    "players": []
+    "last_updated": "2026-02-20 19:16",
+    "players": [
+        {
+            "name": "Nikola Jokic",
+            "team_code": "DEN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Shai Gilgeous-Alexander",
+            "team_code": "OKC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Giannis Antetokounmpo",
+            "team_code": "MIL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Luka Doncic",
+            "team_code": "LAL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Victor Wembanyama",
+            "team_code": "SAS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Anthony Edwards",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Stephen Curry",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Donovan Mitchell",
+            "team_code": "CLE",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Jaylen Brown",
+            "team_code": "BOS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Kawhi Leonard",
+            "team_code": "LAC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Cade Cunningham",
+            "team_code": "DET",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Jalen Brunson",
+            "team_code": "NYK",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Devin Booker",
+            "team_code": "PHX",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Tyrese Maxey",
+            "team_code": "PHI",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "LeBron James",
+            "team_code": "LAL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Kevin Durant",
+            "team_code": "HOU",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "De'Aaron Fox",
+            "team_code": "SAS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Paolo Banchero",
+            "team_code": "ORL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Chet Holmgren",
+            "team_code": "OKC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Jalen Johnson",
+            "team_code": "ATL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Alperen Sengun",
+            "team_code": "HOU",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Scottie Barnes",
+            "team_code": "TOR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Jalen Duren",
+            "team_code": "DET",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "Evan Mobley",
+            "team_code": "CLE",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Pascal Siakam",
+            "team_code": "IND",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Derrick White",
+            "team_code": "BOS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "OG Anunoby",
+            "team_code": "NYK",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Jarrett Allen",
+            "team_code": "CLE",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Kristaps Porzingis",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Karl-Anthony Towns",
+            "team_code": "NYK",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Amen Thompson",
+            "team_code": "HOU",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Brandon Ingram",
+            "team_code": "TOR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-16"
+        },
+        {
+            "name": "James Harden",
+            "team_code": "CLE",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Josh Giddey",
+            "team_code": "CHI",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Anfernee Simons",
+            "team_code": "POR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Immanuel Quickley",
+            "team_code": "TOR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "RJ Barrett",
+            "team_code": "TOR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Cameron Johnson",
+            "team_code": "DEN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Bilal Coulibaly",
+            "team_code": "WAS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Clint Capela",
+            "team_code": "ATL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Bogdan Bogdanovic",
+            "team_code": "ATL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Dyson Daniels",
+            "team_code": "ATL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Malik Monk",
+            "team_code": "SAC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Jabari Smith Jr",
+            "team_code": "HOU",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Miles Bridges",
+            "team_code": "CHA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "LaMelo Ball",
+            "team_code": "CHA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Brandon Miller",
+            "team_code": "CHA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Norman Powell",
+            "team_code": "MIA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-15"
+        },
+        {
+            "name": "Michael Porter Jr",
+            "team_code": "BKN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Brook Lopez",
+            "team_code": "LAC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Josh Hart",
+            "team_code": "NYK",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Mikal Bridges",
+            "team_code": "NYK",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Jaden Ivey",
+            "team_code": "DET",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "John Collins",
+            "team_code": "UTA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Aaron Nesmith",
+            "team_code": "IND",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Quinten Post",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Stephon Castle",
+            "team_code": "SAS",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Draymond Green",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Moses Moody",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Brandin Podziemski",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "De'Anthony Melton",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Al Horford",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Gary Payton II",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Gui Santos",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Quinten Post",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Will Richard",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Pat Spencer",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Nate Williams",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Malevy Leons",
+            "team_code": "GSW",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-20"
+        }
+    ]
 }
