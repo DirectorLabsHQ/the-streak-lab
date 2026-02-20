@@ -2,26 +2,30 @@ name: NBA Auto Update
 
 on:
   schedule:
-    # This tells it to run every night at 4:00 AM UTC (Midnight EST)
-    - cron: '0 4 * * *'
-  workflow_dispatch: # This adds a "Run Now" button so you can test it
+    # Runs at 10:00 AM UTC (approx. 5:00 AM EST) every day
+    - cron: '0 10 * * *'
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Important for saving the JSON back to your repo
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
-      - name: Install requests library
+      - name: Install dependencies
         run: pip install requests
 
       - name: Run the script
+        # This points to the script inside your folder
         run: python nba-streaks/update_nba.py
 
       - name: Save results to the repo
@@ -29,5 +33,5 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add nba-streaks/streak_data.json
-          git commit -m "Auto-update NBA stats" || exit 0
+          git commit -m "Auto-update NBA Heat Index" || exit 0
           git push
