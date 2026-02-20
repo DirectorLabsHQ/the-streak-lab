@@ -1,1 +1,33 @@
+name: NBA Auto Update
 
+on:
+  schedule:
+    # This tells it to run every night at 4:00 AM UTC (Midnight EST)
+    - cron: '0 4 * * *'
+  workflow_dispatch: # This adds a "Run Now" button so you can test it
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install requests library
+        run: pip install requests
+
+      - name: Run the script
+        run: python update_nba.py
+
+      - name: Save results to the repo
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add nba_live_streaks.json
+          git commit -m "Auto-update NBA stats" || exit 0
+          git push
