@@ -17,21 +17,32 @@ PLAYER_LIST = [
 
 def get_player_stats(player_name, team_code):
     try:
-        # Step 1: Search for Player ID
-        search_url = f"https://site.web.api.espn.com/apis/search/v2?query={player_name}&limit=1"
+        # STEP 1: CAPTURE ATHLETE ID
+        # We use the common search API to find the ID based on the name
+        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name}&limit=1&type=player"
         res = requests.get(search_url, timeout=10).json()
-        if not res.get('results'): return None
-        player_id = res['results'][0]['id']
+        
+        # Check if we actually captured an ID
+        if 'items' not in res or not res['items']:
+            print(f"❌ Capture Failed: Could not find ID for {player_name}")
+            return None
+            
+        player_id = res['items'][0]['id']
 
-        # Step 2: Get L10 Game Logs
+        # STEP 2: CAPTURE GAMELOG JSON
         log_url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{player_id}/gamelog"
         logs = requests.get(log_url, timeout=10).json()
+        
         events = logs.get('events', [])[:10]
-        if not events: return None
+        if not events:
+            print(f"❌ Capture Failed: No recent games in JSON for {player_name}")
+            return None
 
+        # STEP 3: EXTRACT STATS FROM CAPTURED JSON
         hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
         for event in events:
             stats = event['stats']
+            # ESPN Gamelog Index: Pts(3), Reb(10), Ast(11), 3PM(14)
             if float(stats[3]) >= TARGETS['pts']: hits['pts'] += 1
             if float(stats[10]) >= TARGETS['reb']: hits['reb'] += 1
             if float(stats[11]) >= TARGETS['ast']: hits['ast'] += 1
@@ -46,7 +57,8 @@ def get_player_stats(player_name, team_code):
             "tpm_heat": int((hits['tpm'] / len(events)) * 100),
             "last_game": f"{events[0]['gameDate'][:10]}"
         }
-    except:
+    except Exception as e:
+        print(f"⚠️ Error during capture for {player_name}: {e}")
         return None
 
 def main():
