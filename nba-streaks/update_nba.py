@@ -5,11 +5,13 @@ import time
 
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
-# -----------------------------------
-# Get recent NBA game IDs
-# -----------------------------------
-def get_recent_game_ids(days=30):
+
+def get_all_recent_boxscores(days=14):
+    """Downloads every boxscore from the last X days ONCE."""
     game_ids = []
+    all_boxscores = []
+
+    print(f"📡 Gathering game IDs for the last {days} days...")
 
     for i in range(days):
         date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
@@ -24,153 +26,166 @@ def get_recent_game_ids(days=30):
         except:
             continue
 
-        time.sleep(0.3)
+        time.sleep(0.2)
 
-    return list(set(game_ids))
+    game_ids = list(set(game_ids))
+    print(f"📦 Downloading {len(game_ids)} boxscores...")
+
+    for gid in game_ids:
+        try:
+            url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={gid}"
+            data = requests.get(url, timeout=10).json()
+
+            game_date = data.get('header', {}).get('competitions', [{}])[0].get('date', '')[:10]
+            players = data.get('boxscore', {}).get('players', [])
+
+            if players:
+                all_boxscores.append({
+                    "date": game_date,
+                    "players": players
+                })
+
+            print(f"✔️ Loaded Game {gid}", end="\r")
+
+        except:
+            continue
+
+        time.sleep(0.4)
+
+    # Sort newest first
+    all_boxscores.sort(key=lambda x: x['date'], reverse=True)
+
+    return all_boxscores
 
 
-# -----------------------------------
-# Extract stats from games
-# -----------------------------------
-def get_player_stats(player_name, team_code, game_ids):
+def get_stat_index(keys, stat_name):
+    """Safely find stat index"""
     try:
-        # Get player ID
-        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
-        res = requests.get(search_url, timeout=10).json()
-
-        if not res.get('items'):
-            return None
-
-        p_id = str(res['items'][0]['id'])
-
-        hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
-        games_processed = 0
-        last_game_date = ""
-
-        # Loop through games
-        for game_id in game_ids:
-            try:
-                url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={game_id}"
-                data = requests.get(url, timeout=10).json()
-
-                players = data.get('boxscore', {}).get('players', [])
-                found_player = False
-
-                for team in players:
-                    stats_block = team.get('statistics', [{}])[0]
-
-                    raw_keys = stats_block.get('keys', [])
-                    keys = [str(k).upper() for k in raw_keys]
-
-                    def find_idx(names):
-                        for name in names:
-                            if name.upper() in keys:
-                                return keys.index(name.upper())
-                        return None
-
-                    p_idx = find_idx(['PTS', 'POINTS'])
-                    r_idx = find_idx(['REB', 'REBOUNDS'])
-                    a_idx = find_idx(['AST', 'ASSISTS'])
-                    t_idx = find_idx(['3PM', '3PT', 'THREEPOINTFIELDGOALSMADE'])
-
-                    for athlete in stats_block.get('athletes', []):
-                        if str(athlete.get('athlete', {}).get('id')) == p_id:
-                            found_player = True
-                            stats = athlete.get('stats', [])
-
-                            def get_val(idx):
-                                try:
-                                    if idx is not None and idx < len(stats):
-                                        return float(stats[idx])
-                                    return 0
-                                except:
-                                    return 0
-
-                            if get_val(p_idx) >= TARGETS['pts']:
-                                hits['pts'] += 1
-                            if get_val(r_idx) >= TARGETS['reb']:
-                                hits['reb'] += 1
-                            if get_val(a_idx) >= TARGETS['ast']:
-                                hits['ast'] += 1
-                            if get_val(t_idx) >= TARGETS['tpm']:
-                                hits['tpm'] += 1
-
-                            games_processed += 1
-
-                            if not last_game_date:
-                                last_game_date = data.get('header', {}) \
-                                    .get('competitions', [{}])[0] \
-                                    .get('date', '')[:10]
-
-                            break
-
-                # ONLY count real games
-                if not found_player:
-                    continue
-
-                # Stop at last 10 real games
-                if games_processed >= 10:
-                    break
-
-                time.sleep(0.4)
-
-            except:
-                continue
-
-        if games_processed == 0:
-            return None
-
-        return {
-            "name": player_name,
-            "team_code": team_code,
-            "pts_heat": int((hits['pts'] / games_processed) * 100),
-            "reb_heat": int((hits['reb'] / games_processed) * 100),
-            "ast_heat": int((hits['ast'] / games_processed) * 100),
-            "tpm_heat": int((hits['tpm'] / games_processed) * 100),
-            "last_game": last_game_date
-        }
-
-    except Exception as e:
-        print(f"❌ Error with {player_name}: {e}")
+        return keys.index(stat_name)
+    except ValueError:
         return None
 
 
-# -----------------------------------
-# MAIN
-# -----------------------------------
-def main():
-    player_data = []
+def safe_stat_value(stats, idx):
+    """Safely extract stat value"""
+    try:
+        if idx is None:
+            return 0
+        return float(stats[idx])
+    except:
+        return 0
 
+
+def get_player_stats_optimized(player_name, team_code, p_id, boxscores):
+    hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
+    games_processed = 0
+    last_game_date = ""
+
+    for game in boxscores:
+        if games_processed >= 10:
+            break
+
+        found_in_game = False
+
+        for team_data in game['players']:
+            stats_blocks = team_data.get('statistics', [])
+
+            if not stats_blocks:
+                continue
+
+            stats_block = stats_blocks[0]
+
+            keys = [str(k).upper() for k in stats_block.get('keys', [])]
+
+            p_idx = get_stat_index(keys, 'PTS')
+            r_idx = get_stat_index(keys, 'REB')
+            a_idx = get_stat_index(keys, 'AST')
+            t_idx = get_stat_index(keys, '3PM')
+
+            for athlete in stats_block.get('athletes', []):
+                athlete_id = str(athlete.get('athlete', {}).get('id'))
+
+                if athlete_id == p_id:
+                    stats = athlete.get('stats', [])
+
+                    if safe_stat_value(stats, p_idx) >= TARGETS['pts']:
+                        hits['pts'] += 1
+                    if safe_stat_value(stats, r_idx) >= TARGETS['reb']:
+                        hits['reb'] += 1
+                    if safe_stat_value(stats, a_idx) >= TARGETS['ast']:
+                        hits['ast'] += 1
+                    if safe_stat_value(stats, t_idx) >= TARGETS['tpm']:
+                        hits['tpm'] += 1
+
+                    if not last_game_date:
+                        last_game_date = game['date']
+
+                    games_processed += 1
+                    found_in_game = True
+                    break
+
+            if found_in_game:
+                break
+
+    if games_processed == 0:
+        return None
+
+    return {
+        "name": player_name,
+        "team_code": team_code,
+        "pts_heat": int((hits['pts'] / games_processed) * 100),
+        "reb_heat": int((hits['reb'] / games_processed) * 100),
+        "ast_heat": int((hits['ast'] / games_processed) * 100),
+        "tpm_heat": int((hits['tpm'] / games_processed) * 100),
+        "last_game": last_game_date
+    }
+
+
+def get_player_id(name):
+    """Fetch player ID from ESPN"""
+    try:
+        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={name.replace(' ', '%20')}&limit=1&type=player"
+        data = requests.get(search_url, timeout=10).json()
+        return str(data['items'][0]['id'])
+    except:
+        return None
+
+
+def main():
     with open('nba-streaks/players.txt', 'r') as f:
         lines = [l.strip() for l in f if l.strip()]
 
-    print("📡 Fetching recent NBA games...")
-    game_ids = get_recent_game_ids(days=30)
+    # Step 1: Load all games once
+    all_boxscores = get_all_recent_boxscores(days=14)
 
-    print(f"🏀 Processing {len(lines)} players across {len(game_ids)} games...")
+    final_data = []
+
+    print(f"\n🔥 Calculating Heat for {len(lines)} players...")
 
     for line in lines:
         parts = line.split()
         team = parts[-1]
         name = " ".join(parts[:-1])
 
-        stats = get_player_stats(name, team, game_ids)
+        p_id = get_player_id(name)
+
+        if not p_id:
+            print(f"❌ {name} (ID not found)")
+            continue
+
+        stats = get_player_stats_optimized(name, team, p_id, all_boxscores)
 
         if stats:
-            player_data.append(stats)
+            final_data.append(stats)
             print(f"✅ {name} ({stats['pts_heat']}%)")
         else:
-            print(f"⚠️ {name}")
-
-    output = {
-        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "players": player_data
-    }
+            print(f"⚠️ {name} (No games found)")
 
     with open('nba-streaks/streak_data.json', 'w') as f:
-        json.dump(output, f, indent=4)
-
-    print(f"🚀 DONE: {len(player_data)} players")
+        json.dump({
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "players": final_data
+        }, f, indent=4)
 
 
 if __name__ == "__main__":
