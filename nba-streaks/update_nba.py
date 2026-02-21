@@ -6,7 +6,7 @@ DAYS_BACK = 21
 
 
 # --------------------------------------------------
-# GET RECENT COMPLETED GAME IDS
+# GET RECENT COMPLETED REGULAR SEASON GAME IDS
 # --------------------------------------------------
 def get_recent_game_ids():
     today = datetime.date.today()
@@ -29,7 +29,14 @@ def get_recent_game_ids():
         data = r.json()
 
         for event in data.get("events", []):
-            if event.get("status", {}).get("type", {}).get("completed"):
+            status = event.get("status", {}).get("type", {})
+            season = event.get("season", {})
+
+            # ✅ Only completed regular season games
+            if (
+                status.get("completed") and
+                season.get("type") == 2  # 2 = Regular season
+            ):
                 game_ids.append(event["id"])
 
     return game_ids
@@ -58,13 +65,13 @@ def get_players_from_game(game_id):
             labels = group.get("labels", [])
             athletes = group.get("athletes", [])
 
-            # Dynamically locate stat columns
+            # Dynamically find stat columns
             try:
                 pts_index = labels.index("PTS")
                 reb_index = labels.index("REB")
                 ast_index = labels.index("AST")
             except ValueError:
-                continue  # Skip if stat table format is unexpected
+                continue
 
             for athlete in athletes:
                 name = athlete.get("athlete", {}).get("displayName")
@@ -81,7 +88,7 @@ def get_players_from_game(game_id):
                         "AST": int(stats[ast_index]),
                     }
                 except ValueError:
-                    continue  # Skip DNP / non-numeric rows
+                    continue  # Skip DNP or malformed rows
 
                 all_players.append(player_data)
 
@@ -109,11 +116,10 @@ def main():
 
             all_players[name].append(p)
 
-        time.sleep(0.25)  # Prevent ESPN rate limiting
+        time.sleep(0.25)  # Prevent rate limiting
 
     print(f"🔥 Calculating Heat for {len(all_players)} players...\n")
 
-    # Display sample output (top 20 by games played)
     sorted_players = sorted(
         all_players.items(),
         key=lambda x: len(x[1]),
