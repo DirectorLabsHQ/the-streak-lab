@@ -5,79 +5,112 @@ import time
 
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
-def get_recent_game_ids(days=7):
+# -----------------------------------
+# Get recent NBA game IDs
+# -----------------------------------
+def get_recent_game_ids(days=30):
     game_ids = []
-    
+
     for i in range(days):
         date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date}"
-        
+
         try:
             data = requests.get(url, timeout=10).json()
-            events = data.get('events', [])
-            
-            for event in events:
-                game_ids.append(event.get('id'))
+            for event in data.get('events', []):
+                gid = event.get('id')
+                if gid:
+                    game_ids.append(gid)
         except:
             continue
-        
+
         time.sleep(0.3)
-    
+
     return list(set(game_ids))
 
 
-def get_player_stats_from_games(player_name, team_code, game_ids):
-    hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
-    games_processed = 0
-    last_game_date = ""
-
+# -----------------------------------
+# Extract stats from games
+# -----------------------------------
+def get_player_stats(player_name, team_code, game_ids):
     try:
-        # Get player ID once
+        # Get player ID
         search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
         res = requests.get(search_url, timeout=10).json()
+
         if not res.get('items'):
             return None
 
         p_id = str(res['items'][0]['id'])
 
+        hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
+        games_processed = 0
+        last_game_date = ""
+
+        # Loop through games
         for game_id in game_ids:
-            url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={game_id}"
-            
             try:
+                url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={game_id}"
                 data = requests.get(url, timeout=10).json()
+
                 players = data.get('boxscore', {}).get('players', [])
+                found_player = False
 
                 for team in players:
                     stats_block = team.get('statistics', [{}])[0]
-                    keys = [str(k).upper() for k in stats_block.get('keys', [])]
+
+                    raw_keys = stats_block.get('keys', [])
+                    keys = [str(k).upper() for k in raw_keys]
+
+                    def find_idx(names):
+                        for name in names:
+                            if name.upper() in keys:
+                                return keys.index(name.upper())
+                        return None
+
+                    p_idx = find_idx(['PTS', 'POINTS'])
+                    r_idx = find_idx(['REB', 'REBOUNDS'])
+                    a_idx = find_idx(['AST', 'ASSISTS'])
+                    t_idx = find_idx(['3PM', '3PT', 'THREEPOINTFIELDGOALSMADE'])
 
                     for athlete in stats_block.get('athletes', []):
                         if str(athlete.get('athlete', {}).get('id')) == p_id:
+                            found_player = True
                             stats = athlete.get('stats', [])
 
-                            def get_v(stat):
+                            def get_val(idx):
                                 try:
-                                    if stat in keys:
-                                        return float(stats[keys.index(stat)])
+                                    if idx is not None and idx < len(stats):
+                                        return float(stats[idx])
                                     return 0
                                 except:
                                     return 0
 
-                            if get_v('PTS') >= TARGETS['pts']:
+                            if get_val(p_idx) >= TARGETS['pts']:
                                 hits['pts'] += 1
-                            if get_v('REB') >= TARGETS['reb']:
+                            if get_val(r_idx) >= TARGETS['reb']:
                                 hits['reb'] += 1
-                            if get_v('AST') >= TARGETS['ast']:
+                            if get_val(a_idx) >= TARGETS['ast']:
                                 hits['ast'] += 1
-                            if get_v('3PM') >= TARGETS['tpm']:
+                            if get_val(t_idx) >= TARGETS['tpm']:
                                 hits['tpm'] += 1
 
                             games_processed += 1
 
                             if not last_game_date:
-                                last_game_date = data.get('header', {}).get('competitions', [{}])[0].get('date', '')[:10]
+                                last_game_date = data.get('header', {}) \
+                                    .get('competitions', [{}])[0] \
+                                    .get('date', '')[:10]
 
                             break
+
+                # ONLY count real games
+                if not found_player:
+                    continue
+
+                # Stop at last 10 real games
+                if games_processed >= 10:
+                    break
 
                 time.sleep(0.4)
 
@@ -97,10 +130,14 @@ def get_player_stats_from_games(player_name, team_code, game_ids):
             "last_game": last_game_date
         }
 
-    except:
+    except Exception as e:
+        print(f"❌ Error with {player_name}: {e}")
         return None
 
 
+# -----------------------------------
+# MAIN
+# -----------------------------------
 def main():
     player_data = []
 
@@ -108,7 +145,7 @@ def main():
         lines = [l.strip() for l in f if l.strip()]
 
     print("📡 Fetching recent NBA games...")
-    game_ids = get_recent_game_ids(days=7)
+    game_ids = get_recent_game_ids(days=30)
 
     print(f"🏀 Processing {len(lines)} players across {len(game_ids)} games...")
 
@@ -117,7 +154,7 @@ def main():
         team = parts[-1]
         name = " ".join(parts[:-1])
 
-        stats = get_player_stats_from_games(name, team, game_ids)
+        stats = get_player_stats(name, team, game_ids)
 
         if stats:
             player_data.append(stats)
