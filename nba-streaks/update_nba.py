@@ -51,6 +51,18 @@ def get_all_recent_boxscores(days=21):
     return all_boxscores
 
 
+def get_correct_stat_block(team):
+    """
+    ESPN now has multiple stat groups.
+    We pick the one that actually contains PTS.
+    """
+    for block in team.get('statistics', []):
+        keys = [str(k).upper() for k in block.get('keys', [])]
+        if 'PTS' in keys:
+            return block
+    return None
+
+
 def get_player_stats(player_name, team_code, boxscores):
     hits = {'pts': 0, 'reb': 0, 'ast': 0, 'tpm': 0}
     games_processed = 0
@@ -65,12 +77,14 @@ def get_player_stats(player_name, team_code, boxscores):
         found = False
 
         for team in game['players']:
-            stats_block = team.get('statistics', [{}])[0]
+
+            stats_block = get_correct_stat_block(team)
+            if not stats_block:
+                continue
 
             keys = [str(k).upper() for k in stats_block.get('keys', [])]
             athletes = stats_block.get('athletes', [])
 
-            # 🔥 flexible stat mapping
             def find_key(options):
                 for opt in options:
                     if opt in keys:
@@ -97,13 +111,13 @@ def get_player_stats(player_name, team_code, boxscores):
                         except:
                             return 0
 
-                    if val(p_idx) >= TARGETS['pts']:
+                    if p_idx is not None and val(p_idx) >= TARGETS['pts']:
                         hits['pts'] += 1
-                    if val(r_idx) >= TARGETS['reb']:
+                    if r_idx is not None and val(r_idx) >= TARGETS['reb']:
                         hits['reb'] += 1
-                    if val(a_idx) >= TARGETS['ast']:
+                    if a_idx is not None and val(a_idx) >= TARGETS['ast']:
                         hits['ast'] += 1
-                    if val(t_idx) >= TARGETS['tpm']:
+                    if t_idx is not None and val(t_idx) >= TARGETS['tpm']:
                         hits['tpm'] += 1
 
                     if not last_game_date:
