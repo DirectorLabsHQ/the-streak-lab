@@ -5,8 +5,8 @@ import time
 
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
 
+
 def get_all_recent_boxscores(days=21):
-    """Download all NBA boxscores once (last X days)."""
     game_ids = set()
     all_boxscores = []
 
@@ -15,6 +15,7 @@ def get_all_recent_boxscores(days=21):
     for i in range(days):
         date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date}"
+
         try:
             data = requests.get(url, timeout=10).json()
             for event in data.get('events', []):
@@ -22,6 +23,7 @@ def get_all_recent_boxscores(days=21):
                     game_ids.add(event['id'])
         except:
             continue
+
         time.sleep(0.2)
 
     print(f"📦 Downloading {len(game_ids)} boxscores...")
@@ -43,11 +45,9 @@ def get_all_recent_boxscores(days=21):
         except:
             continue
 
-        time.sleep(0.35)  # avoid rate limit
+        time.sleep(0.35)
 
-    # newest first
     all_boxscores.sort(key=lambda x: x['date'], reverse=True)
-
     return all_boxscores
 
 
@@ -70,25 +70,30 @@ def get_player_stats(player_name, team_code, boxscores):
             keys = [str(k).upper() for k in stats_block.get('keys', [])]
             athletes = stats_block.get('athletes', [])
 
-            # map indices once
-            def idx(stat):
-                return keys.index(stat) if stat in keys else None
+            # 🔥 flexible stat mapping
+            def find_key(options):
+                for opt in options:
+                    if opt in keys:
+                        return keys.index(opt)
+                return None
 
-            p_idx = idx('PTS')
-            r_idx = idx('REB')
-            a_idx = idx('AST')
-            t_idx = idx('3PM') if '3PM' in keys else idx('3PT')
+            p_idx = find_key(['PTS'])
+            r_idx = find_key(['REB', 'TREB'])
+            a_idx = find_key(['AST'])
+            t_idx = find_key(['3PM', 'FG3M'])
 
             for athlete in athletes:
                 name = athlete.get('athlete', {}).get('displayName', '').lower()
 
-                # 🔥 KEY FIX: NAME MATCH (NOT ID)
                 if name == player_name_lower:
                     stats = athlete.get('stats', [])
 
                     def val(i):
                         try:
-                            return float(stats[i]) if i is not None else 0
+                            v = stats[i]
+                            if v in ("", None):
+                                return 0
+                            return float(v)
                         except:
                             return 0
 
@@ -126,7 +131,6 @@ def get_player_stats(player_name, team_code, boxscores):
 
 
 def main():
-    # Load players
     try:
         with open('nba-streaks/players.txt', 'r') as f:
             lines = [l.strip() for l in f if l.strip()]
@@ -134,7 +138,6 @@ def main():
         print("❌ players.txt not found")
         return
 
-    # Step 1: get all boxscores ONCE
     all_boxscores = get_all_recent_boxscores(days=21)
 
     print(f"\n🔥 Calculating Heat for {len(lines)} players...")
