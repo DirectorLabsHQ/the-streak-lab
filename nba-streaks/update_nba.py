@@ -12,11 +12,9 @@ def get_all_recent_boxscores(days=14):
     all_boxscores = []
 
     print(f"📡 Gathering game IDs for the last {days} days...")
-
     for i in range(days):
         date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date}"
-
         try:
             data = requests.get(url, timeout=10).json()
             for event in data.get('events', []):
@@ -25,7 +23,6 @@ def get_all_recent_boxscores(days=14):
                     game_ids.append(gid)
         except:
             continue
-
         time.sleep(0.2)
 
     game_ids = list(set(game_ids))
@@ -39,11 +36,10 @@ def get_all_recent_boxscores(days=14):
             game_date = data.get('header', {}).get('competitions', [{}])[0].get('date', '')[:10]
             players = data.get('boxscore', {}).get('players', [])
 
-            if players:
-                all_boxscores.append({
-                    "date": game_date,
-                    "players": players
-                })
+            all_boxscores.append({
+                "date": game_date,
+                "players": players
+            })
 
             print(f"✔️ Loaded Game {gid}", end="\r")
 
@@ -52,28 +48,8 @@ def get_all_recent_boxscores(days=14):
 
         time.sleep(0.4)
 
-    # Sort newest first
     all_boxscores.sort(key=lambda x: x['date'], reverse=True)
-
     return all_boxscores
-
-
-def get_stat_index(keys, stat_name):
-    """Safely find stat index"""
-    try:
-        return keys.index(stat_name)
-    except ValueError:
-        return None
-
-
-def safe_stat_value(stats, idx):
-    """Safely extract stat value"""
-    try:
-        if idx is None:
-            return 0
-        return float(stats[idx])
-    except:
-        return 0
 
 
 def get_player_stats_optimized(player_name, team_code, p_id, boxscores):
@@ -90,31 +66,47 @@ def get_player_stats_optimized(player_name, team_code, p_id, boxscores):
         for team_data in game['players']:
             stats_blocks = team_data.get('statistics', [])
 
-            if not stats_blocks:
-                continue
+            # ✅ FIX: select "totals" block only
+            stats_block = None
+            for block in stats_blocks:
+                if isinstance(block, dict) and str(block.get('name', '')).lower() == 'totals':
+                    stats_block = block
+                    break
 
-            stats_block = stats_blocks[0]
+            if not stats_block:
+                continue
 
             keys = [str(k).upper() for k in stats_block.get('keys', [])]
 
-            p_idx = get_stat_index(keys, 'PTS')
-            r_idx = get_stat_index(keys, 'REB')
-            a_idx = get_stat_index(keys, 'AST')
-            t_idx = get_stat_index(keys, '3PM')
+            # Index mapping
+            p_idx = keys.index('PTS') if 'PTS' in keys else None
+            r_idx = keys.index('REB') if 'REB' in keys else None
+            a_idx = keys.index('AST') if 'AST' in keys else None
+
+            # ✅ FIX: handle 3PM vs FG3M
+            t_idx = None
+            if '3PM' in keys:
+                t_idx = keys.index('3PM')
+            elif 'FG3M' in keys:
+                t_idx = keys.index('FG3M')
 
             for athlete in stats_block.get('athletes', []):
-                athlete_id = str(athlete.get('athlete', {}).get('id'))
-
-                if athlete_id == p_id:
+                if str(athlete.get('athlete', {}).get('id')) == p_id:
                     stats = athlete.get('stats', [])
 
-                    if safe_stat_value(stats, p_idx) >= TARGETS['pts']:
+                    def val(idx):
+                        try:
+                            return float(stats[idx]) if idx is not None else 0
+                        except:
+                            return 0
+
+                    if val(p_idx) >= TARGETS['pts']:
                         hits['pts'] += 1
-                    if safe_stat_value(stats, r_idx) >= TARGETS['reb']:
+                    if val(r_idx) >= TARGETS['reb']:
                         hits['reb'] += 1
-                    if safe_stat_value(stats, a_idx) >= TARGETS['ast']:
+                    if val(a_idx) >= TARGETS['ast']:
                         hits['ast'] += 1
-                    if safe_stat_value(stats, t_idx) >= TARGETS['tpm']:
+                    if val(t_idx) >= TARGETS['tpm']:
                         hits['tpm'] += 1
 
                     if not last_game_date:
@@ -141,12 +133,11 @@ def get_player_stats_optimized(player_name, team_code, p_id, boxscores):
     }
 
 
-def get_player_id(name):
-    """Fetch player ID from ESPN"""
+def get_player_id(player_name):
     try:
-        search_url = f"https://site.web.api.espn.com/apis/common/v3/search?query={name.replace(' ', '%20')}&limit=1&type=player"
-        data = requests.get(search_url, timeout=10).json()
-        return str(data['items'][0]['id'])
+        url = f"https://site.web.api.espn.com/apis/common/v3/search?query={player_name.replace(' ', '%20')}&limit=1&type=player"
+        res = requests.get(url, timeout=10).json()
+        return str(res['items'][0]['id'])
     except:
         return None
 
@@ -155,9 +146,10 @@ def main():
     with open('nba-streaks/players.txt', 'r') as f:
         lines = [l.strip() for l in f if l.strip()]
 
-    # Step 1: Load all games once
+    # STEP 1: load all games once
     all_boxscores = get_all_recent_boxscores(days=14)
 
+    # STEP 2: process players
     final_data = []
 
     print(f"\n🔥 Calculating Heat for {len(lines)} players...")
@@ -168,9 +160,8 @@ def main():
         name = " ".join(parts[:-1])
 
         p_id = get_player_id(name)
-
         if not p_id:
-            print(f"❌ {name} (ID not found)")
+            print(f"⚠️ {name} (No ID)")
             continue
 
         stats = get_player_stats_optimized(name, team, p_id, all_boxscores)
@@ -179,13 +170,18 @@ def main():
             final_data.append(stats)
             print(f"✅ {name} ({stats['pts_heat']}%)")
         else:
-            print(f"⚠️ {name} (No games found)")
+            print(f"⚠️ {name} (No games)")
+
+    # STEP 3: save output
+    output = {
+        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "players": final_data
+    }
 
     with open('nba-streaks/streak_data.json', 'w') as f:
-        json.dump({
-            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M"),
-            "players": final_data
-        }, f, indent=4)
+        json.dump(output, f, indent=4)
+
+    print(f"\n🚀 DONE: {len(final_data)} players updated.")
 
 
 if __name__ == "__main__":
