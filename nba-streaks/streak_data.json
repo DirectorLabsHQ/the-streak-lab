@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-02-20 19:16",
+    "last_updated": "2026-02-21 00:29",
     "players": [
         {
             "name": "Nikola Jokic",
@@ -8,7 +8,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-15"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Shai Gilgeous-Alexander",
@@ -44,7 +44,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-15"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Anthony Edwards",
@@ -71,7 +71,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Jaylen Brown",
@@ -80,7 +80,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Kawhi Leonard",
@@ -89,7 +89,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Cade Cunningham",
@@ -98,7 +98,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Jalen Brunson",
@@ -107,7 +107,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Devin Booker",
@@ -116,7 +116,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Tyrese Maxey",
@@ -125,7 +125,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "LeBron James",
@@ -143,7 +143,16 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Joel Embiid",
+            "team_code": "PHI",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-10"
         },
         {
             "name": "De'Aaron Fox",
@@ -152,7 +161,34 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
+        },
+        {
+            "name": "Domantas Sabonis",
+            "team_code": "SAC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Bam Adebayo",
+            "team_code": "MIA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Zion Williamson",
+            "team_code": "NOP",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
         },
         {
             "name": "Paolo Banchero",
@@ -164,6 +200,15 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Jalen Williams",
+            "team_code": "OKC",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
             "name": "Chet Holmgren",
             "team_code": "OKC",
             "pts_heat": 0,
@@ -173,13 +218,22 @@
             "last_game": "2026-02-16"
         },
         {
+            "name": "Lauri Markkanen",
+            "team_code": "UTA",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
             "name": "Jalen Johnson",
             "team_code": "ATL",
             "pts_heat": 0,
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Alperen Sengun",
@@ -191,13 +245,31 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Franz Wagner",
+            "team_code": "ORL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Julius Randle",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
             "name": "Scottie Barnes",
             "team_code": "TOR",
             "pts_heat": 0,
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Jalen Duren",
@@ -206,7 +278,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Evan Mobley",
@@ -245,13 +317,22 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Rudy Gobert",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
             "name": "Jarrett Allen",
             "team_code": "CLE",
             "pts_heat": 0,
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Kristaps Porzingis",
@@ -269,7 +350,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-15"
+            "last_game": "2026-02-20"
         },
         {
             "name": "Amen Thompson",
@@ -287,7 +368,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-16"
+            "last_game": "2026-02-20"
         },
         {
             "name": "James Harden",
@@ -296,7 +377,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Josh Giddey",
@@ -317,6 +398,15 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Jerami Grant",
+            "team_code": "POR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
             "name": "Immanuel Quickley",
             "team_code": "TOR",
             "pts_heat": 0,
@@ -335,6 +425,24 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Cam Thomas",
+            "team_code": "MIL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
+            "name": "Nic Claxton",
+            "team_code": "BKN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-10"
+        },
+        {
             "name": "Cameron Johnson",
             "team_code": "DEN",
             "pts_heat": 0,
@@ -344,13 +452,31 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Jordan Poole",
+            "team_code": "NOP",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Kyle Kuzma",
+            "team_code": "MIL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
             "name": "Bilal Coulibaly",
             "team_code": "WAS",
             "pts_heat": 0,
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Clint Capela",
@@ -380,6 +506,24 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Bobby Portis",
+            "team_code": "MIL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
+            "name": "Austin Reaves",
+            "team_code": "LAL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
             "name": "Malik Monk",
             "team_code": "SAC",
             "pts_heat": 0,
@@ -387,6 +531,15 @@
             "ast_heat": 0,
             "tpm_heat": 0,
             "last_game": "2026-02-20"
+        },
+        {
+            "name": "Trey Murphy III",
+            "team_code": "NOP",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
         },
         {
             "name": "Jabari Smith Jr",
@@ -404,7 +557,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "LaMelo Ball",
@@ -413,7 +566,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Brandon Miller",
@@ -422,7 +575,7 @@
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
         },
         {
             "name": "Norman Powell",
@@ -450,6 +603,33 @@
             "ast_heat": 0,
             "tpm_heat": 0,
             "last_game": "2026-02-20"
+        },
+        {
+            "name": "Naz Reid",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Donte DiVincenzo",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Myles Turner",
+            "team_code": "IND",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
         },
         {
             "name": "Josh Hart",
@@ -488,13 +668,49 @@
             "last_game": "2026-02-20"
         },
         {
+            "name": "Scoot Henderson",
+            "team_code": "POR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
+            "name": "Shaedon Sharpe",
+            "team_code": "POR",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
+        },
+        {
             "name": "Aaron Nesmith",
             "team_code": "IND",
             "pts_heat": 0,
             "reb_heat": 0,
             "ast_heat": 0,
             "tpm_heat": 0,
-            "last_game": "2026-02-20"
+            "last_game": "2026-02-21"
+        },
+        {
+            "name": "Jaden McDaniels",
+            "team_code": "MIN",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-12"
+        },
+        {
+            "name": "Rui Hachimura",
+            "team_code": "LAL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-13"
         },
         {
             "name": "Quinten Post",
@@ -504,6 +720,15 @@
             "ast_heat": 0,
             "tpm_heat": 0,
             "last_game": "2026-02-20"
+        },
+        {
+            "name": "Cooper Flagg",
+            "team_code": "DAL",
+            "pts_heat": 0,
+            "reb_heat": 0,
+            "ast_heat": 0,
+            "tpm_heat": 0,
+            "last_game": "2026-02-11"
         },
         {
             "name": "Stephon Castle",
