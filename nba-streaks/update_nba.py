@@ -4,34 +4,46 @@ import time
 import json
 
 DAYS_BACK = 30
+REQUEST_DELAY = 0.2
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0"
+}
 
 
 # --------------------------------------------------
-# GET RECENT COMPLETED GAME IDS
+# GET RECENT COMPLETED GAME IDS (DEDUPED)
 # --------------------------------------------------
 def get_recent_game_ids():
     today = datetime.date.today()
     start = today - datetime.timedelta(days=DAYS_BACK)
 
-    game_ids = []
+    game_ids = set()
 
     for i in range(DAYS_BACK):
         date = start + datetime.timedelta(days=i)
         date_str = date.strftime("%Y%m%d")
 
         url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date_str}"
-        r = requests.get(url)
 
-        if r.status_code != 200:
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=10)
+            if r.status_code != 200:
+                continue
+
+            data = r.json()
+
+            for event in data.get("events", []):
+                status = event.get("status", {}).get("type", {})
+                if status.get("completed") is True:
+                    game_ids.add(event["id"])
+
+        except:
             continue
 
-        data = r.json()
+        time.sleep(0.05)
 
-        for event in data.get("events", []):
-            if event.get("status", {}).get("type", {}).get("completed"):
-                game_ids.append(event["id"])
-
-    return game_ids
+    return list(game_ids)
 
 
 # --------------------------------------------------
@@ -39,40 +51,53 @@ def get_recent_game_ids():
 # --------------------------------------------------
 def get_players_from_game(game_id):
     url = f"https://cdn.espn.com/core/nba/boxscore?xhr=1&gameId={game_id}"
-    r = requests.get(url)
 
-    if r.status_code != 200:
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=10)
+        if r.status_code != 200:
+            return []
+
+        data = r.json()
+    except:
         return []
 
-    data = r.json()
     pkg = data.get("gamepackageJSON", {})
 
-    # 🔥 Extract true game date
-    game_date_str = pkg.get("header", {}).get("competitions", [{}])[0].get("date")
+    game_date_str = (
+        pkg.get("header", {})
+        .get("competitions", [{}])[0]
+        .get("date")
+    )
+
     if not game_date_str:
         return []
 
-    game_date = datetime.datetime.fromisoformat(game_date_str.replace("Z", "+00:00"))
+    game_date = datetime.datetime.fromisoformat(
+        game_date_str.replace("Z", "+00:00")
+    )
 
     boxscore = pkg.get("boxscore", {})
-    players = boxscore.get("players", [])
+    teams = boxscore.get("players", [])
 
     all_players = []
 
-    for team in players:
+    for team in teams:
         team_code = team.get("team", {}).get("abbreviation")
+        stat_groups = team.get("statistics", [])
 
-        for group in team.get("statistics", []):
+        for group in stat_groups:
             labels = group.get("labels", [])
             athletes = group.get("athletes", [])
 
-            try:
-                pts_i = labels.index("PTS")
-                reb_i = labels.index("REB")
-                ast_i = labels.index("AST")
-                tpm_i = labels.index("3PT")
-            except ValueError:
+            # Ensure required stats exist
+            required_stats = ["PTS", "REB", "AST", "3PT"]
+            if not all(stat in labels for stat in required_stats):
                 continue
+
+            pts_i = labels.index("PTS")
+            reb_i = labels.index("REB")
+            ast_i = labels.index("AST")
+            tpm_i = labels.index("3PT")
 
             for athlete in athletes:
                 name = athlete.get("athlete", {}).get("displayName")
@@ -106,54 +131,63 @@ def get_players_from_game(game_id):
 # MAIN
 # --------------------------------------------------
 def main():
+    print("🔎 Pulling recent completed games...")
     game_ids = get_recent_game_ids()
+    print(f"✅ Found {len(game_ids)} completed games")
+
     all_players = {}
 
     for gid in game_ids:
         players = get_players_from_game(gid)
 
         for p in players:
-            name = p["name"]
+            key = f"{p['name']}_{p['team_code']}"  # avoids name collision
 
-            if name not in all_players:
-                all_players[name] = {
+            if key not in all_players:
+                all_players[key] = {
+                    "name": p["name"],
                     "team_code": p["team_code"],
                     "games": []
                 }
 
-            all_players[name]["games"].append(p)
+            all_players[key]["games"].append(p)
 
-        time.sleep(0.25)
+        time.sleep(REQUEST_DELAY)
 
     output_players = []
 
-    for name, data in all_players.items():
+    for data in all_players.values():
         games = data["games"]
 
         if len(games) < 5:
             continue
 
-        # 🔥 True chronological sort
+        # True chronological sort
         games_sorted = sorted(games, key=lambda x: x["date"])
-
         last10 = games_sorted[-10:]
 
-        pts_hits = sum(1 for g in last10 if g["PTS"] >= 20)
-        reb_hits = sum(1 for g in last10 if g["REB"] >= 7)
-        ast_hits = sum(1 for g in last10 if g["AST"] >= 5)
-        tpm_hits = sum(1 for g in last10 if g["3PM"] >= 3)
+        total_games = len(last10)
+
+        pts_hits = sum(g["PTS"] >= 20 for g in last10)
+        reb_hits = sum(g["REB"] >= 7 for g in last10)
+        ast_hits = sum(g["AST"] >= 5 for g in last10)
+        tpm_hits = sum(g["3PM"] >= 3 for g in last10)
 
         last_game = last10[-1]
 
         output_players.append({
-            "name": name,
+            "name": data["name"],
             "team_code": data["team_code"],
-            "pts_heat": int((pts_hits / len(last10)) * 100),
-            "reb_heat": int((reb_hits / len(last10)) * 100),
-            "ast_heat": int((ast_hits / len(last10)) * 100),
-            "tpm_heat": int((tpm_hits / len(last10)) * 100),
+            "games_used": total_games,
+            "pts_heat": int((pts_hits / total_games) * 100),
+            "reb_heat": int((reb_hits / total_games) * 100),
+            "ast_heat": int((ast_hits / total_games) * 100),
+            "tpm_heat": int((tpm_hits / total_games) * 100),
             "last_game": f"{last_game['PTS']} PTS, {last_game['REB']} REB, {last_game['AST']} AST"
         })
+
+    # Sort by scoring heat descending
+    output_players.sort(key=lambda x: x["pts_heat"], reverse=True)
 
     final_data = {
         "last_updated": datetime.datetime.now().strftime("%b %d, %Y - %I:%M %p EST"),
@@ -163,7 +197,7 @@ def main():
     with open("streak_data.json", "w") as f:
         json.dump(final_data, f, indent=2)
 
-    print("🔥 streak_data.json updated successfully")
+    print(f"🔥 streak_data.json updated successfully ({len(output_players)} players)")
 
 
 if __name__ == "__main__":
