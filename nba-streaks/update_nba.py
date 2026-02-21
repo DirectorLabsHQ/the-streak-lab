@@ -2,8 +2,16 @@ import requests
 import json
 from datetime import datetime, timedelta
 import time
+import unicodedata
 
 TARGETS = {'pts': 20, 'reb': 7, 'ast': 5, 'tpm': 3}
+
+
+def normalize(text):
+    return unicodedata.normalize('NFKD', text)\
+        .encode('ascii', 'ignore')\
+        .decode('ascii')\
+        .lower()
 
 
 def get_all_recent_boxscores(days=21):
@@ -52,10 +60,6 @@ def get_all_recent_boxscores(days=21):
 
 
 def get_correct_stat_block(team):
-    """
-    ESPN now has multiple stat groups.
-    We pick the one that actually contains PTS.
-    """
     for block in team.get('statistics', []):
         keys = [str(k).upper() for k in block.get('keys', [])]
         if 'PTS' in keys:
@@ -68,7 +72,7 @@ def get_player_stats(player_name, team_code, boxscores):
     games_processed = 0
     last_game_date = ""
 
-    player_name_lower = player_name.lower()
+    player_name_normalized = normalize(player_name)
 
     for game in boxscores:
         if games_processed >= 10:
@@ -97,13 +101,16 @@ def get_player_stats(player_name, team_code, boxscores):
             t_idx = find_key(['3PM', 'FG3M'])
 
             for athlete in athletes:
-                name = athlete.get('athlete', {}).get('displayName', '').lower()
+                raw_name = athlete.get('athlete', {}).get('displayName', '')
+                name = normalize(raw_name)
 
-                if name == player_name_lower:
+                if name == player_name_normalized:
                     stats = athlete.get('stats', [])
 
                     def val(i):
                         try:
+                            if i is None:
+                                return 0
                             v = stats[i]
                             if v in ("", None):
                                 return 0
@@ -111,13 +118,13 @@ def get_player_stats(player_name, team_code, boxscores):
                         except:
                             return 0
 
-                    if p_idx is not None and val(p_idx) >= TARGETS['pts']:
+                    if val(p_idx) >= TARGETS['pts']:
                         hits['pts'] += 1
-                    if r_idx is not None and val(r_idx) >= TARGETS['reb']:
+                    if val(r_idx) >= TARGETS['reb']:
                         hits['reb'] += 1
-                    if a_idx is not None and val(a_idx) >= TARGETS['ast']:
+                    if val(a_idx) >= TARGETS['ast']:
                         hits['ast'] += 1
-                    if t_idx is not None and val(t_idx) >= TARGETS['tpm']:
+                    if val(t_idx) >= TARGETS['tpm']:
                         hits['tpm'] += 1
 
                     if not last_game_date:
