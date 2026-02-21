@@ -6,7 +6,7 @@ DAYS_BACK = 21
 
 
 # --------------------------------------------------
-# GET RECENT GAME IDS
+# GET RECENT COMPLETED GAME IDS
 # --------------------------------------------------
 def get_recent_game_ids():
     today = datetime.date.today()
@@ -29,7 +29,6 @@ def get_recent_game_ids():
         data = r.json()
 
         for event in data.get("events", []):
-            # Only completed games
             if event.get("status", {}).get("type", {}).get("completed"):
                 game_ids.append(event["id"])
 
@@ -37,7 +36,7 @@ def get_recent_game_ids():
 
 
 # --------------------------------------------------
-# GET PLAYER STATS FROM A GAME
+# GET PLAYER STATS FROM A SINGLE GAME
 # --------------------------------------------------
 def get_players_from_game(game_id):
     url = f"https://cdn.espn.com/core/nba/boxscore?xhr=1&gameId={game_id}"
@@ -48,7 +47,6 @@ def get_players_from_game(game_id):
 
     data = r.json()
     pkg = data.get("gamepackageJSON", {})
-
     boxscore = pkg.get("boxscore", {})
     players = boxscore.get("players", [])
 
@@ -56,35 +54,36 @@ def get_players_from_game(game_id):
 
     for team in players:
         for group in team.get("statistics", []):
-            for athlete in group.get("athletes", []):
-                name = athlete.get("athlete", {}).get("displayName")
 
+            labels = group.get("labels", [])
+            athletes = group.get("athletes", [])
+
+            # Dynamically locate stat columns
+            try:
+                pts_index = labels.index("PTS")
+                reb_index = labels.index("REB")
+                ast_index = labels.index("AST")
+            except ValueError:
+                continue  # Skip if stat table format is unexpected
+
+            for athlete in athletes:
+                name = athlete.get("athlete", {}).get("displayName")
                 stats = athlete.get("stats", [])
 
-                # ESPN stat order:
-                # 0 MIN
-                # 1 FG
-                # 2 3PT
-                # 3 FT
-                # 4 OREB
-                # 5 DREB
-                # 6 REB
-                # 7 AST
-                # 8 STL
-                # 9 BLK
-                # 10 TO
-                # 11 PF
-                # 12 PTS
+                if not name or len(stats) <= max(pts_index, reb_index, ast_index):
+                    continue
 
-                if len(stats) >= 13:
+                try:
                     player_data = {
                         "name": name,
-                        "PTS": int(stats[12]) if stats[12].isdigit() else 0,
-                        "REB": int(stats[6]) if stats[6].isdigit() else 0,
-                        "AST": int(stats[7]) if stats[7].isdigit() else 0,
+                        "PTS": int(stats[pts_index]),
+                        "REB": int(stats[reb_index]),
+                        "AST": int(stats[ast_index]),
                     }
+                except ValueError:
+                    continue  # Skip DNP / non-numeric rows
 
-                    all_players.append(player_data)
+                all_players.append(player_data)
 
     return all_players
 
@@ -110,18 +109,34 @@ def main():
 
             all_players[name].append(p)
 
-        time.sleep(0.3)  # prevent rate limiting
+        time.sleep(0.25)  # Prevent ESPN rate limiting
 
     print(f"🔥 Calculating Heat for {len(all_players)} players...\n")
 
-    for name, games in list(all_players.items())[:12]:  # limit output
+    # Display sample output (top 20 by games played)
+    sorted_players = sorted(
+        all_players.items(),
+        key=lambda x: len(x[1]),
+        reverse=True
+    )
+
+    for name, games in sorted_players[:20]:
+
         if not games:
             print(f"⚠️ {name} (No games found)")
             continue
 
         avg_pts = sum(g["PTS"] for g in games) / len(games)
+        avg_reb = sum(g["REB"] for g in games) / len(games)
+        avg_ast = sum(g["AST"] for g in games) / len(games)
 
-        print(f"✅ {name} — {len(games)} games — {avg_pts:.1f} PPG")
+        print(
+            f"✅ {name} — "
+            f"{len(games)} games — "
+            f"{avg_pts:.1f} PPG / "
+            f"{avg_reb:.1f} RPG / "
+            f"{avg_ast:.1f} APG"
+        )
 
 
 if __name__ == "__main__":
