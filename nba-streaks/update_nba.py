@@ -22,7 +22,7 @@ def get_all_recent_boxscores(days=21):
 
     for i in range(days):
         date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
-        url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date}"
+       url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/boxscore?event={gid}"
 
         try:
             data = requests.get(url, timeout=10).json()
