@@ -1,41 +1,23 @@
 {
-  "last_updated": "May 18, 2026 - 12:33 PM",
+  "last_updated": "May 19, 2026 - 12:12 PM",
   "players": [
     {
       "name": "Nikola Jokic",
       "team_code": "DEN",
       "pts_heat": 100,
       "reb_heat": 100,
-      "ast_heat": 83,
+      "ast_heat": 80,
       "tpm_heat": 0,
       "last_game": "28 PTS, 9 REB, 10 AST"
     },
     {
       "name": "Shai Gilgeous-Alexander",
       "team_code": "OKC",
-      "pts_heat": 87,
+      "pts_heat": 88,
       "reb_heat": 0,
-      "ast_heat": 87,
-      "tpm_heat": 12,
-      "last_game": "35 PTS, 1 REB, 8 AST"
-    },
-    {
-      "name": "RJ Barrett",
-      "team_code": "TOR",
-      "pts_heat": 85,
-      "reb_heat": 57,
-      "ast_heat": 57,
-      "tpm_heat": 42,
-      "last_game": "23 PTS, 4 REB, 6 AST"
-    },
-    {
-      "name": "Scottie Barnes",
-      "team_code": "TOR",
-      "pts_heat": 85,
-      "reb_heat": 57,
-      "ast_heat": 100,
-      "tpm_heat": 28,
-      "last_game": "24 PTS, 9 REB, 6 AST"
+      "ast_heat": 88,
+      "tpm_heat": 11,
+      "last_game": "24 PTS, 3 REB, 12 AST"
     },
     {
       "name": "Jaylen Brown",
@@ -47,13 +29,22 @@
       "last_game": "33 PTS, 9 REB, 4 AST"
     },
     {
-      "name": "Cade Cunningham",
-      "team_code": "DET",
-      "pts_heat": 80,
-      "reb_heat": 30,
-      "ast_heat": 90,
-      "tpm_heat": 50,
-      "last_game": "13 PTS, 4 REB, 5 AST"
+      "name": "RJ Barrett",
+      "team_code": "TOR",
+      "pts_heat": 83,
+      "reb_heat": 66,
+      "ast_heat": 66,
+      "tpm_heat": 33,
+      "last_game": "23 PTS, 4 REB, 6 AST"
+    },
+    {
+      "name": "Scottie Barnes",
+      "team_code": "TOR",
+      "pts_heat": 83,
+      "reb_heat": 66,
+      "ast_heat": 100,
+      "tpm_heat": 16,
+      "last_game": "24 PTS, 9 REB, 6 AST"
     },
     {
       "name": "Donovan Mitchell",
@@ -65,12 +56,30 @@
       "last_game": "26 PTS, 6 REB, 8 AST"
     },
     {
+      "name": "Cade Cunningham",
+      "team_code": "DET",
+      "pts_heat": 80,
+      "reb_heat": 30,
+      "ast_heat": 90,
+      "tpm_heat": 50,
+      "last_game": "13 PTS, 4 REB, 5 AST"
+    },
+    {
+      "name": "LeBron James",
+      "team_code": "LAL",
+      "pts_heat": 77,
+      "reb_heat": 44,
+      "ast_heat": 88,
+      "tpm_heat": 22,
+      "last_game": "24 PTS, 12 REB, 3 AST"
+    },
+    {
       "name": "Jalen Brunson",
       "team_code": "NY",
-      "pts_heat": 80,
+      "pts_heat": 77,
       "reb_heat": 0,
-      "ast_heat": 70,
-      "tpm_heat": 70,
+      "ast_heat": 66,
+      "tpm_heat": 66,
       "last_game": "22 PTS, 4 REB, 6 AST"
     },
     {
@@ -110,22 +119,13 @@
       "last_game": "17 PTS, 2 REB, 4 AST"
     },
     {
-      "name": "LeBron James",
-      "team_code": "LAL",
-      "pts_heat": 70,
-      "reb_heat": 50,
-      "ast_heat": 90,
-      "tpm_heat": 20,
-      "last_game": "24 PTS, 12 REB, 3 AST"
-    },
-    {
-      "name": "Jamal Murray",
-      "team_code": "DEN",
+      "name": "Jalen Williams",
+      "team_code": "OKC",
       "pts_heat": 66,
-      "reb_heat": 16,
-      "ast_heat": 66,
-      "tpm_heat": 33,
-      "last_game": "12 PTS, 6 REB, 4 AST"
+      "reb_heat": 66,
+      "ast_heat": 33,
+      "tpm_heat": 0,
+      "last_game": "26 PTS, 7 REB, 3 AST"
     },
     {
       "name": "Jayson Tatum",
@@ -146,15 +146,6 @@
       "last_game": "5 PTS, 5 REB, 2 AST"
     },
     {
-      "name": "Anthony Edwards",
-      "team_code": "MIN",
-      "pts_heat": 60,
-      "reb_heat": 30,
-      "ast_heat": 20,
-      "tpm_heat": 30,
-      "last_game": "24 PTS, 2 REB, 2 AST"
-    },
-    {
       "name": "Deni Avdija",
       "team_code": "POR",
       "pts_heat": 60,
@@ -162,6 +153,24 @@
       "ast_heat": 40,
       "tpm_heat": 0,
       "last_game": "22 PTS, 3 REB, 3 AST"
+    },
+    {
+      "name": "Jamal Murray",
+      "team_code": "DEN",
+      "pts_heat": 60,
+      "reb_heat": 20,
+      "ast_heat": 60,
+      "tpm_heat": 40,
+      "last_game": "12 PTS, 6 REB, 4 AST"
+    },
+    {
+      "name": "OG Anunoby",
+      "team_code": "NY",
+      "pts_heat": 57,
+      "reb_heat": 71,
+      "ast_heat": 0,
+      "tpm_heat": 42,
+      "last_game": "24 PTS, 5 REB, 2 AST"
     },
     {
       "name": "Paolo Banchero",
@@ -182,13 +191,13 @@
       "last_game": "24 PTS, 5 REB, 4 AST"
     },
     {
-      "name": "James Harden",
-      "team_code": "CLE",
-      "pts_heat": 50,
-      "reb_heat": 50,
-      "ast_heat": 70,
-      "tpm_heat": 50,
-      "last_game": "9 PTS, 5 REB, 6 AST"
+      "name": "Anthony Edwards",
+      "team_code": "MIN",
+      "pts_heat": 55,
+      "reb_heat": 22,
+      "ast_heat": 11,
+      "tpm_heat": 33,
+      "last_game": "24 PTS, 2 REB, 2 AST"
     },
     {
       "name": "Austin Reaves",
@@ -200,49 +209,94 @@
       "last_game": "27 PTS, 7 REB, 6 AST"
     },
     {
+      "name": "James Harden",
+      "team_code": "CLE",
+      "pts_heat": 50,
+      "reb_heat": 50,
+      "ast_heat": 70,
+      "tpm_heat": 50,
+      "last_game": "9 PTS, 5 REB, 6 AST"
+    },
+    {
       "name": "Ajay Mitchell",
       "team_code": "OKC",
-      "pts_heat": 50,
+      "pts_heat": 44,
       "reb_heat": 0,
-      "ast_heat": 50,
-      "tpm_heat": 25,
-      "last_game": "28 PTS, 3 REB, 4 AST"
+      "ast_heat": 55,
+      "tpm_heat": 22,
+      "last_game": "4 PTS, 4 REB, 5 AST"
     },
     {
-      "name": "Jalen Johnson",
-      "team_code": "ATL",
-      "pts_heat": 50,
-      "reb_heat": 83,
-      "ast_heat": 66,
-      "tpm_heat": 16,
-      "last_game": "21 PTS, 8 REB, 6 AST"
-    },
-    {
-      "name": "CJ McCollum",
-      "team_code": "ATL",
-      "pts_heat": 50,
+      "name": "Rui Hachimura",
+      "team_code": "LAL",
+      "pts_heat": 44,
       "reb_heat": 0,
-      "ast_heat": 16,
-      "tpm_heat": 33,
-      "last_game": "11 PTS, 3 REB, 0 AST"
-    },
-    {
-      "name": "OG Anunoby",
-      "team_code": "NY",
-      "pts_heat": 50,
-      "reb_heat": 75,
       "ast_heat": 0,
-      "tpm_heat": 37,
-      "last_game": "24 PTS, 5 REB, 2 AST"
+      "tpm_heat": 77,
+      "last_game": "25 PTS, 5 REB, 2 AST"
     },
     {
       "name": "Victor Wembanyama",
       "team_code": "SA",
       "pts_heat": 40,
+      "reb_heat": 70,
+      "ast_heat": 20,
+      "tpm_heat": 10,
+      "last_game": "41 PTS, 24 REB, 3 AST"
+    },
+    {
+      "name": "Stephon Castle",
+      "team_code": "SA",
+      "pts_heat": 40,
+      "reb_heat": 10,
+      "ast_heat": 80,
+      "tpm_heat": 40,
+      "last_game": "17 PTS, 6 REB, 11 AST"
+    },
+    {
+      "name": "Jabari Smith Jr.",
+      "team_code": "HOU",
+      "pts_heat": 40,
       "reb_heat": 60,
+      "ast_heat": 0,
+      "tpm_heat": 60,
+      "last_game": "9 PTS, 12 REB, 3 AST"
+    },
+    {
+      "name": "Alperen Sengun",
+      "team_code": "HOU",
+      "pts_heat": 40,
+      "reb_heat": 80,
+      "ast_heat": 60,
+      "tpm_heat": 0,
+      "last_game": "17 PTS, 11 REB, 1 AST"
+    },
+    {
+      "name": "Amen Thompson",
+      "team_code": "HOU",
+      "pts_heat": 40,
+      "reb_heat": 60,
+      "ast_heat": 40,
+      "tpm_heat": 0,
+      "last_game": "18 PTS, 8 REB, 3 AST"
+    },
+    {
+      "name": "Jalen Johnson",
+      "team_code": "ATL",
+      "pts_heat": 40,
+      "reb_heat": 80,
+      "ast_heat": 80,
+      "tpm_heat": 0,
+      "last_game": "21 PTS, 8 REB, 6 AST"
+    },
+    {
+      "name": "CJ McCollum",
+      "team_code": "ATL",
+      "pts_heat": 40,
+      "reb_heat": 0,
       "ast_heat": 20,
       "tpm_heat": 20,
-      "last_game": "19 PTS, 6 REB, 2 AST"
+      "last_game": "11 PTS, 3 REB, 0 AST"
     },
     {
       "name": "De'Aaron Fox",
@@ -252,33 +306,6 @@
       "ast_heat": 70,
       "tpm_heat": 20,
       "last_game": "21 PTS, 4 REB, 9 AST"
-    },
-    {
-      "name": "Stephon Castle",
-      "team_code": "SA",
-      "pts_heat": 40,
-      "reb_heat": 20,
-      "ast_heat": 80,
-      "tpm_heat": 40,
-      "last_game": "32 PTS, 11 REB, 6 AST"
-    },
-    {
-      "name": "Rui Hachimura",
-      "team_code": "LAL",
-      "pts_heat": 40,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 70,
-      "last_game": "25 PTS, 5 REB, 2 AST"
-    },
-    {
-      "name": "Karl-Anthony Towns",
-      "team_code": "NY",
-      "pts_heat": 40,
-      "reb_heat": 80,
-      "ast_heat": 70,
-      "tpm_heat": 20,
-      "last_game": "17 PTS, 4 REB, 10 AST"
     },
     {
       "name": "Jrue Holiday",
@@ -301,38 +328,29 @@
     {
       "name": "Chet Holmgren",
       "team_code": "OKC",
-      "pts_heat": 37,
+      "pts_heat": 33,
       "reb_heat": 100,
       "ast_heat": 0,
-      "tpm_heat": 25,
-      "last_game": "16 PTS, 9 REB, 0 AST"
+      "tpm_heat": 22,
+      "last_game": "8 PTS, 8 REB, 0 AST"
     },
     {
-      "name": "Jabari Smith Jr.",
-      "team_code": "HOU",
+      "name": "Ja'Kobe Walter",
+      "team_code": "TOR",
       "pts_heat": 33,
-      "reb_heat": 66,
+      "reb_heat": 16,
       "ast_heat": 0,
       "tpm_heat": 66,
-      "last_game": "9 PTS, 12 REB, 3 AST"
+      "last_game": "13 PTS, 2 REB, 2 AST"
     },
     {
-      "name": "Alperen Sengun",
-      "team_code": "HOU",
+      "name": "Karl-Anthony Towns",
+      "team_code": "NY",
       "pts_heat": 33,
-      "reb_heat": 83,
-      "ast_heat": 66,
-      "tpm_heat": 0,
-      "last_game": "17 PTS, 11 REB, 1 AST"
-    },
-    {
-      "name": "Amen Thompson",
-      "team_code": "HOU",
-      "pts_heat": 33,
-      "reb_heat": 66,
-      "ast_heat": 50,
-      "tpm_heat": 0,
-      "last_game": "18 PTS, 8 REB, 3 AST"
+      "reb_heat": 77,
+      "ast_heat": 77,
+      "tpm_heat": 11,
+      "last_game": "17 PTS, 4 REB, 10 AST"
     },
     {
       "name": "Jarrett Allen",
@@ -353,6 +371,15 @@
       "last_game": "21 PTS, 12 REB, 6 AST"
     },
     {
+      "name": "Dylan Harper",
+      "team_code": "SA",
+      "pts_heat": 30,
+      "reb_heat": 50,
+      "ast_heat": 20,
+      "tpm_heat": 10,
+      "last_game": "24 PTS, 11 REB, 6 AST"
+    },
+    {
       "name": "Desmond Bane",
       "team_code": "ORL",
       "pts_heat": 28,
@@ -362,13 +389,13 @@
       "last_game": "16 PTS, 3 REB, 3 AST"
     },
     {
-      "name": "Ja'Kobe Walter",
+      "name": "Brandon Ingram",
       "team_code": "TOR",
-      "pts_heat": 28,
-      "reb_heat": 14,
+      "pts_heat": 25,
+      "reb_heat": 0,
       "ast_heat": 0,
-      "tpm_heat": 57,
-      "last_game": "13 PTS, 2 REB, 2 AST"
+      "tpm_heat": 25,
+      "last_game": "1 PTS, 1 REB, 2 AST"
     },
     {
       "name": "Collin Gillespie",
@@ -380,6 +407,24 @@
       "last_game": "20 PTS, 2 REB, 2 AST"
     },
     {
+      "name": "Marcus Smart",
+      "team_code": "LAL",
+      "pts_heat": 22,
+      "reb_heat": 11,
+      "ast_heat": 55,
+      "tpm_heat": 22,
+      "last_game": "5 PTS, 2 REB, 3 AST"
+    },
+    {
+      "name": "Mikal Bridges",
+      "team_code": "NY",
+      "pts_heat": 22,
+      "reb_heat": 0,
+      "ast_heat": 22,
+      "tpm_heat": 11,
+      "last_game": "12 PTS, 4 REB, 6 AST"
+    },
+    {
       "name": "Terrence Shannon Jr.",
       "team_code": "MIN",
       "pts_heat": 22,
@@ -387,6 +432,42 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "21 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "Ayo Dosunmu",
+      "team_code": "MIN",
+      "pts_heat": 22,
+      "reb_heat": 22,
+      "ast_heat": 44,
+      "tpm_heat": 33,
+      "last_game": "10 PTS, 1 REB, 9 AST"
+    },
+    {
+      "name": "Tari Eason",
+      "team_code": "HOU",
+      "pts_heat": 20,
+      "reb_heat": 40,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "14 PTS, 5 REB, 2 AST"
+    },
+    {
+      "name": "Jonathan Kuminga",
+      "team_code": "ATL",
+      "pts_heat": 20,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "11 PTS, 2 REB, 3 AST"
+    },
+    {
+      "name": "VJ Edgecombe",
+      "team_code": "PHI",
+      "pts_heat": 20,
+      "reb_heat": 50,
+      "ast_heat": 20,
+      "tpm_heat": 40,
+      "last_game": "8 PTS, 6 REB, 7 AST"
     },
     {
       "name": "Julius Randle",
@@ -407,109 +488,28 @@
       "last_game": "13 PTS, 1 REB, 3 AST"
     },
     {
-      "name": "Ayo Dosunmu",
-      "team_code": "MIN",
-      "pts_heat": 20,
-      "reb_heat": 20,
-      "ast_heat": 40,
-      "tpm_heat": 40,
-      "last_game": "10 PTS, 1 REB, 9 AST"
-    },
-    {
-      "name": "Dylan Harper",
-      "team_code": "SA",
-      "pts_heat": 20,
-      "reb_heat": 40,
-      "ast_heat": 10,
-      "tpm_heat": 10,
-      "last_game": "15 PTS, 5 REB, 2 AST"
-    },
-    {
-      "name": "VJ Edgecombe",
-      "team_code": "PHI",
-      "pts_heat": 20,
-      "reb_heat": 50,
-      "ast_heat": 20,
-      "tpm_heat": 40,
-      "last_game": "8 PTS, 6 REB, 7 AST"
-    },
-    {
-      "name": "Marcus Smart",
-      "team_code": "LAL",
-      "pts_heat": 20,
-      "reb_heat": 10,
-      "ast_heat": 60,
-      "tpm_heat": 20,
-      "last_game": "5 PTS, 2 REB, 3 AST"
-    },
-    {
-      "name": "Luke Kennard",
-      "team_code": "LAL",
-      "pts_heat": 20,
-      "reb_heat": 0,
-      "ast_heat": 10,
-      "tpm_heat": 30,
-      "last_game": "5 PTS, 2 REB, 2 AST"
-    },
-    {
-      "name": "Mikal Bridges",
-      "team_code": "NY",
-      "pts_heat": 20,
-      "reb_heat": 0,
-      "ast_heat": 20,
-      "tpm_heat": 10,
-      "last_game": "12 PTS, 4 REB, 6 AST"
-    },
-    {
-      "name": "Brandon Ingram",
-      "team_code": "TOR",
-      "pts_heat": 20,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 20,
-      "last_game": "1 PTS, 1 REB, 2 AST"
-    },
-    {
       "name": "Cameron Johnson",
       "team_code": "DEN",
-      "pts_heat": 16,
-      "reb_heat": 16,
-      "ast_heat": 16,
-      "tpm_heat": 16,
+      "pts_heat": 20,
+      "reb_heat": 20,
+      "ast_heat": 20,
+      "tpm_heat": 20,
       "last_game": "27 PTS, 8 REB, 3 AST"
     },
     {
       "name": "Spencer Jones",
       "team_code": "DEN",
-      "pts_heat": 16,
+      "pts_heat": 20,
       "reb_heat": 0,
       "ast_heat": 0,
-      "tpm_heat": 16,
+      "tpm_heat": 20,
       "last_game": "8 PTS, 2 REB, 1 AST"
-    },
-    {
-      "name": "Tari Eason",
-      "team_code": "HOU",
-      "pts_heat": 16,
-      "reb_heat": 50,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "14 PTS, 5 REB, 2 AST"
-    },
-    {
-      "name": "Jonathan Kuminga",
-      "team_code": "ATL",
-      "pts_heat": 16,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "11 PTS, 2 REB, 3 AST"
     },
     {
       "name": "Collin Murray-Boyles",
       "team_code": "TOR",
-      "pts_heat": 14,
-      "reb_heat": 57,
+      "pts_heat": 16,
+      "reb_heat": 66,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "8 PTS, 4 REB, 3 AST"
@@ -533,22 +533,31 @@
       "last_game": "13 PTS, 5 REB, 7 AST"
     },
     {
-      "name": "Caris LeVert",
-      "team_code": "DET",
-      "pts_heat": 10,
+      "name": "Alex Caruso",
+      "team_code": "OKC",
+      "pts_heat": 11,
       "reb_heat": 0,
       "ast_heat": 0,
-      "tpm_heat": 10,
-      "last_game": "11 PTS, 2 REB, 2 AST"
+      "tpm_heat": 44,
+      "last_game": "31 PTS, 2 REB, 1 AST"
     },
     {
-      "name": "Keldon Johnson",
-      "team_code": "SA",
-      "pts_heat": 10,
-      "reb_heat": 10,
+      "name": "Luke Kennard",
+      "team_code": "LAL",
+      "pts_heat": 11,
+      "reb_heat": 0,
+      "ast_heat": 11,
+      "tpm_heat": 22,
+      "last_game": "5 PTS, 2 REB, 2 AST"
+    },
+    {
+      "name": "Miles McBride",
+      "team_code": "NY",
+      "pts_heat": 11,
+      "reb_heat": 0,
       "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 2 AST"
+      "tpm_heat": 33,
+      "last_game": "25 PTS, 4 REB, 0 AST"
     },
     {
       "name": "Max Strus",
@@ -569,6 +578,24 @@
       "last_game": "23 PTS, 1 REB, 2 AST"
     },
     {
+      "name": "Keldon Johnson",
+      "team_code": "SA",
+      "pts_heat": 10,
+      "reb_heat": 10,
+      "ast_heat": 0,
+      "tpm_heat": 10,
+      "last_game": "13 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Caris LeVert",
+      "team_code": "DET",
+      "pts_heat": 10,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 10,
+      "last_game": "11 PTS, 2 REB, 2 AST"
+    },
+    {
       "name": "Paul George",
       "team_code": "PHI",
       "pts_heat": 10,
@@ -587,22 +614,472 @@
       "last_game": "10 PTS, 4 REB, 0 AST"
     },
     {
-      "name": "Miles McBride",
-      "team_code": "NY",
-      "pts_heat": 10,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 30,
-      "last_game": "25 PTS, 4 REB, 0 AST"
+      "name": "Isaiah Hartenstein",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 77,
+      "ast_heat": 11,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 2 REB, 2 AST"
     },
     {
-      "name": "Franz Wagner",
-      "team_code": "ORL",
+      "name": "Luguentz Dort",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 22,
+      "last_game": "5 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Jaylin Williams",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 11,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 3 REB, 0 AST"
+    },
+    {
+      "name": "Isaiah Joe",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 28,
+      "last_game": "0 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Aaron Wiggins",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Cason Wallace",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 11,
+      "last_game": "8 PTS, 6 REB, 0 AST"
+    },
+    {
+      "name": "Jared McCain",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 33,
+      "last_game": "7 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "Deandre Ayton",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 55,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "6 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Maxi Kleber",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jarred Vanderbilt",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Adou Thiero",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 16,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jaxson Hayes",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "18 PTS, 5 REB, 1 AST"
+    },
+    {
+      "name": "Dean Wade",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 6 REB, 1 AST"
+    },
+    {
+      "name": "Dennis Schroder",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 20,
+      "tpm_heat": 20,
+      "last_game": "2 PTS, 3 REB, 3 AST"
+    },
+    {
+      "name": "Jaylon Tyson",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 10,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Keon Ellis",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jakob Poeltl",
+      "team_code": "TOR",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "9 PTS, 7 REB, 0 AST"
+    },
+    {
+      "name": "Sandro Mamukelashvili",
+      "team_code": "TOR",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "6 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jamison Battle",
+      "team_code": "TOR",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 20,
+      "last_game": "3 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "A.J. Lawson",
+      "team_code": "TOR",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Jamal Shead",
+      "team_code": "TOR",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 66,
+      "tpm_heat": 16,
+      "last_game": "14 PTS, 3 REB, 7 AST"
+    },
+    {
+      "name": "Julian Champagnie",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 40,
+      "ast_heat": 0,
+      "tpm_heat": 50,
+      "last_game": "11 PTS, 9 REB, 1 AST"
+    },
+    {
+      "name": "Devin Vassell",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 10,
+      "ast_heat": 0,
+      "tpm_heat": 40,
+      "last_game": "13 PTS, 6 REB, 2 AST"
+    },
+    {
+      "name": "Harrison Barnes",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Carter Bryant",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "Luke Kornet",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 30,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Josh Okogie",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 4 REB, 1 AST"
+    },
+    {
+      "name": "Jae'Sean Tate",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 3 REB, 0 AST"
+    },
+    {
+      "name": "Clint Capela",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Aaron Holiday",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 20,
+      "last_game": "2 PTS, 1 REB, 2 AST"
+    },
+    {
+      "name": "Reed Sheppard",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 40,
+      "tpm_heat": 40,
+      "last_game": "10 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Jake LaRavia",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Bronny James",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Josh Hart",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 77,
+      "ast_heat": 44,
+      "tpm_heat": 11,
+      "last_game": "17 PTS, 9 REB, 1 AST"
+    },
+    {
+      "name": "Jeremy Sochan",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 2 REB, 2 AST"
+    },
+    {
+      "name": "Pacome Dadiet",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Mohamed Diawara",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Mitchell Robinson",
+      "team_code": "NY",
       "pts_heat": 0,
       "reb_heat": 25,
-      "ast_heat": 25,
+      "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "19 PTS, 5 REB, 3 AST"
+      "last_game": "6 PTS, 6 REB, 0 AST"
+    },
+    {
+      "name": "Ariel Hukporti",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 14,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 4 REB, 1 AST"
+    },
+    {
+      "name": "Jordan Clarkson",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "7 PTS, 1 REB, 3 AST"
+    },
+    {
+      "name": "Landry Shamet",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 11,
+      "last_game": "12 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jose Alvarado",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "7 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Tyler Kolek",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 3 REB, 2 AST"
+    },
+    {
+      "name": "Onyeka Okongwu",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 40,
+      "ast_heat": 20,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 6 REB, 5 AST"
+    },
+    {
+      "name": "Nickeil Alexander-Walker",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 20,
+      "tpm_heat": 60,
+      "last_game": "11 PTS, 1 REB, 2 AST"
+    },
+    {
+      "name": "Dyson Daniels",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 40,
+      "ast_heat": 60,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Corey Kispert",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "Mouhamed Gueye",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 2 REB, 2 AST"
+    },
+    {
+      "name": "Tony Bradley",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Gabe Vincent",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Keaton Wallace",
+      "team_code": "ATL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 3 REB, 2 AST"
+    },
+    {
+      "name": "Jamal Cain",
+      "team_code": "ORL",
+      "pts_heat": 0,
+      "reb_heat": 14,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 4 REB, 1 AST"
     },
     {
       "name": "Wendell Carter Jr.",
@@ -623,15 +1100,6 @@
       "last_game": "6 PTS, 4 REB, 4 AST"
     },
     {
-      "name": "Jamal Cain",
-      "team_code": "ORL",
-      "pts_heat": 0,
-      "reb_heat": 14,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 4 REB, 1 AST"
-    },
-    {
       "name": "Tristan da Silva",
       "team_code": "ORL",
       "pts_heat": 0,
@@ -639,15 +1107,6 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Goga Bitadze",
-      "team_code": "ORL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 4 REB, 1 AST"
     },
     {
       "name": "Jevon Carter",
@@ -704,6 +1163,15 @@
       "last_game": "4 PTS, 4 REB, 1 AST"
     },
     {
+      "name": "Tolu Smith",
+      "team_code": "DET",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 2 REB, 0 AST"
+    },
+    {
       "name": "Isaiah Stewart",
       "team_code": "DET",
       "pts_heat": 0,
@@ -731,15 +1199,6 @@
       "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
-      "name": "Kevin Huerter",
-      "team_code": "DET",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 20,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 1 AST"
-    },
-    {
       "name": "Marcus Sasser",
       "team_code": "DET",
       "pts_heat": 0,
@@ -749,6 +1208,15 @@
       "last_game": "9 PTS, 2 REB, 1 AST"
     },
     {
+      "name": "Chaz Lanier",
+      "team_code": "DET",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 1 AST"
+    },
+    {
       "name": "Daniss Jenkins",
       "team_code": "DET",
       "pts_heat": 0,
@@ -756,348 +1224,6 @@
       "ast_heat": 20,
       "tpm_heat": 20,
       "last_game": "17 PTS, 3 REB, 5 AST"
-    },
-    {
-      "name": "Rudy Gobert",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 80,
-      "ast_heat": 10,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 3 REB, 0 AST"
-    },
-    {
-      "name": "Mike Conley",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 10,
-      "tpm_heat": 10,
-      "last_game": "6 PTS, 0 REB, 4 AST"
-    },
-    {
-      "name": "Joe Ingles",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "7 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Kyle Anderson",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 12,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 0 REB, 3 AST"
-    },
-    {
-      "name": "Julian Phillips",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Joan Beringer",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "4 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Naz Reid",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 80,
-      "ast_heat": 10,
-      "tpm_heat": 40,
-      "last_game": "18 PTS, 7 REB, 1 AST"
-    },
-    {
-      "name": "Jaylen Clark",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 3 REB, 0 AST"
-    },
-    {
-      "name": "Bones Hyland",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 10,
-      "tpm_heat": 20,
-      "last_game": "3 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Julian Champagnie",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 30,
-      "ast_heat": 0,
-      "tpm_heat": 40,
-      "last_game": "18 PTS, 5 REB, 2 AST"
-    },
-    {
-      "name": "Devin Vassell",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 20,
-      "ast_heat": 0,
-      "tpm_heat": 30,
-      "last_game": "11 PTS, 5 REB, 4 AST"
-    },
-    {
-      "name": "Harrison Barnes",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 4 REB, 2 AST"
-    },
-    {
-      "name": "Kelly Olynyk",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 4 REB, 1 AST"
-    },
-    {
-      "name": "Lindy Waters III",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 1 AST"
-    },
-    {
-      "name": "Carter Bryant",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 6 REB, 1 AST"
-    },
-    {
-      "name": "Bismack Biyombo",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Mason Plumlee",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Luke Kornet",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 40,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 6 REB, 1 AST"
-    },
-    {
-      "name": "Jordan McLaughlin",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 1 AST"
-    },
-    {
-      "name": "Dean Wade",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 6 REB, 1 AST"
-    },
-    {
-      "name": "Dennis Schroder",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 20,
-      "tpm_heat": 20,
-      "last_game": "2 PTS, 3 REB, 3 AST"
-    },
-    {
-      "name": "Jaylon Tyson",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 10,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Keon Ellis",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Donte DiVincenzo",
-      "team_code": "MIN",
-      "pts_heat": 0,
-      "reb_heat": 25,
-      "ast_heat": 50,
-      "tpm_heat": 75,
-      "last_game": "0 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Aaron Gordon",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 66,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "9 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Christian Braun",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 16,
-      "ast_heat": 16,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Jonas Valanciunas",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Tim Hardaway Jr.",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 16,
-      "last_game": "13 PTS, 4 REB, 2 AST"
-    },
-    {
-      "name": "Bruce Brown",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 16,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "1 PTS, 1 REB, 1 AST"
-    },
-    {
-      "name": "Tyus Jones",
-      "team_code": "DEN",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "4 PTS, 0 REB, 3 AST"
-    },
-    {
-      "name": "Jakob Poeltl",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 28,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "9 PTS, 7 REB, 0 AST"
-    },
-    {
-      "name": "Jamal Shead",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 57,
-      "tpm_heat": 28,
-      "last_game": "14 PTS, 3 REB, 7 AST"
-    },
-    {
-      "name": "Sandro Mamukelashvili",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 42,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Trayce Jackson-Davis",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Jamison Battle",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 16,
-      "last_game": "3 PTS, 2 REB, 1 AST"
-    },
-    {
-      "name": "Jonathan Mogbo",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "A.J. Lawson",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Gradey Dick",
-      "team_code": "TOR",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
       "name": "Sam Hauser",
@@ -1136,6 +1262,15 @@
       "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
+      "name": "Ron Harper Jr.",
+      "team_code": "BOS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
       "name": "Baylor Scheierman",
       "team_code": "BOS",
       "pts_heat": 0,
@@ -1154,148 +1289,13 @@
       "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
-      "name": "Adem Bona",
-      "team_code": "PHI",
-      "pts_heat": 0,
-      "reb_heat": 10,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "7 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Justin Edwards",
-      "team_code": "PHI",
+      "name": "Hugo Gonzalez",
+      "team_code": "BOS",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "8 PTS, 1 REB, 1 AST"
-    },
-    {
-      "name": "Andre Drummond",
-      "team_code": "PHI",
-      "pts_heat": 0,
-      "reb_heat": 30,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "4 PTS, 4 REB, 0 AST"
-    },
-    {
-      "name": "Quentin Grimes",
-      "team_code": "PHI",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 10,
-      "tpm_heat": 10,
-      "last_game": "6 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Deandre Ayton",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 60,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 3 REB, 1 AST"
-    },
-    {
-      "name": "Jarred Vanderbilt",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Jake LaRavia",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Jaxson Hayes",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "18 PTS, 5 REB, 1 AST"
-    },
-    {
-      "name": "Nick Smith Jr.",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Bronny James",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Reed Sheppard",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 50,
-      "tpm_heat": 50,
-      "last_game": "10 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Dorian Finney-Smith",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Jae'Sean Tate",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 3 REB, 0 AST"
-    },
-    {
-      "name": "Clint Capela",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Aaron Holiday",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 16,
-      "last_game": "2 PTS, 1 REB, 2 AST"
-    },
-    {
-      "name": "Josh Okogie",
-      "team_code": "HOU",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 4 REB, 1 AST"
+      "last_game": "0 PTS, 3 REB, 0 AST"
     },
     {
       "name": "Trendon Watford",
@@ -1325,6 +1325,15 @@
       "last_game": "9 PTS, 1 REB, 3 AST"
     },
     {
+      "name": "Justin Edwards",
+      "team_code": "PHI",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "8 PTS, 1 REB, 1 AST"
+    },
+    {
       "name": "Dominick Barlow",
       "team_code": "PHI",
       "pts_heat": 0,
@@ -1334,247 +1343,31 @@
       "last_game": "5 PTS, 1 REB, 1 AST"
     },
     {
-      "name": "Ron Harper Jr.",
-      "team_code": "BOS",
+      "name": "Andre Drummond",
+      "team_code": "PHI",
       "pts_heat": 0,
-      "reb_heat": 0,
+      "reb_heat": 30,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
+      "last_game": "4 PTS, 4 REB, 0 AST"
     },
     {
-      "name": "Hugo Gonzalez",
-      "team_code": "BOS",
+      "name": "Adem Bona",
+      "team_code": "PHI",
       "pts_heat": 0,
-      "reb_heat": 0,
+      "reb_heat": 10,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "0 PTS, 3 REB, 0 AST"
+      "last_game": "7 PTS, 2 REB, 0 AST"
     },
     {
-      "name": "Josh Hart",
-      "team_code": "NY",
+      "name": "Quentin Grimes",
+      "team_code": "PHI",
       "pts_heat": 0,
-      "reb_heat": 80,
-      "ast_heat": 50,
+      "reb_heat": 0,
+      "ast_heat": 10,
       "tpm_heat": 10,
-      "last_game": "17 PTS, 9 REB, 1 AST"
-    },
-    {
-      "name": "Jeremy Sochan",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 2 REB, 2 AST"
-    },
-    {
-      "name": "Pacome Dadiet",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 3 REB, 1 AST"
-    },
-    {
-      "name": "Mohamed Diawara",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Mitchell Robinson",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 22,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 6 REB, 0 AST"
-    },
-    {
-      "name": "Ariel Hukporti",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 14,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 4 REB, 1 AST"
-    },
-    {
-      "name": "Jordan Clarkson",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "7 PTS, 1 REB, 3 AST"
-    },
-    {
-      "name": "Landry Shamet",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 10,
-      "last_game": "12 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Jose Alvarado",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "7 PTS, 3 REB, 1 AST"
-    },
-    {
-      "name": "Tyler Kolek",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "4 PTS, 3 REB, 2 AST"
-    },
-    {
-      "name": "Dalton Knecht",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 1 REB, 3 AST"
-    },
-    {
-      "name": "Adou Thiero",
-      "team_code": "LAL",
-      "pts_heat": 0,
-      "reb_heat": 16,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Isaiah Hartenstein",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 87,
-      "ast_heat": 12,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 10 REB, 5 AST"
-    },
-    {
-      "name": "Luguentz Dort",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 25,
-      "last_game": "6 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Jaylin Williams",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 12,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Alex Caruso",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 37,
-      "last_game": "9 PTS, 4 REB, 1 AST"
-    },
-    {
-      "name": "Kenrich Williams",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Isaiah Joe",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 28,
-      "last_game": "0 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Aaron Wiggins",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Cason Wallace",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 12,
-      "last_game": "3 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Jared McCain",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 37,
-      "last_game": "13 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Nikola Topic",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Tolu Smith",
-      "team_code": "DET",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "4 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Chaz Lanier",
-      "team_code": "DET",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 1 AST"
-    },
-    {
-      "name": "Nae'Qwan Tomlin",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 0 AST"
+      "last_game": "6 PTS, 0 REB, 0 AST"
     },
     {
       "name": "Thomas Bryant",
@@ -1584,69 +1377,6 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "0 PTS, 4 REB, 1 AST"
-    },
-    {
-      "name": "Craig Porter Jr.",
-      "team_code": "CLE",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 2 REB, 1 AST"
-    },
-    {
-      "name": "Onyeka Okongwu",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 50,
-      "ast_heat": 16,
-      "tpm_heat": 16,
-      "last_game": "4 PTS, 6 REB, 5 AST"
-    },
-    {
-      "name": "Nickeil Alexander-Walker",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 16,
-      "tpm_heat": 66,
-      "last_game": "11 PTS, 1 REB, 2 AST"
-    },
-    {
-      "name": "Dyson Daniels",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 50,
-      "ast_heat": 66,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Mouhamed Gueye",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 2 REB, 2 AST"
-    },
-    {
-      "name": "Zaccharie Risacher",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "8 PTS, 3 REB, 0 AST"
-    },
-    {
-      "name": "Gabe Vincent",
-      "team_code": "ATL",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
       "name": "Oso Ighodaro",
@@ -1710,6 +1440,150 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "2 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Kenrich Williams",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Nikola Topic",
+      "team_code": "OKC",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Rudy Gobert",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 80,
+      "ast_heat": 10,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 3 REB, 0 AST"
+    },
+    {
+      "name": "Mike Conley",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 10,
+      "tpm_heat": 10,
+      "last_game": "6 PTS, 0 REB, 4 AST"
+    },
+    {
+      "name": "Joe Ingles",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "7 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Kyle Anderson",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 14,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 0 REB, 3 AST"
+    },
+    {
+      "name": "Julian Phillips",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Joan Beringer",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Naz Reid",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 80,
+      "ast_heat": 10,
+      "tpm_heat": 40,
+      "last_game": "18 PTS, 7 REB, 1 AST"
+    },
+    {
+      "name": "Jaylen Clark",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 3 REB, 0 AST"
+    },
+    {
+      "name": "Bones Hyland",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 11,
+      "tpm_heat": 22,
+      "last_game": "3 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Kelly Olynyk",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 4 REB, 1 AST"
+    },
+    {
+      "name": "Lindy Waters III",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 1 AST"
+    },
+    {
+      "name": "Bismack Biyombo",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Mason Plumlee",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Jordan McLaughlin",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 1 AST"
     },
     {
       "name": "Toumani Camara",
@@ -1811,40 +1685,130 @@
       "last_game": "11 PTS, 4 REB, 0 AST"
     },
     {
-      "name": "Corey Kispert",
-      "team_code": "ATL",
+      "name": "Goga Bitadze",
+      "team_code": "ORL",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "4 PTS, 2 REB, 1 AST"
+      "last_game": "6 PTS, 4 REB, 1 AST"
     },
     {
-      "name": "Tony Bradley",
-      "team_code": "ATL",
+      "name": "Donte DiVincenzo",
+      "team_code": "MIN",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 66,
+      "tpm_heat": 66,
+      "last_game": "0 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Christian Braun",
+      "team_code": "DEN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 20,
+      "tpm_heat": 0,
+      "last_game": "3 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Jonas Valanciunas",
+      "team_code": "DEN",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "5 PTS, 3 REB, 1 AST"
+      "last_game": "2 PTS, 2 REB, 0 AST"
     },
     {
-      "name": "Keaton Wallace",
-      "team_code": "ATL",
+      "name": "Tim Hardaway Jr.",
+      "team_code": "DEN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 20,
+      "last_game": "13 PTS, 4 REB, 2 AST"
+    },
+    {
+      "name": "Bruce Brown",
+      "team_code": "DEN",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
-      "last_game": "4 PTS, 3 REB, 2 AST"
+      "last_game": "1 PTS, 1 REB, 1 AST"
     },
     {
-      "name": "Maxi Kleber",
+      "name": "Kevin Huerter",
+      "team_code": "DET",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 20,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 1 AST"
+    },
+    {
+      "name": "Franz Wagner",
+      "team_code": "ORL",
+      "pts_heat": 0,
+      "reb_heat": 25,
+      "ast_heat": 25,
+      "tpm_heat": 0,
+      "last_game": "19 PTS, 5 REB, 3 AST"
+    },
+    {
+      "name": "Nick Smith Jr.",
       "team_code": "LAL",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
+      "last_game": "6 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Dorian Finney-Smith",
+      "team_code": "HOU",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
       "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Dalton Knecht",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 1 REB, 3 AST"
+    },
+    {
+      "name": "Nae'Qwan Tomlin",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Craig Porter Jr.",
+      "team_code": "CLE",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 2 REB, 1 AST"
+    },
+    {
+      "name": "Tyus Jones",
+      "team_code": "DEN",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 0 REB, 3 AST"
     }
   ]
 }
