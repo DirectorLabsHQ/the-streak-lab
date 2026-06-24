@@ -1,13 +1,13 @@
 {
-  "last_updated": "Jun 23, 2026 - 12:08 PM",
+  "last_updated": "Jun 24, 2026 - 11:45 AM",
   "players": [
     {
       "name": "Victor Wembanyama",
       "team_code": "SA",
-      "pts_heat": 88,
-      "reb_heat": 88,
-      "ast_heat": 22,
-      "tpm_heat": 33,
+      "pts_heat": 87,
+      "reb_heat": 87,
+      "ast_heat": 12,
+      "tpm_heat": 25,
       "last_game": "19 PTS, 14 REB, 2 AST"
     },
     {
@@ -22,9 +22,9 @@
     {
       "name": "Shai Gilgeous-Alexander",
       "team_code": "OKC",
-      "pts_heat": 50,
+      "pts_heat": 66,
       "reb_heat": 0,
-      "ast_heat": 75,
+      "ast_heat": 66,
       "tpm_heat": 0,
       "last_game": "35 PTS, 4 REB, 9 AST"
     },
@@ -40,46 +40,46 @@
     {
       "name": "Jared McCain",
       "team_code": "OKC",
-      "pts_heat": 25,
+      "pts_heat": 33,
       "reb_heat": 0,
-      "ast_heat": 25,
-      "tpm_heat": 25,
+      "ast_heat": 33,
+      "tpm_heat": 33,
       "last_game": "12 PTS, 1 REB, 0 AST"
     },
     {
       "name": "Alex Caruso",
       "team_code": "OKC",
-      "pts_heat": 25,
+      "pts_heat": 33,
       "reb_heat": 0,
-      "ast_heat": 25,
-      "tpm_heat": 25,
+      "ast_heat": 33,
+      "tpm_heat": 33,
       "last_game": "12 PTS, 5 REB, 4 AST"
     },
     {
       "name": "Julian Champagnie",
       "team_code": "SA",
-      "pts_heat": 22,
-      "reb_heat": 33,
+      "pts_heat": 25,
+      "reb_heat": 37,
       "ast_heat": 0,
-      "tpm_heat": 55,
+      "tpm_heat": 62,
       "last_game": "14 PTS, 7 REB, 1 AST"
     },
     {
       "name": "Stephon Castle",
       "team_code": "SA",
-      "pts_heat": 22,
-      "reb_heat": 11,
-      "ast_heat": 66,
-      "tpm_heat": 11,
+      "pts_heat": 25,
+      "reb_heat": 12,
+      "ast_heat": 62,
+      "tpm_heat": 12,
       "last_game": "6 PTS, 5 REB, 4 AST"
     },
     {
       "name": "Dylan Harper",
       "team_code": "SA",
-      "pts_heat": 22,
-      "reb_heat": 33,
+      "pts_heat": 25,
+      "reb_heat": 37,
       "ast_heat": 0,
-      "tpm_heat": 11,
+      "tpm_heat": 12,
       "last_game": "25 PTS, 5 REB, 4 AST"
     },
     {
@@ -103,10 +103,10 @@
     {
       "name": "De'Aaron Fox",
       "team_code": "SA",
-      "pts_heat": 11,
-      "reb_heat": 11,
+      "pts_heat": 12,
+      "reb_heat": 0,
       "ast_heat": 100,
-      "tpm_heat": 22,
+      "tpm_heat": 25,
       "last_game": "7 PTS, 0 REB, 5 AST"
     },
     {
@@ -185,9 +185,9 @@
       "name": "Devin Vassell",
       "team_code": "SA",
       "pts_heat": 0,
-      "reb_heat": 33,
-      "ast_heat": 11,
-      "tpm_heat": 44,
+      "reb_heat": 37,
+      "ast_heat": 12,
+      "tpm_heat": 50,
       "last_game": "12 PTS, 7 REB, 2 AST"
     },
     {
@@ -212,43 +212,16 @@
       "name": "Luke Kornet",
       "team_code": "SA",
       "pts_heat": 0,
-      "reb_heat": 11,
+      "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "0 PTS, 2 REB, 0 AST"
     },
     {
-      "name": "Harrison Barnes",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Kelly Olynyk",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "6 PTS, 1 REB, 0 AST"
-    },
-    {
-      "name": "Jordan McLaughlin",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 4 REB, 2 AST"
-    },
-    {
       "name": "Isaiah Hartenstein",
       "team_code": "OKC",
       "pts_heat": 0,
-      "reb_heat": 50,
+      "reb_heat": 33,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "7 PTS, 5 REB, 0 AST"
@@ -257,7 +230,7 @@
       "name": "Chet Holmgren",
       "team_code": "OKC",
       "pts_heat": 0,
-      "reb_heat": 75,
+      "reb_heat": 66,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "4 PTS, 4 REB, 0 AST"
@@ -275,7 +248,7 @@
       "name": "Jaylin Williams",
       "team_code": "OKC",
       "pts_heat": 0,
-      "reb_heat": 50,
+      "reb_heat": 66,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "11 PTS, 10 REB, 4 AST"
@@ -290,35 +263,17 @@
       "last_game": "2 PTS, 1 REB, 0 AST"
     },
     {
-      "name": "Isaiah Joe",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "3 PTS, 4 REB, 2 AST"
-    },
-    {
-      "name": "Aaron Wiggins",
-      "team_code": "OKC",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "5 PTS, 0 REB, 0 AST"
-    },
-    {
       "name": "Cason Wallace",
       "team_code": "OKC",
       "pts_heat": 0,
-      "reb_heat": 25,
-      "ast_heat": 25,
-      "tpm_heat": 50,
+      "reb_heat": 33,
+      "ast_heat": 33,
+      "tpm_heat": 66,
       "last_game": "17 PTS, 7 REB, 4 AST"
     },
     {
-      "name": "Nikola Topic",
-      "team_code": "OKC",
+      "name": "Harrison Barnes",
+      "team_code": "SA",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
