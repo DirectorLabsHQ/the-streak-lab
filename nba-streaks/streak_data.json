@@ -1,5 +1,5 @@
 {
-  "last_updated": "Jun 26, 2026 - 11:44 AM",
+  "last_updated": "Jun 27, 2026 - 10:57 AM",
   "players": [
     {
       "name": "Jalen Brunson",
@@ -92,15 +92,6 @@
       "last_game": "12 PTS, 7 REB, 2 AST"
     },
     {
-      "name": "Harrison Barnes",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
       "name": "Keldon Johnson",
       "team_code": "SA",
       "pts_heat": 0,
@@ -137,6 +128,15 @@
       "last_game": "13 PTS, 11 REB, 2 AST"
     },
     {
+      "name": "Jeremy Sochan",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
       "name": "Mitchell Robinson",
       "team_code": "NY",
       "pts_heat": 0,
@@ -144,6 +144,15 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "2 PTS, 10 REB, 2 AST"
+    },
+    {
+      "name": "Jordan Clarkson",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 0 AST"
     },
     {
       "name": "Landry Shamet",
@@ -173,22 +182,13 @@
       "last_game": "0 PTS, 0 REB, 1 AST"
     },
     {
-      "name": "Jeremy Sochan",
-      "team_code": "NY",
+      "name": "Harrison Barnes",
+      "team_code": "SA",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
-      "name": "Jordan Clarkson",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 0 AST"
     }
   ]
 }
