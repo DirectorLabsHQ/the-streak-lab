@@ -1,5 +1,5 @@
 {
-  "last_updated": "Jun 27, 2026 - 10:57 AM",
+  "last_updated": "Jun 28, 2026 - 11:08 AM",
   "players": [
     {
       "name": "Jalen Brunson",
@@ -13,10 +13,10 @@
     {
       "name": "Victor Wembanyama",
       "team_code": "SA",
-      "pts_heat": 85,
+      "pts_heat": 83,
       "reb_heat": 100,
-      "ast_heat": 14,
-      "tpm_heat": 28,
+      "ast_heat": 16,
+      "tpm_heat": 16,
       "last_game": "19 PTS, 14 REB, 2 AST"
     },
     {
@@ -31,10 +31,10 @@
     {
       "name": "Dylan Harper",
       "team_code": "SA",
-      "pts_heat": 28,
-      "reb_heat": 42,
+      "pts_heat": 33,
+      "reb_heat": 50,
       "ast_heat": 0,
-      "tpm_heat": 14,
+      "tpm_heat": 16,
       "last_game": "25 PTS, 5 REB, 4 AST"
     },
     {
@@ -58,65 +58,29 @@
     {
       "name": "Julian Champagnie",
       "team_code": "SA",
-      "pts_heat": 14,
-      "reb_heat": 28,
+      "pts_heat": 16,
+      "reb_heat": 33,
       "ast_heat": 0,
-      "tpm_heat": 57,
+      "tpm_heat": 66,
       "last_game": "14 PTS, 7 REB, 1 AST"
     },
     {
       "name": "De'Aaron Fox",
       "team_code": "SA",
-      "pts_heat": 14,
+      "pts_heat": 16,
       "reb_heat": 0,
       "ast_heat": 100,
-      "tpm_heat": 28,
+      "tpm_heat": 33,
       "last_game": "7 PTS, 0 REB, 5 AST"
     },
     {
       "name": "Stephon Castle",
       "team_code": "SA",
-      "pts_heat": 14,
-      "reb_heat": 14,
-      "ast_heat": 57,
+      "pts_heat": 16,
+      "reb_heat": 16,
+      "ast_heat": 50,
       "tpm_heat": 0,
       "last_game": "6 PTS, 5 REB, 4 AST"
-    },
-    {
-      "name": "Devin Vassell",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 42,
-      "ast_heat": 14,
-      "tpm_heat": 57,
-      "last_game": "12 PTS, 7 REB, 2 AST"
-    },
-    {
-      "name": "Keldon Johnson",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "7 PTS, 5 REB, 0 AST"
-    },
-    {
-      "name": "Carter Bryant",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Luke Kornet",
-      "team_code": "SA",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 2 REB, 0 AST"
     },
     {
       "name": "Josh Hart",
@@ -128,15 +92,6 @@
       "last_game": "13 PTS, 11 REB, 2 AST"
     },
     {
-      "name": "Jeremy Sochan",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
-    },
-    {
       "name": "Mitchell Robinson",
       "team_code": "NY",
       "pts_heat": 0,
@@ -144,15 +99,6 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "2 PTS, 10 REB, 2 AST"
-    },
-    {
-      "name": "Jordan Clarkson",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "2 PTS, 1 REB, 0 AST"
     },
     {
       "name": "Landry Shamet",
@@ -182,8 +128,62 @@
       "last_game": "0 PTS, 0 REB, 1 AST"
     },
     {
+      "name": "Devin Vassell",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 50,
+      "ast_heat": 16,
+      "tpm_heat": 50,
+      "last_game": "12 PTS, 7 REB, 2 AST"
+    },
+    {
       "name": "Harrison Barnes",
       "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Keldon Johnson",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "7 PTS, 5 REB, 0 AST"
+    },
+    {
+      "name": "Carter Bryant",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Luke Kornet",
+      "team_code": "SA",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 2 REB, 0 AST"
+    },
+    {
+      "name": "Jordan Clarkson",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 1 REB, 0 AST"
+    },
+    {
+      "name": "Jeremy Sochan",
+      "team_code": "NY",
       "pts_heat": 0,
       "reb_heat": 0,
       "ast_heat": 0,
