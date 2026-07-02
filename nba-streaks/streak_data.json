@@ -1,5 +1,5 @@
 {
-  "last_updated": "Jul 01, 2026 - 12:09 PM",
+  "last_updated": "Jul 02, 2026 - 11:34 AM",
   "players": [
     {
       "name": "Jalen Brunson",
@@ -81,6 +81,15 @@
       "ast_heat": 60,
       "tpm_heat": 40,
       "last_game": "13 PTS, 11 REB, 2 AST"
+    },
+    {
+      "name": "Jeremy Sochan",
+      "team_code": "NY",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "0 PTS, 0 REB, 0 AST"
     },
     {
       "name": "Mitchell Robinson",
@@ -171,15 +180,6 @@
       "ast_heat": 0,
       "tpm_heat": 0,
       "last_game": "0 PTS, 2 REB, 0 AST"
-    },
-    {
-      "name": "Jeremy Sochan",
-      "team_code": "NY",
-      "pts_heat": 0,
-      "reb_heat": 0,
-      "ast_heat": 0,
-      "tpm_heat": 0,
-      "last_game": "0 PTS, 0 REB, 0 AST"
     }
   ]
 }
