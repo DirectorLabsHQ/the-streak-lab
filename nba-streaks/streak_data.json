@@ -1,4 +1,86 @@
 {
-  "last_updated": "Oct 07, 2026 - 04:08 PM",
-  "players": []
+  "last_updated": "Oct 08, 2026 - 04:10 PM",
+  "players": [
+    {
+      "name": "Dalen Terry",
+      "team_code": "GS",
+      "pts_heat": 33,
+      "reb_heat": 33,
+      "ast_heat": 33,
+      "tpm_heat": 33,
+      "last_game": "23 PTS, 8 REB, 9 AST"
+    },
+    {
+      "name": "Miles Kelly",
+      "team_code": "GS",
+      "pts_heat": 33,
+      "reb_heat": 33,
+      "ast_heat": 33,
+      "tpm_heat": 33,
+      "last_game": "24 PTS, 7 REB, 6 AST"
+    },
+    {
+      "name": "Graham Ike",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "10 PTS, 6 REB, 2 AST"
+    },
+    {
+      "name": "Malevy Leons",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 5 REB, 0 AST"
+    },
+    {
+      "name": "Alex Toohey",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "5 PTS, 1 REB, 2 AST"
+    },
+    {
+      "name": "Charles Bassey",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "13 PTS, 6 REB, 1 AST"
+    },
+    {
+      "name": "Brandon Williams",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "17 PTS, 3 REB, 4 AST"
+    },
+    {
+      "name": "LJ Cryer",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "6 PTS, 1 REB, 1 AST"
+    },
+    {
+      "name": "Will Richard",
+      "team_code": "GS",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 33,
+      "last_game": "15 PTS, 3 REB, 1 AST"
+    }
+  ]
 }
