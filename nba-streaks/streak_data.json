@@ -1,5 +1,5 @@
 {
-  "last_updated": "Oct 08, 2026 - 04:10 PM",
+  "last_updated": "Oct 09, 2026 - 03:51 PM",
   "players": [
     {
       "name": "Dalen Terry",
@@ -18,6 +18,96 @@
       "ast_heat": 33,
       "tpm_heat": 33,
       "last_game": "24 PTS, 7 REB, 6 AST"
+    },
+    {
+      "name": "Sandro Mamukelashvili",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 33,
+      "tpm_heat": 66,
+      "last_game": "19 PTS, 3 REB, 4 AST"
+    },
+    {
+      "name": "Jake LaRavia",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 33,
+      "last_game": "17 PTS, 4 REB, 3 AST"
+    },
+    {
+      "name": "Adou Thiero",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "6 PTS, 3 REB, 1 AST"
+    },
+    {
+      "name": "Quentin Grimes",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "12 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Bronny James",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 66,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 4 REB, 6 AST"
+    },
+    {
+      "name": "Kevon Looney",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 33,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 5 REB, 1 AST"
+    },
+    {
+      "name": "Jarred Vanderbilt",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "4 PTS, 6 REB, 0 AST"
+    },
+    {
+      "name": "William Kyle III",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Chris Manon",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "2 PTS, 0 REB, 0 AST"
+    },
+    {
+      "name": "Jaden Hardy",
+      "team_code": "LAL",
+      "pts_heat": 0,
+      "reb_heat": 0,
+      "ast_heat": 0,
+      "tpm_heat": 0,
+      "last_game": "6 PTS, 0 REB, 0 AST"
     },
     {
       "name": "Graham Ike",
